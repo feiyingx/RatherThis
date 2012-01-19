@@ -1,0 +1,64 @@
+﻿@model RatherThis.Models.QuestionDisplayViewModel
+
+@{
+    var questionContainerId = "question-container-" + Model.Question.QuestionID;
+    var questionId = Model.Question.QuestionID;
+    var gender = "FOR EVERYONE";
+    if(Model.Question.Gender == "F"){
+        gender = "FOR THE LADIES";
+    }else if(Model.Question.Gender == "M"){
+        gender = "FOR THE GUYS";   
+    }
+    
+    
+}
+
+<div id="@questionContainerId">
+@Model.Question.DateCreated.ToString("MMM dd yyyy").ToUpper()
+
+<span>@gender</span>
+@if (Model.HasAnsweredQuestion)
+{
+    <span>Answered</span>
+}
+
+would you rather...
+
+@if (Model.HasAnsweredQuestion)
+{
+    foreach(var option in Model.Question.QuestionOptions)
+    {
+        
+    }
+}
+else
+{
+    using(Ajax.BeginForm("Answer", "Question", new { qid = questionId }, new AjaxOptions{
+        UpdateTargetId = questionContainerId,
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "question-ajax-loading-" + questionId
+    })){
+        foreach (var option in Model.Question.QuestionOptions)
+        {
+            <label for="option-@option.QuestionOptionID"><input type="radio" name="oid" id="option-@option.QuestionOptionID" value="@option.QuestionOptionID" />@option.OptionText</label>
+        }
+        
+        <input type="submit" value="VOTE" />
+    }
+
+    using (Ajax.BeginForm("Answer", "Question", new { qid = questionId }, new AjaxOptions
+    {
+        UpdateTargetId = questionContainerId,
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "question-ajax-loading-" + questionId
+    }))
+    {
+        <input type="hidden" value="0" name="oid" />@* the option id for skipping is 0 *@
+        <input type="submit" value="SKIP" />
+    }
+    
+    
+    <div id="question-ajax-loading-@questionId" class="ajax-loading" style="display:none;">Processing</div>
+}
+<span>posted by: @Model.Question.User.Username</span>
+</div>

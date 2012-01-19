@@ -1,0 +1,29 @@
+﻿@model RatherThis.Models.HomeIndexViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@if (Model.Questions != null && Model.Questions.Count > 0)
+{
+    foreach (var q in Model.Questions)
+    {
+        var genderString = "";
+        if (q.Gender == "F")
+        {
+            genderString = "FOR THE LADIES ONLY";
+        }
+        else if (q.Gender == "M")
+        {
+            genderString = "FOR THE GUYS ONLY";
+        }
+        
+        <span>@genderString</span>
+        <h1>Would you rather..</h1>
+        
+        foreach (var option in q.QuestionOptions)
+        {
+            <a href="">@option.OptionText</a>    
+        }
+    }
+}
+

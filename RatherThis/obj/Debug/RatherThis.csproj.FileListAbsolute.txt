@@ -1,0 +1,15 @@
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\RatherThis.dll
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\RatherThis.pdb
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\obj\Debug\RatherThis.dll
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\obj\Debug\RatherThis.pdb
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\BCrypt.Net.dll
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\Ninject.dll
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\RatherThis.Domain.dll
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\EntityFramework.dll
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\RatherThis.Domain.pdb
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\BCrypt.Net.pdb
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\BCrypt.Net.xml
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\Ninject.pdb
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\Ninject.xml
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\EntityFramework.xml
