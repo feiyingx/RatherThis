@@ -39,10 +39,30 @@ namespace RatherThis.Models
         public string OptionText2 { get; set; }
         public int OptionVotes1 { get; set; }
         public int OptionVotes2 { get; set; }
+        public int OptionId1 { get; set; }
+        public int OptionId2 { get; set; }
         public string Gender { get; set; }
         public string Name { get; set; }
         public Guid UserId { get; set; }
         public int TotalVotes { get; set; }
         public int QuestionId { get; set; }
+        public int AnsweredOptionId { get; set; }
+        public List<Comment> Comments { get; set; }
+    }
+
+    public class CommentFormViewModel
+    {
+        [Required]
+        [StringLength(500)]
+        public string Comment { get; set; }
+        public int QuestionId { get; set; }
+        public int AnsweredOptionId { get; set; }
+    }
+
+    public class CommentListViewModel
+    {
+        public List<Comment> Comments { get; set; }
+        public int OptionId1 { get; set; }
+        public int OptionId2 { get; set; }
     }
 }

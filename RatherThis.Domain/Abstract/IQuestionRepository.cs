@@ -10,5 +10,6 @@ namespace RatherThis.Domain.Abstract
     {
         IQueryable<Question> Questions { get; }
         void SaveQuestion(Question question);
+        Question GetQuestionWithComments(int qid);
     }
 }

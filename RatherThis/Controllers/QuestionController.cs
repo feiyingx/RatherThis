@@ -17,16 +17,18 @@ namespace RatherThis.Controllers
         private IQuestionOptionRepository _optionRepo;
         private IAnswerRepository _answerRepo;
         private IUserRepository _userRepo;
+        private ICommentRepository _commentRepo;
 
         private int _pageSize = 9;
 
-        public QuestionController(IMembershipService membershipService, IQuestionRepository questionRepo, IQuestionOptionRepository optionRepo, IAnswerRepository answerRepo, IUserRepository userRepo)
+        public QuestionController(IMembershipService membershipService, IQuestionRepository questionRepo, IQuestionOptionRepository optionRepo, IAnswerRepository answerRepo, IUserRepository userRepo, ICommentRepository commentRepo)
         {
             _membershipService = membershipService;
             _questionRepo = questionRepo;
             _optionRepo = optionRepo;
             _answerRepo = answerRepo;
             _userRepo = userRepo;
+            _commentRepo = commentRepo;
         }
 
         public ActionResult New()
@@ -191,6 +193,7 @@ namespace RatherThis.Controllers
                     model.Gender = gender;
                     model.Name = name;
                     model.UserId = questionUserId;
+                    model.AnsweredOptionId = userAnswer.QuestionOptionID;
 
                     model.OptionText1 = optionText1;
                     model.OptionText2 = optionText2;
@@ -198,6 +201,11 @@ namespace RatherThis.Controllers
                     model.OptionVotes1 = q.Answers.Where(a => a.QuestionOptionID == option1.QuestionOptionID).Count();
                     model.OptionVotes2 = q.Answers.Where(a => a.QuestionOptionID == option2.QuestionOptionID).Count();
                     model.TotalVotes = (model.OptionVotes1 + model.OptionVotes2);
+
+                    model.OptionId1 = option1.QuestionOptionID;
+                    model.OptionId2 = option2.QuestionOptionID;
+
+                    model.Comments = q.Comments.ToList();
 
                     return PartialView("_AnswerDisplay", model);
                 }
@@ -221,6 +229,56 @@ namespace RatherThis.Controllers
                     return PartialView("_QuestionDisplay", model);
                 }
             }
+        }
+
+        public ActionResult NewComment(int qid, int oid)
+        {
+            CommentFormViewModel model = new CommentFormViewModel();
+            model.QuestionId = qid;
+            model.AnsweredOptionId = oid;
+
+            return View("_CommentsForm", model);
+        }
+
+        [HttpPost]
+        public ActionResult NewComment(CommentFormViewModel model, int qid, int oid)
+        {
+            if (ModelState.IsValid && _membershipService.IsAuthenticated())
+            {
+                Comment newComment = new Comment();
+                newComment.CommentText = model.Comment;
+                newComment.QuestionID = qid;
+                newComment.QuestionOptionID = oid;
+                newComment.UserID = _membershipService.GetCurrentUserId();
+                _commentRepo.SaveComment(newComment);
+
+                return RedirectToAction("NewComment", new { qid = qid, oid = oid });
+            }
+            model.QuestionId = qid;
+            model.AnsweredOptionId = oid;
+            return View("_CommentsForm", model);
+        }
+
+        public ActionResult CommentList(int qid, int listSize = 0)
+        {
+            List<Comment> comments;
+            Question q = _questionRepo.GetQuestionWithComments(qid);
+            if (listSize > 0)
+            {
+                //if there is a list size param passed in, then take that number of comments, otherwise take all comments
+                comments = q.Comments.OrderByDescending(c => c.DateCreated).Take(listSize).ToList();
+            }
+            else
+            {
+                comments = q.Comments.Where(c => c.QuestionID == qid).OrderByDescending(c => c.DateCreated).ToList();
+            }
+
+            CommentListViewModel model = new CommentListViewModel();
+            model.Comments = comments;
+            model.OptionId1 = q.QuestionOptions.ElementAt(0).QuestionOptionID;
+            model.OptionId2 = q.QuestionOptions.ElementAt(1).QuestionOptionID;
+
+            return View(model);
         }
     }
 }

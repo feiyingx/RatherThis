@@ -1,7 +1,7 @@
 ﻿@model RatherThis.Models.AnswerDisplayViewModel
 
 @if (Model != null)
-{    
+{
     var genderTag = "FOR EVERYONE";
     if (Model.Gender == "F")
     {
@@ -31,5 +31,12 @@
     <p>posted by: @Model.Name</p>
     
     <text>TODO-COMMENTS</text>
+    <div id="question-@Model.QuestionId-comment">
+        @{ Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId }); }
     </div>
-}
+
+        <div id="question-@Model.QuestionId-comment-list">
+        @{ Html.RenderAction("CommentList", "Question", new { qid = Model.QuestionId, listSize = 10 }); }
+        </div>
+    </div>
+}   

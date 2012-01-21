@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using RatherThis.Domain.Abstract;
 using System.Data.Entity;
+using RatherThis.Domain.Entities;
 
 namespace RatherThis.Domain.Concrete
 {
@@ -27,6 +28,12 @@ namespace RatherThis.Domain.Concrete
             }
 
             context.SaveChanges();
+        }
+
+
+        public Question GetQuestionWithComments(int qid)
+        {
+            return Questions.Include(q => q.Comments.Select(c => c.User)).Where(q => q.QuestionID == qid).FirstOrDefault();
         }
     }
 }

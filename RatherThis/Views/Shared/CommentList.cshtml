@@ -1,0 +1,17 @@
+﻿@model RatherThis.Models.CommentListViewModel
+@{
+    Layout = null;
+}
+
+
+@if (Model != null && Model.Comments != null && Model.Comments.Count() > 0)
+{
+    
+    foreach (var comment in Model.Comments)
+    {
+        var commentSide = (comment.QuestionOptionID == Model.OptionId1) ? "left-comment" : "right-comment";
+        <p class="@commentSide">@comment.CommentText</p>
+        <span>@comment.DateCreated.ToShortDateString() @comment.User.Username</span>
+    }
+    
+}

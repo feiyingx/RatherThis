@@ -14,5 +14,6 @@ namespace RatherThis.Domain.Entities
 
         public virtual Question Question { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

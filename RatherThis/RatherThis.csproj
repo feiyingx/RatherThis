@@ -82,6 +82,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="LICENSE.txt" />
+    <Content Include="Scripts\global.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -169,6 +170,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Question\_NewQuestion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_CommentsForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\CommentList.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
