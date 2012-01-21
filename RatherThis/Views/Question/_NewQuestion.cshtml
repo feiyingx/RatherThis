@@ -1,0 +1,28 @@
+﻿@model RatherThis.Models.NewQuestionViewModel
+           
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("New", "Question", new AjaxOptions
+        {
+            UpdateTargetId = "new-question",
+            InsertionMode = InsertionMode.Replace,
+            LoadingElementId = "new-question-ajax-loading"
+        }))
+{
+    <span>QUESTION FOR: </span>
+    <label for="gender-all"><input type="radio" id="gender-all" value="" name="Gender" checked />All</label>
+    <label for="gender-female"><input type="radio" id="gender-female" value="F" name="Gender" />Ladies</label>
+    <label for="gender-male"><input type="radio" id="gender-male" name="Gender" />Guys</label>
+    
+    @Html.ValidationSummary()
+    
+    <h1>Would you rather..</h1>    
+    @Html.TextAreaFor(m => m.Option1)
+    <text>Or</text>
+    @Html.TextAreaFor(m => m.Option2)
+
+    <input type="submit" value="Submit" />
+}
+

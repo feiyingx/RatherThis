@@ -52,6 +52,13 @@
                 @{ Html.RenderAction("LogOn", "Account"); }
             </div>
         }
+        else
+        {
+            <div id="new-question">
+                @{ Html.RenderAction("New", "Question"); }
+            </div>
+        }
+
         </div>
 
         <div id="main">

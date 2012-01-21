@@ -31,7 +31,7 @@ namespace RatherThis.Controllers
 
         public ActionResult New()
         {
-            return View();
+            return View("_NewQuestion");
         }
 
         [HttpPost]
@@ -53,10 +53,10 @@ namespace RatherThis.Controllers
                 _optionRepo.SaveQuestionOption(option1);
                 _optionRepo.SaveQuestionOption(option2);
 
-                return RedirectToAction("Index", "Home");
+                return JavaScript("window.location.reload();");
             }
 
-            return View(model);
+            return View("_NewQuestion", model);
         }
 
         public ActionResult Index(string sort, string gender)
