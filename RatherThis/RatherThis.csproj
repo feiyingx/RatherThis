@@ -152,7 +152,7 @@
     <Content Include="Views\Shared\_QuestionDisplayPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Question\Latest.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_QuestionDisplay.cshtml" />

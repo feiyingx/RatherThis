@@ -20,9 +20,16 @@ namespace RatherThis.Models
 
     public class QuestionDisplayViewModel
     {
-        public Question Question { get; set; }
+        public DateTime Date { get; set; }
+        public string OptionText1 { get; set; }
+        public string OptionText2 { get; set; }
+        public string Gender { get; set; }
+        public string Name { get; set; }
+        public Guid UserId { get; set; }
+        public int OptionId1 { get; set; }
+        public int OptionId2 { get; set; }
+        public int QuestionId { get; set; }
         public bool IsLoggedIn { get; set; }
-        public bool HasAnsweredQuestion { get; set; }
     }
 
     public class AnswerDisplayViewModel
@@ -36,5 +43,6 @@ namespace RatherThis.Models
         public string Name { get; set; }
         public Guid UserId { get; set; }
         public int TotalVotes { get; set; }
+        public int QuestionId { get; set; }
     }
 }

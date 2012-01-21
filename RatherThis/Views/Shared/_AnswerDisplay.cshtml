@@ -1,9 +1,8 @@
 ﻿@model RatherThis.Models.AnswerDisplayViewModel
 
 @if (Model != null)
-{
+{    
     var genderTag = "FOR EVERYONE";
-
     if (Model.Gender == "F")
     {
         genderTag = "FOR THE LADIES";
@@ -12,11 +11,10 @@
     {
         genderTag = "FOR THE GUYS";
     }
-
     var optionPercent1 = (double)Model.OptionVotes1 / Model.TotalVotes;
     var optionPercent2 = 1 - optionPercent1;
     
-    <div>
+    <div class="answer-display">
     <span>@Model.Date.ToString("MMM dd yyyy").ToUpper()</span>
     <span>@genderTag</span><span>Checked</span>
     <h1>would you rather...</h1>

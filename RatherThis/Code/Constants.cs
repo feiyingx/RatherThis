@@ -12,5 +12,11 @@ namespace RatherThis.Code
             M,
             F
         }
+
+        public enum QuestionSort
+        {
+            LATEST,
+            TOP_VIEWED
+        }
     }
 }

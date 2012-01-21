@@ -106,3 +106,18 @@ body
 {
     display: none;
 }
+
+
+/**************************
+ * CUSTOM CODE
+ **************************/
+
+.question-display, .answer-display
+{
+    margin: 20px;
+}
+
+.question-display
+{
+    background-color: #ccc;
+}

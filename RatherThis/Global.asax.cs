@@ -25,7 +25,7 @@ namespace RatherThis
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Question", action = "Latest", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Question", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }

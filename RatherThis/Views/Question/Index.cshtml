@@ -1,0 +1,16 @@
+﻿@model List<RatherThis.Domain.Entities.Question>
+@{
+    ViewBag.Title = "Latest";
+}
+
+<h2>Latest</h2>
+@foreach (var q in Model)
+{
+    var questionContainerId = string.Format("question-container-{0}", q.QuestionID);
+    <div id="@questionContainerId" class="question-container">
+    @{ 
+        Html.RenderAction("RenderQuestion", q); 
+    }
+    </div>
+}
+
