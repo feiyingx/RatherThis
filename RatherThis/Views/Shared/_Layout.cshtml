@@ -14,6 +14,7 @@
     <script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/MicrosoftMvcValidation.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")" type="text/javascript"></script>
 
     <script src="@Url.Content("~/Scripts/global.js")" type="text/javascript"></script>
 </head>
@@ -49,7 +50,8 @@
         <div>
         @if (!Utility.IsAuthenticated())
         {
-            <div id="registration">
+            <a href="javascript:void(0);" onclick="toggleRegistration()">REGISTER</a>
+            <div id="registration" style="display:none;">
                 @{ Html.RenderAction("Register", "Account"); }
             </div>
             
@@ -59,6 +61,7 @@
         }
         else
         {
+            <a href="javascript:void(0);" onclick="toggleNewQuestion()">NEW QUESTION</a>
             <div id="new-question">
                 @{ Html.RenderAction("New", "Question"); }
             </div>

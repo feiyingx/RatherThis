@@ -69,7 +69,7 @@ namespace RatherThis.Controllers
         {
             FormsService.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Question");
         }
 
         // **************************************

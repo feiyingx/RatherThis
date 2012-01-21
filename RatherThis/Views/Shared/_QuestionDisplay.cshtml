@@ -41,20 +41,32 @@
         </div>
     
         <p>posted by: @Model.Name</p>
+        
+        @* display the vote button if user is logged in, otherwise show a call to action link to register or login *@
+        if (Model.IsLoggedIn)
+        {
         <input type="submit" value="VOTE" />
+        }
+        else
+        {
+        <text>Please <a href="javascript:void(0)" onclick="activateLogin()">LOGIN</a> or <a href="javascript:void(0)" onclick="activateRegistration()">REGISTER</a> to Answer</text>
+        }
         
     }
-
-    @using (Ajax.BeginForm("Answer", "Question", new { qid = Model.QuestionId }, new AjaxOptions
-            {
-                UpdateTargetId = questionContainerId,
-                InsertionMode = InsertionMode.Replace,
-                LoadingElementId = ajaxLoaderId
-            }))
+    @* only display the skip button if user is logged in *@
+    @if (Model.IsLoggedIn)
     {
-        @* 0 is the value for any questions answered by skipping *@
-        <input type="hidden" name="oid" value="0" />
-        <input type="submit" value="SKIP" />
+        using (Ajax.BeginForm("Answer", "Question", new { qid = Model.QuestionId }, new AjaxOptions
+                {
+                    UpdateTargetId = questionContainerId,
+                    InsertionMode = InsertionMode.Replace,
+                    LoadingElementId = ajaxLoaderId
+                }))
+        {
+            @* 0 is the value for any questions answered by skipping *@
+            <input type="hidden" name="oid" value="0" />
+            <input type="submit" value="SKIP" />
+        }
     }
     </div>
 }
