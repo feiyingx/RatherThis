@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using RatherThis.Code
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -16,7 +18,7 @@
 
         <div id="header">
             <div id="title">
-                <h1>My MVC Application</h1>
+                <h1>RATHERTHIS</h1>
             </div>
 
             <div id="logindisplay">
@@ -40,9 +42,16 @@
         </div>
 
         <div>
+        @if (!Utility.IsAuthenticated())
+        {
             <div id="registration">
                 @{ Html.RenderAction("Register", "Account"); }
             </div>
+            
+            <div id="login">
+                @{ Html.RenderAction("LogOn", "Account"); }
+            </div>
+        }
         </div>
 
         <div id="main">

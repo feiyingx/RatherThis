@@ -1,0 +1,42 @@
+﻿@model RatherThis.Models.LogOnModel
+           
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("LogOn", "Account", new AjaxOptions
+        {
+            UpdateTargetId = "login",
+            InsertionMode = InsertionMode.Replace,
+            LoadingElementId = "login-ajax-loading"
+        }))
+{
+    @Html.ValidationSummary()
+    <div>
+        <fieldset>
+            <div class="editor-label">
+                @Html.LabelFor(m => m.UserName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.UserName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Password)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.Password)
+            </div>
+
+            <div class="editor-label">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </div>
+
+            <p>
+                <input type="submit" value="Log On" />
+            </p>
+        </fieldset>
+    </div>
+}
+

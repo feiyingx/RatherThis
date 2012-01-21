@@ -31,7 +31,7 @@ namespace RatherThis.Controllers
 
         public ActionResult LogOn()
         {
-            return View();
+            return View("_LoginForm");
         }
 
         [HttpPost]
@@ -44,11 +44,11 @@ namespace RatherThis.Controllers
                     FormsService.SignIn(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
-                        return Redirect(returnUrl);
+                        return JavaScript("window.location = \"" + returnUrl + "\";");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return JavaScript("window.location.reload();");
                     }
                 }
                 else
@@ -58,7 +58,7 @@ namespace RatherThis.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("_LoginForm", model);
         }
 
         // **************************************
