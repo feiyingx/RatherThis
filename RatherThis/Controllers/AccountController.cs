@@ -79,7 +79,7 @@ namespace RatherThis.Controllers
         public ActionResult Register()
         {
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
-            return View();
+            return View("_RegisterForm");
         }
 
         [HttpPost]
@@ -93,7 +93,7 @@ namespace RatherThis.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsService.SignIn(model.Email, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    return JavaScript("window.location.reload();");
                 }
                 else
                 {
@@ -103,7 +103,7 @@ namespace RatherThis.Controllers
 
             // If we got this far, something failed, redisplay form
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
-            return View(model);
+            return View("_RegisterForm", model);
         }
 
         // **************************************

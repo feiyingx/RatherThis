@@ -39,6 +39,12 @@
             </div>
         </div>
 
+        <div>
+            <div id="registration">
+                @{ Html.RenderAction("Register", "Account"); }
+            </div>
+        </div>
+
         <div id="main">
             @RenderBody()
             <div id="footer">

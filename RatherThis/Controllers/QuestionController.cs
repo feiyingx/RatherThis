@@ -92,10 +92,12 @@ namespace RatherThis.Controllers
 
             if (currentSort == Constants.QuestionSort.TOP_VIEWED)
             {
-                query = query.OrderByDescending(q => q.Answers.Count());
+                results = query.OrderByDescending(q => q.Answers.Count()).ThenByDescending(q => q.DateCreated).Take(_pageSize).ToList(); ;
             }
-            
-            results = query.OrderByDescending(q => q.DateCreated).Take(_pageSize).ToList();
+            else
+            {
+                results = query.OrderByDescending(q => q.DateCreated).Take(_pageSize).ToList();
+            }
             
             
             return View(results);
@@ -132,6 +134,8 @@ namespace RatherThis.Controllers
 
             //need to re-retrieve the question from db in order to get eager loading for its relationships, otherwise the question passed in to our action only  has the question's base properties
             q = _questionRepo.Questions.Where(qe => qe.QuestionID == q.QuestionID).FirstOrDefault();
+            //TODO: what happens if this is null (e.g. bad data)
+
             //get the question options
             QuestionOption option1 = q.QuestionOptions.ElementAt(0);
             QuestionOption option2 = q.QuestionOptions.ElementAt(1);
