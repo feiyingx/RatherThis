@@ -6,6 +6,7 @@
 @if (Model != null)
 {
 <h2>@Model.Name is in the house!</h2>
+<span>@Html.ActionLink("See you next time. Log Off", "LogOff", "Account")</span>
 <p>I've asked @Model.NumQuestions questions.</p>
 <p>I've answered @Model.NumAnswers questions.</p>
 }

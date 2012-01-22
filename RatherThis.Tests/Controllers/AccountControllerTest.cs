@@ -147,7 +147,7 @@ namespace RatherThis.Tests.Controllers
             AccountController controller = GetAccountController();
             LogOnModel model = new LogOnModel()
             {
-                UserName = "someUser",
+                //UserName = "someUser",
                 Password = "goodPassword",
                 RememberMe = false
             };
@@ -170,7 +170,7 @@ namespace RatherThis.Tests.Controllers
             AccountController controller = GetAccountController();
             LogOnModel model = new LogOnModel()
             {
-                UserName = "someUser",
+                //UserName = "someUser",
                 Password = "goodPassword",
                 RememberMe = false
             };
@@ -192,7 +192,7 @@ namespace RatherThis.Tests.Controllers
             AccountController controller = GetAccountController();
             LogOnModel model = new LogOnModel()
             {
-                UserName = "someUser",
+                //UserName = "someUser",
                 Password = "goodPassword",
                 RememberMe = false
             };
@@ -215,7 +215,7 @@ namespace RatherThis.Tests.Controllers
             AccountController controller = GetAccountController();
             LogOnModel model = new LogOnModel()
             {
-                UserName = "someUser",
+                //UserName = "someUser",
                 Password = "goodPassword",
                 RememberMe = false
             };
@@ -237,7 +237,7 @@ namespace RatherThis.Tests.Controllers
             AccountController controller = GetAccountController();
             LogOnModel model = new LogOnModel()
             {
-                UserName = "someUser",
+                //UserName = "someUser",
                 Password = "badPassword",
                 RememberMe = false
             };

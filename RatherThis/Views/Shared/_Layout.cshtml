@@ -4,8 +4,6 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    <!-- Using google web fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css'>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
@@ -15,25 +13,48 @@
     <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/MicrosoftMvcValidation.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.infieldlabel.min.js")" type="text/javascript"></script>
 
     <script src="@Url.Content("~/Scripts/global.js")" type="text/javascript"></script>
 </head>
 
 <body>
     <div class="page">
-
-        <div id="header">
+        <div class="left-column">
             <div id="title">
-                <h1>RATHERTHIS</h1>
+                <a href="/"><img src="/images/logo.png" alt="RatherThis - Would you rather questions" /></a>
             </div>
 
-            <div id="logindisplay">
-                @Html.Partial("_LogOnPartial")
-            </div>
+            <div>
+            @if (!Utility.IsAuthenticated())
+            {
+                <a href="javascript:void(0);" onclick="toggleRegistration()" class="left-nav-link">REGISTER</a>
+                <div id="registration" class="left-column-form" style="display:none;">
+                    @{ Html.RenderAction("Register", "Account"); }
+                </div>
+                
+                <a href="javascript:void(0);" onclick="toggleLogin()" class="left-nav-link">LOGIN</a>
+                <div id="login" class="left-column-form">
+                    @{ Html.RenderAction("LogOn", "Account"); }
+                </div>
+            }
+            else
+            {
+                Html.RenderAction("UserSummary", "Account");
+            
+                <a href="javascript:void(0);" onclick="toggleNewQuestion()" class="left-nav-link">NEW QUESTION</a>
+                <div id="new-question" class="left-column-form">
+                    @{ Html.RenderAction("New", "Question"); }
+                </div>
+            }
 
+            </div>
+        </div>
+        
+        <div class="main-column">
             <div id="menucontainer">
                 @{ 
-                    var topViewedSort = RatherThis.Code.Constants.QuestionSort.TOP_VIEWED.ToString().ToLower(); 
+                    var topViewedSort = RatherThis.Code.Constants.QuestionSort.TOP_VIEWED.ToString().ToLower();
                     var genderFemale = RatherThis.Code.Constants.Gender.F.ToString().ToLower();
                     var genderMale = RatherThis.Code.Constants.Gender.M.ToString().ToLower();
                 }
@@ -45,37 +66,12 @@
                 </ul>
 
             </div>
-        </div>
-
-        <div>
-        @if (!Utility.IsAuthenticated())
-        {
-            <a href="javascript:void(0);" onclick="toggleRegistration()">REGISTER</a>
-            <div id="registration" style="display:none;">
-                @{ Html.RenderAction("Register", "Account"); }
-            </div>
-            
-            <div id="login">
-                @{ Html.RenderAction("LogOn", "Account"); }
-            </div>
-        }
-        else
-        {
-            Html.RenderAction("UserSummary", "Account");
-            
-            <a href="javascript:void(0);" onclick="toggleNewQuestion()">NEW QUESTION</a>
-            <div id="new-question">
-                @{ Html.RenderAction("New", "Question"); }
-            </div>
-        }
-
-        </div>
-
-        <div id="main">
-            @RenderBody()
-            <div id="footer">
+            <div id="main">
+                @RenderBody()
             </div>
         </div>
+
+        <div id="footer"></div>
     </div>
 </body>
 </html>

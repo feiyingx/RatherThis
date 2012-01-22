@@ -54,14 +54,15 @@ table {
 body
 {
     font-size: 75%;
-    font-family: 'Maven Pro', Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;
+    /*font-family: 'Maven Pro', Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;*/
+    font-family: Tahoma, Verdana, Arial;
     margin: 0;
     padding: 0;
 }
 
 .page
 {
-    width: 90%;
+    width: 1000px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -111,6 +112,244 @@ body
 /**************************
  * CUSTOM CODE
  **************************/
+ /* INFIELD styles */
+form .editor-field { position: relative; }
+label.infield 
+{
+    position:absolute; 
+    top: 11px; 
+    left: 7px;
+    font-size: 10px;
+    color: #a8a8a8;
+}
+
+input
+{
+    border: 0px solid white;
+}
+ 
+body
+{
+    background-color:#393939;
+    color: White;
+}
+
+#main
+{
+    background-color: White;
+    color:#393939;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+div.left-column, div.main-column
+{
+    float: left;
+}
+
+div.left-column
+{
+    width: 210px;
+    padding-left:20px;
+    background-color: #393939;
+}
+
+div.main-column
+{
+    width:650px;
+    padding-right: 20px;
+    background-color: #393939;
+}
+
+div.left-column input[type=text], div.left-column input[type=password]
+{
+    width: 165px;
+    height: 20px;
+    margin: 3px 0;
+    padding-left: 5px;
+}
+
+div.left-column div.editor-field
+{
+    margin-bottom: 5px;
+}
+
+div.left-column a
+{
+    color: White;
+}
+
+p.login-message
+{
+    font-size: 10px;
+    margin-bottom: 12px;
+}
+
+.left-column-form
+{
+    background-color: #525252;
+    width: 170px;
+    position:relative;
+    top: -5px;
+    padding: 10px;
+    padding-bottom: 15px;
+}
+
+.left-column-form label
+{
+    font-size: 11px;
+    margin-left: 1px;
+}
+
+div.left-column .validation-summary-errors
+{
+    color: #ff0000;
+    background-color: #ff6182;
+    padding: 6px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: 1px dashed #fff;
+}
+
+div.left-column .validation-summary-errors li
+{
+    margin: 5px;
+    font-size: 11px;
+    font-weight: normal;
+    color: White;
+}
+
+
+#menucontainer a
+{
+    color: White;    
+}
+
+#menucontainer a:hover
+{
+    font-weight: bold;
+}
+
+#title
+{
+    margin-top: 80px;
+    height: 50px;
+    background: #393939 url('/images/arrow.png') no-repeat right -3px;
+    width: 210px;
+    margin-bottom: 15px;
+}
+
+#title img
+{
+    margin-top: 4px;
+    margin-left: 20px;
+}
+
+a.left-nav-link
+{
+    display:block;
+    width: 190px;
+    background-color: #525252;
+    text-align: center;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+    font-size: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+a.left-nav-link:hover
+{
+    background-color: White;
+    color: #525252;
+}
+
+#login input[type=checkbox]
+{
+    margin: 0;
+}
+
+#login label.remember-me
+{
+    font-size: 10px;
+    position: relative;
+    top: -3px;
+}
+
+.left-column-form input[type=submit]
+{
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #40950c;
+    color: White;
+}
+
+.left-column-form input[type=submit]:hover
+{
+    background-color: White;
+    color: #191919;
+}
+
+.left-column-form a.forgot-pw
+{
+    font-size: 11px;
+    padding-left: 7px;
+}
+.left-column-form a.forgot-pw:hover
+{
+    color: #191919;
+}
+
+.gender-field
+{
+    padding-top: 3px;
+    padding-bottom: 10px;
+}
+
+.gender-field input[type=radio]
+{
+    cursor: pointer;
+}
+
+.gender-field label
+{
+    position: relative;
+    top: -2px;
+    cursor: pointer;
+}
+
+.gender-field span
+{
+    padding: 6px 10px 4px 3px;
+    font-size: 10px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    font-weight: bold;
+}
+
+.gender-field span.female
+{
+    background-color: #fd005f;
+    margin-left: 15px;
+}
+
+.gender-field span.male
+{
+    background-color:#00a8ff;
+}
 
 .question-display, .answer-display
 {

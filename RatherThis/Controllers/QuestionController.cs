@@ -291,7 +291,7 @@ namespace RatherThis.Controllers
             model.OptionId1 = q.QuestionOptions.ElementAt(0).QuestionOptionID;
             model.OptionId2 = q.QuestionOptions.ElementAt(1).QuestionOptionID;
 
-            return View(model);
+            return View("_CommentList",model);
         }
     }
 }

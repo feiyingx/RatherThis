@@ -4,6 +4,7 @@
     Layout = null;
 }
 
+<p class="login-message">Login to ASK and ANSWER questions</p>
 @using (Ajax.BeginForm("LogOn", "Account", new AjaxOptions
         {
             UpdateTargetId = "login",
@@ -14,30 +15,27 @@
     @Html.ValidationSummary()
     <div>
         <fieldset>
-            <div class="editor-label">
-                @Html.LabelFor(m => m.UserName)
-            </div>
             <div class="editor-field">
-                @Html.TextBoxFor(m => m.UserName)
+                <label for="login-email" name="Email">Enter Email</label>
+                @Html.TextBoxFor(m => m.Email, new { id = "login-email" })
+            </div>
+
+            <div class="editor-field">
+                <label for="login-pw" name="Password">Enter Password</label>
+                @Html.PasswordFor(m => m.Password, new { id="login-pw" })
             </div>
 
             <div class="editor-label">
-                @Html.LabelFor(m => m.Password)
-            </div>
-            <div class="editor-field">
-                @Html.PasswordFor(m => m.Password)
-            </div>
-
-            <div class="editor-label">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
+                @Html.CheckBoxFor(m => m.RememberMe, new { id="remember-me" })
+                <label for="remember-me" class="remember-me">Remember me?</label>
             </div>
 
             <p>
-                <input type="submit" value="Log On" />
+                <input type="submit" value="LOGIN" />
+                <a href="@Url.Action("ForgotPassword","Account")" class="forgot-pw">Forgot Password?</a>
             </p>
         </fieldset>
     </div>
 }
-<a href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a>
+
 

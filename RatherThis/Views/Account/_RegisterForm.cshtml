@@ -12,38 +12,30 @@
     @Html.ValidationSummary()
     <div>
         <fieldset>
-            <div class="editor-label">
-                @Html.LabelFor(m => m.UserName)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
+            <div class="editor-field gender-field">
+                <span class="female">@Html.RadioButtonFor(m => m.Gender, "F", new{id="gender-female"})<label for="gender-female" >Female</label></span>
+                <span class="male">@Html.RadioButtonFor(m => m.Gender, "M", new{id="gender-male"})<label for="gender-male" >Male</label></span>
+                
             </div>
 
             <div class="editor-field">
-                <label for="gender-female"><input id="gender-female" type="radio" name="Gender" value="F" />Female</label>
-                <label for="gender-male"><input id="gender-male" type="radio" name="Gender" value="M" />Male</label>
+                <label for="register-username" >Enter Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { id="register-username" })
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(m => m.Email)
-            </div>
             <div class="editor-field">
-                @Html.TextBoxFor(m => m.Email)
+                <label for="register-email" >Enter Email</label>
+                @Html.TextBoxFor(m => m.Email, new { id = "register-email" })
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(m => m.Password)
-            </div>
             <div class="editor-field">
-                @Html.PasswordFor(m => m.Password)
+                <label for="register-pw" >Enter Password</label>
+                @Html.PasswordFor(m => m.Password, new { id="register-pw" })
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(m => m.ConfirmPassword)
-            </div>
             <div class="editor-field">
-                @Html.PasswordFor(m => m.ConfirmPassword)
+                <label for="register-pw-confirm" >Confirm Password</label>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { id="register-pw-confirm" })
             </div>
 
             <p>

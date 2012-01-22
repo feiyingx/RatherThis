@@ -68,9 +68,9 @@ namespace RatherThis.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (MembershipService.ValidateUser(model.UserName, model.Password))
+                    if (MembershipService.ValidateUser(model.Email, model.Password))
                     {
-                        FormsService.SignIn(model.UserName, model.RememberMe);
+                        FormsService.SignIn(model.Email, model.RememberMe);
                         if (Url.IsLocalUrl(returnUrl))
                         {
                             return JavaScript("window.location = \"" + returnUrl + "\";");
@@ -168,10 +168,10 @@ namespace RatherThis.Controllers
                     model.NumAnswers = currentUser.Answers.Count();
                     model.NumQuestions = currentUser.Questions.Count();
 
-                    return View(model);
+                    return View("_UserSummary", model);
                 }
             }
-            return View();
+            return View("_UserSummary");
         }
 
         public ActionResult ForgotPassword()

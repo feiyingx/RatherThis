@@ -1,4 +1,12 @@
-﻿function loadComments(containerId, loaderId, questionId, listSize) {
+﻿$(function () {
+    initInField();
+});
+
+function initInField() {
+    $("label.infield").inFieldLabels();
+}
+
+function loadComments(containerId, loaderId, questionId, listSize) {
     $.get("/Question/CommentList?qid=" + questionId + "&listSize=" + listSize, function (result) {
         var container = $("#" + containerId);
         if (container) $(container).html(result);
@@ -12,6 +20,11 @@ function toggleRegistration() {
     if (registration) $(registration).slideToggle();
 }
 
+function toggleLogin() {
+    var login = $("#login");
+    if (login) $(login).slideToggle();
+}
+
 function toggleNewQuestion() {
     var newQuestion = $("#new-question");
     if (newQuestion) $(newQuestion).slideToggle();
@@ -20,13 +33,13 @@ function toggleNewQuestion() {
 function activateRegistration() {
     var registration = $("#registration");
     if(registration){
-        $(registration).slideDown().effect("highlight", {}, 2000);
+        $(registration).slideDown().effect("highlight", { color: "#ffe400" }, 1000);
     }
 }
 
 function activateLogin() {
     var login = $("#login");
     if (login) {
-        $(login).effect("highlight", {}, 2000);
+        $(login).slideDown().effect("highlight", { color: "#ffe400"}, 1000);
     }
 }

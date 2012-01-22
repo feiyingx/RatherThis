@@ -35,14 +35,13 @@ namespace RatherThis.Models
 
     public class LogOnModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "The Email is invalid.")]
-        public string UserName { get; set; }
+        [Required(ErrorMessage="Please enter email.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "Invalid email address.")]
+        [StringLength(200, ErrorMessage="Email must be less than 200 characters.")]
+        public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Please enter password.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -52,28 +51,27 @@ namespace RatherThis.Models
 
     public class RegisterModel
     {
-        [Required]
-        [Display(Name = "User name")]
+        [Required(ErrorMessage="Please pick a username.")]
+        [Display(Name = "Username")]
+        [StringLength(100, ErrorMessage="Username must be less than 100 characters.")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Please enter email.")]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email address")]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "The Email is invalid.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "Invalid email address.")]
+        [StringLength(200, ErrorMessage="Email must be less than 200 characters.")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Please select gender.")]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Please enter password.")]
         [ValidatePasswordLength]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
@@ -87,9 +85,9 @@ namespace RatherThis.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [StringLength(200)]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "The Email is invalid.")]
+        [Required(ErrorMessage="Please enter email.")]
+        [StringLength(200, ErrorMessage="Email must be less than 200 characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
     }
 
@@ -98,14 +96,13 @@ namespace RatherThis.Models
         public bool IsTokenExpired { get; set; }
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter email.")]
         [ValidatePasswordLength]
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Required]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
@@ -122,7 +119,7 @@ namespace RatherThis.Models
     {
         int MinPasswordLength { get; }
 
-        bool ValidateUser(string userName, string password);
+        bool ValidateUser(string email, string password);
         MembershipCreateStatus CreateUser(string userName, string password, string email, string gender);
         bool ChangePassword(string userName, string oldPassword, string newPassword);
         Guid GetCurrentUserId();
@@ -151,12 +148,12 @@ namespace RatherThis.Models
             }
         }
 
-        public bool ValidateUser(string userName, string password)
+        public bool ValidateUser(string email, string password)
         {
-            if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
+            if (String.IsNullOrEmpty(email)) throw new ArgumentException("Value cannot be null or empty.", "email");
             if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
 
-            return _provider.ValidateUser(userName, password);
+            return _provider.ValidateUser(email, password);
         }
 
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
@@ -223,7 +220,7 @@ namespace RatherThis.Models
 
     public interface IFormsAuthenticationService
     {
-        void SignIn(string userName, bool createPersistentCookie);
+        void SignIn(string email, bool createPersistentCookie);
         void SignOut();
     }
 
