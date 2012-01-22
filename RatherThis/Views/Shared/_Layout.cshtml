@@ -41,7 +41,7 @@
             else
             {
                 Html.RenderAction("UserSummary", "Account");
-            
+                <a href="@Url.Action("LogOff","Account")" class="left-nav-link">LOG OUT</a>
                 <a href="javascript:void(0);" onclick="toggleNewQuestion()" class="left-nav-link">NEW QUESTION</a>
                 <div id="new-question" class="left-column-form">
                     @{ Html.RenderAction("New", "Question"); }
@@ -59,16 +59,47 @@
                     var genderMale = RatherThis.Code.Constants.Gender.M.ToString().ToLower();
                 }
                 <ul id="menu">
-                    <li>@Html.ActionLink("LATEST", "Index", "Question", null, null)</li>
-                    <li>@Html.ActionLink("TOP VIEWED", "Index", "Question", new { sort = topViewedSort }, null)</li>
-                    <li>@Html.ActionLink("FOR THE LADIES", "Index", "Question", new { gender = genderFemale }, null)</li>
-                    <li>@Html.ActionLink("FOR THE GUYS", "Index", "Question", new { sort = genderMale }, null)</li>
-                </ul>
+                    @{
+                        var latestUrl = Url.Action("Index", "Question").ToLower();
+                        var topViewedUrl = Url.Action("Index", "Question", new { sort = topViewedSort }, null).ToLower();
+                        var ladiesUrl = Url.Action("Index", "Question", new { gender = genderFemale }, null).ToLower();
+                        var guysUrl = Url.Action("Index", "Question", new { sort = genderMale }, null).ToLower();
 
+                        var latestClass = "";
+                        var topViewedClass = "";
+                        var ladiesClass = "";
+                        var guysClass = "";
+
+                        var currentUrl = Request.Url.PathAndQuery.ToString().ToLower();
+                        if (latestUrl == currentUrl)
+                        {
+                            latestClass = "current";
+                        }
+                        if (topViewedUrl == currentUrl)
+                        {
+                            topViewedClass = "current";
+                        }
+                        if (ladiesUrl == currentUrl)
+                        {
+                            ladiesClass = "current";
+                        }
+                        if (guysUrl == currentUrl)
+                        {
+                            guysClass = "current";
+                        }
+                    }
+                    <li><a href="@latestUrl" class="@latestClass">LATEST</a></li>
+                    <li><a href="@topViewedUrl" class="@topViewedClass">TOP VIEWED</a></li>
+                    <li><a href="@ladiesUrl" class="@ladiesClass">FOR THE LADIES</a></li>
+                    <li><a href="@guysUrl" class="@guysClass">FOR THE GUYS</a></li>
+                </ul>
             </div>
-            <div id="main">
+            <div id="main" class="clear">
                 @RenderBody()
+
+                <div class="clear"></div>
             </div>
+            
         </div>
 
         <div id="footer"></div>
