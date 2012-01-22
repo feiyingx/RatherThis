@@ -11,8 +11,18 @@
     {
         genderTag = "FOR THE GUYS";
     }
-    var optionPercent1 = (double)Model.OptionVotes1 / Model.TotalVotes;
-    var optionPercent2 = 1 - optionPercent1;
+    double optionPercent1;
+    double optionPercent2;
+    //check for total votes before doing any % calculations, if its 0, then both should be 0%*@
+    if (Model.TotalVotes > 0)
+    {
+        optionPercent1 = (double)Model.OptionVotes1 / Model.TotalVotes;
+        optionPercent2 = 1 - optionPercent1;
+    }
+    else
+    {
+        optionPercent1 = optionPercent2 = 0;
+    }
     
     <div class="answer-display">
     <span>@Model.Date.ToString("MMM dd yyyy").ToUpper()</span>
@@ -28,9 +38,8 @@
         @optionPercent2.ToString("0.0%") (@Model.OptionVotes2 votes)
     </div>
     
-    <p>posted by: @Model.Name</p>
+    <p>asked by: @Model.Name</p>
     
-    <text>TODO-COMMENTS</text>
     <div id="question-@Model.QuestionId-comment">
         @{ Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId }); }
     </div>

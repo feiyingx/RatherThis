@@ -61,6 +61,8 @@
         }
         else
         {
+            Html.RenderAction("UserSummary", "Account");
+            
             <a href="javascript:void(0);" onclick="toggleNewQuestion()">NEW QUESTION</a>
             <div id="new-question">
                 @{ Html.RenderAction("New", "Question"); }

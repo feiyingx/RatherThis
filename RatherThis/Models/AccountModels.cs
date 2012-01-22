@@ -36,7 +36,8 @@ namespace RatherThis.Models
     public class LogOnModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "The Email is invalid.")]
         public string UserName { get; set; }
 
         [Required]
@@ -58,6 +59,7 @@ namespace RatherThis.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "The Email is invalid.")]
         public string Email { get; set; }
 
         [Required]
@@ -71,6 +73,39 @@ namespace RatherThis.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class UserSummaryViewModel
+    {
+        public string Name { get; set; }
+        public int NumQuestions { get; set; }
+        public int NumAnswers { get; set; }
+    }
+
+    public class ForgotPasswordViewModel
+    {
+        [Required]
+        [StringLength(200)]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "The Email is invalid.")]
+        public string Email { get; set; }
+    }
+
+    public class ResetPasswordViewModel
+    {
+        public bool IsTokenExpired { get; set; }
+        public string Email { get; set; }
+
+        [Required]
+        [ValidatePasswordLength]
+        [DataType(DataType.Password)]
+        [Display(Name = "New Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Required]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }

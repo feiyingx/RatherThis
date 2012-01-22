@@ -36,5 +36,11 @@ namespace RatherThis.Domain.Concrete
             }
             context.SaveChanges();
         }
+
+
+        public Entities.User GetUserWithQuestionsAnswers(Guid userId)
+        {
+            return Users.Include(u => u.Questions).Include(u => u.Answers).Where(u => u.UserID == userId).FirstOrDefault();
+        }
     }
 }

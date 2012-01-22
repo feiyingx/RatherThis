@@ -6,10 +6,9 @@ using RatherThis.Domain.Entities;
 
 namespace RatherThis.Domain.Abstract
 {
-    public interface IUserRepository
+    public interface IResetPasswordTokenRepository
     {
-        IQueryable<User> Users { get; }
-        void SaveUser(User user);
-        User GetUserWithQuestionsAnswers(Guid userId);
+        IQueryable<ResetPasswordToken> Tokens { get; }
+        void AddToken(ResetPasswordToken token);
     }
 }

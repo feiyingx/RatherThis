@@ -39,23 +39,35 @@ namespace RatherThis.Controllers
         [HttpPost]
         public ActionResult New(NewQuestionViewModel model)
         {
-            if (ModelState.IsValid)
+            //first check to see if this post request is meant for this action, if not, then don't do anything
+            if (Request.Url.ToString().ToLower().Contains(Url.Action("New", "Question").ToLower()))
             {
-                Question newQuestion = new Question();
-                newQuestion.Gender = model.Gender;
-                newQuestion.UserID = _membershipService.GetCurrentUserId();
-                _questionRepo.SaveQuestion(newQuestion);
+                if (ModelState.IsValid)
+                {
+                    Question newQuestion = new Question();
+                    newQuestion.Gender = model.Gender;
+                    newQuestion.UserID = _membershipService.GetCurrentUserId();
+                    _questionRepo.SaveQuestion(newQuestion);
 
-                QuestionOption option1 = new QuestionOption();
-                QuestionOption option2 = new QuestionOption();
+                    QuestionOption option1 = new QuestionOption();
+                    QuestionOption option2 = new QuestionOption();
 
-                option1.QuestionID = option2.QuestionID = newQuestion.QuestionID;
-                option1.OptionText = model.Option1;
-                option2.OptionText = model.Option2;
-                _optionRepo.SaveQuestionOption(option1);
-                _optionRepo.SaveQuestionOption(option2);
+                    option1.QuestionID = option2.QuestionID = newQuestion.QuestionID;
+                    option1.OptionText = model.Option1;
+                    option2.OptionText = model.Option2;
+                    _optionRepo.SaveQuestionOption(option1);
+                    _optionRepo.SaveQuestionOption(option2);
 
-                return JavaScript("window.location.reload();");
+                    return JavaScript("window.location.reload();");
+                }
+            }
+            else
+            {
+                //clear the model state errors for this request since this httppost was meant for another action
+                //e.g. when we post back on 'forgot password', it will also hit this action because the form is also
+                //on the page, but we know the request is not meant for this action so just clear the errors manually
+                //so it doesn't get rendered onto the page
+                ModelState.Clear();
             }
 
             return View("_NewQuestion", model);
@@ -193,7 +205,8 @@ namespace RatherThis.Controllers
                     model.Gender = gender;
                     model.Name = name;
                     model.UserId = questionUserId;
-                    model.AnsweredOptionId = userAnswer.QuestionOptionID;
+                    if(isAnswered)
+                        model.AnsweredOptionId = userAnswer.QuestionOptionID;
 
                     model.OptionText1 = optionText1;
                     model.OptionText2 = optionText2;

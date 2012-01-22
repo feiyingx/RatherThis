@@ -339,6 +339,7 @@ namespace RatherThis.Tests.Controllers
 
         private static AccountController GetAccountController()
         {
+            /*
             RequestContext requestContext = new RequestContext(new MockHttpContext(), new RouteData());
             AccountController controller = new AccountController()
             {
@@ -352,6 +353,8 @@ namespace RatherThis.Tests.Controllers
                 RequestContext = requestContext
             };
             return controller;
+             * */
+            return null;
         }
 
         private class MockFormsAuthenticationService : IFormsAuthenticationService

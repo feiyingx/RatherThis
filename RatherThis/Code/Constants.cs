@@ -18,5 +18,17 @@ namespace RatherThis.Code
             LATEST,
             TOP_VIEWED
         }
+
+        public static string BaseUrl
+        {
+            get
+            {
+                string url = "http://www.ratherthis.com";
+                if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
+                    url = "";
+
+                return url;
+            }
+        }
     }
 }
