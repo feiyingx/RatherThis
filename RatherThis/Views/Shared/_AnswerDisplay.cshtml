@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    var genderTag = "FOR EVERYONE";
+    var genderTag = "FOR ALL";
     if (Model.Gender == "F")
     {
         genderTag = "FOR THE LADIES";
@@ -25,9 +25,9 @@
     }
     
     <div class="answer-display">
-    <span>@Model.Date.ToString("MMM dd yyyy").ToUpper()</span>
-    <span>@genderTag</span><span>Checked</span>
-    <h1>would you rather...</h1>
+    <p class="question-date">@Model.Date.ToString("MMM dd yyyy").ToUpper()</p>
+    <p class="gender-tag @Model.Gender">@genderTag</p>@*<span class="checked"></span>*@
+    <h1 class="question">would you rather...</h1>
     
     <div>
         <p>@Model.OptionText1</p>
@@ -38,10 +38,12 @@
         @optionPercent2.ToString("0.0%") (@Model.OptionVotes2 votes)
     </div>
     
-    <p>asked by: @Model.Name</p>
+    <p class="ask-name answer">asked by: <span class="@Model.QuestionUserGender">@Model.Name</span></p>
     
     <div id="question-@Model.QuestionId-comment">
-        @{ Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId }); }
+        @{ 
+            Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
+        }
     </div>
 
         <div id="question-@Model.QuestionId-comment-list">

@@ -128,7 +128,7 @@ namespace RatherThis.Controllers
                 if (ModelState.IsValid)
                 {
                     // Attempt to register the user
-                    MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName, model.Password, model.Email, model.Gender);
+                    MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName.Trim(), model.Password.Trim(), model.Email.Trim(), model.Gender.Trim());
 
                     if (createStatus == MembershipCreateStatus.Success)
                     {

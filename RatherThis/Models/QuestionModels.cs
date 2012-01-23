@@ -10,11 +10,11 @@ namespace RatherThis.Models
     public class NewQuestionViewModel
     {
         public string Gender { get; set; }
-        [Required(ErrorMessage="Please enter the first answer option")]
-        [StringLength(1000, ErrorMessage="Please enter a shorter option")]
+        [Required(ErrorMessage="Please enter the first answer option.")]
+        [StringLength(500, ErrorMessage="First answer option exceeds 500 characters.")]
         public string Option1 { get; set; }
-        [Required(ErrorMessage = "Please enter the second answer option")]
-        [StringLength(1000, ErrorMessage = "Please enter a shorter option")]
+        [Required(ErrorMessage = "Please enter the second answer option.")]
+        [StringLength(500, ErrorMessage = "Second answer option exceeds 500 characters.")]
         public string Option2 { get; set; }
     }
 
@@ -30,6 +30,7 @@ namespace RatherThis.Models
         public int OptionId2 { get; set; }
         public int QuestionId { get; set; }
         public bool IsLoggedIn { get; set; }
+        public string QuestionUserGender { get; set; }
     }
 
     public class AnswerDisplayViewModel
@@ -47,7 +48,8 @@ namespace RatherThis.Models
         public int TotalVotes { get; set; }
         public int QuestionId { get; set; }
         public int AnsweredOptionId { get; set; }
-        public List<Comment> Comments { get; set; }
+        public string QuestionUserGender { get; set; }
+        public CommentListViewModel CommentModel { get; set; }
     }
 
     public class CommentFormViewModel

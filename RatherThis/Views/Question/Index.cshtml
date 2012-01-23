@@ -1,15 +1,32 @@
-﻿@model List<RatherThis.Domain.Entities.Question>
+﻿@model Dictionary<object, string>
+@using RatherThis.Models
 @{
     ViewBag.Title = "Latest";
 }
 
-@foreach (var q in Model)
+@foreach (var keyValue in Model)
 {
-    var questionContainerId = string.Format("question-container-{0}", q.QuestionID);
-    <div id="@questionContainerId" class="question-container">
-    @{ 
-        Html.RenderAction("RenderQuestion", q); 
-    }
-    </div>
+    
+    
+        if (keyValue.Value == "question")
+        {
+            var q = (QuestionDisplayViewModel)keyValue.Key;
+            var questionContainerId = string.Format("question-container-{0}", q.QuestionId);
+            
+            <div id="@questionContainerId" class="question-container">
+                @{Html.RenderPartial("_QuestionDisplay", q);}
+            </div>
+        }
+        else
+        {
+            var q = (AnswerDisplayViewModel)keyValue.Key;
+            var questionContainerId2 = string.Format("question-container-{0}", q.QuestionId);
+            
+            <div id="@questionContainerId2" class="question-container">
+                @{Html.RenderPartial("_AnswerDisplay", q);}
+            </div>
+        }
+    
+   
 }
 

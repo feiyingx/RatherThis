@@ -63,7 +63,7 @@
                         var latestUrl = Url.Action("Index", "Question").ToLower();
                         var topViewedUrl = Url.Action("Index", "Question", new { sort = topViewedSort }, null).ToLower();
                         var ladiesUrl = Url.Action("Index", "Question", new { gender = genderFemale }, null).ToLower();
-                        var guysUrl = Url.Action("Index", "Question", new { sort = genderMale }, null).ToLower();
+                        var guysUrl = Url.Action("Index", "Question", new { gender = genderMale }, null).ToLower();
 
                         var latestClass = "";
                         var topViewedClass = "";

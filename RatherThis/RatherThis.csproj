@@ -85,6 +85,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="images\arrow.png" />
+    <Content Include="images\check.png" />
     <Content Include="images\logo.png" />
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\global.js" />
@@ -198,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\ForgotPasswordThankYou.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\fonts\RAYSHAND-REGULAR.TTF" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -185,7 +185,7 @@ namespace RatherThis.Models
             if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
             if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
             if (String.IsNullOrEmpty(email)) throw new ArgumentException("Value cannot be null or empty.", "email");
-            if (String.IsNullOrEmpty(gender)) throw new ArgumentException("Value cannot be null or empty.", "gender");
+            if (gender == null) throw new ArgumentException("Value cannot be null or empty.", "gender");
 
             MembershipCreateStatus status;
             _provider.CreateUser(userName, password, email, gender, out status);
