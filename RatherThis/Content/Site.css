@@ -463,8 +463,6 @@ h1.question
     width: 270px;
     float: left;
     margin: 15px;
-    margin-bottom: 50px;
-    height: 270px;
 }
 
 p.question-date
@@ -722,4 +720,9 @@ p.login-action-message a
 p.login-action-message a:hover
 {
     color: #40950C;
+}
+
+div.question-row.not-first
+{
+    padding-top: 35px;
 }

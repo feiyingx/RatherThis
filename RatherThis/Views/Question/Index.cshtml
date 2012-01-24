@@ -4,10 +4,15 @@
     ViewBag.Title = "Latest";
 }
 
+@{ var i = 1; }
 @foreach (var keyValue in Model)
 {
     
-    
+        if (i % 3 == 1)
+        {
+            var classNotFirst = i == 1 ? "" : "not-first";
+            <text><div class="question-row clear @classNotFirst"></text>
+        }
         if (keyValue.Value == "question")
         {
             var q = (QuestionDisplayViewModel)keyValue.Key;
@@ -26,7 +31,11 @@
                 @{Html.RenderPartial("_AnswerDisplay", q);}
             </div>
         }
-    
+        if (i % 3 == 0)
+        {
+            @:</div>
+        }
+        i = i + 1;
    
 }
 
