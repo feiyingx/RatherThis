@@ -11,10 +11,10 @@ namespace RatherThis.Models
     {
         public string Gender { get; set; }
         [Required(ErrorMessage="Please enter the first answer option.")]
-        [StringLength(500, ErrorMessage="First answer option exceeds 500 characters.")]
+        [StringLength(140, ErrorMessage="First answer option exceeds 140 characters.")]
         public string Option1 { get; set; }
         [Required(ErrorMessage = "Please enter the second answer option.")]
-        [StringLength(500, ErrorMessage = "Second answer option exceeds 500 characters.")]
+        [StringLength(140, ErrorMessage = "Second answer option exceeds 140 characters.")]
         public string Option2 { get; set; }
     }
 

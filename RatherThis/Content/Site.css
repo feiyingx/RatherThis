@@ -464,6 +464,7 @@ h1.question
     float: left;
     margin: 15px;
     margin-bottom: 50px;
+    height: 270px;
 }
 
 p.question-date
@@ -539,7 +540,7 @@ span.checked
     display: block;
     color: #4d4d4d;
     float: left;
-    width: 240px;
+    width: 177px;
     padding-left: 3px;
     position: relative;
     padding-bottom: 10px;
@@ -592,8 +593,7 @@ p.ask-name span
 {
     display: inline-block;
     padding: 3px 7px 4px 7px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
+    
     color: White;
     font-weight: bold;
 }
@@ -613,3 +613,113 @@ p.ask-name.answer
     top: 0;
 }
 
+div.vote-result-bar.fill
+{
+    background-color: #393939;
+    color: White;
+    text-align: center;
+}
+
+div.vote-result-bar
+{
+    height: 20px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    color: #ccc;
+    line-height: 20px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+div.vote-result-bar.none
+{
+    margin-left: 30px;
+}
+
+div.vote-result-bar-container
+{
+    background-color: #eee;
+    margin-left: 42px;
+}
+
+div.vote-result-bar span
+{
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+.answer-option
+{
+    width: 185px;
+    position: relative;
+}
+
+.answer-option p
+{
+    font-family: Georgia, Times New Roman, Sans-Serif;
+    font-size: 12px;
+    line-height: 13px;
+}
+
+p.vote-result-percent-indicator
+{
+    position: absolute;
+    color: #393939;
+    font-size: 11px;
+    display: block;
+    width: 42px;
+    height: 20px;
+    line-height: 20px;
+    font-family: arial, Tahoma, Serif;
+    border-right: 3px solid #393939;
+}
+
+p.vote-result-percent-indicator.first
+{
+    bottom: 0px;
+}
+
+.vote-count
+{
+    position: absolute;
+    
+    font-weight: bold;
+    font-size: 10px;
+    left: 90px;
+    bottom: 8px;
+    color: white;
+}
+
+.vote-count.second
+{
+    top: 7px;
+}
+
+p.ask-name.answer
+{
+    margin-top: 20px;
+}
+
+
+.question-display.not-logged-in p.ask-name
+{
+    top: 0px;
+}
+
+p.login-action-message
+{
+    margin-top: 20px;
+    font-size: 11px;
+    display: inline-block;
+}
+
+p.login-action-message a
+{
+    color: #393939;
+    font-weight: bold;
+}
+
+p.login-action-message a:hover
+{
+    color: #40950C;
+}

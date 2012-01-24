@@ -53,8 +53,8 @@ namespace RatherThis.Controllers
                     QuestionOption option2 = new QuestionOption();
 
                     option1.QuestionID = option2.QuestionID = newQuestion.QuestionID;
-                    option1.OptionText = model.Option1;
-                    option2.OptionText = model.Option2;
+                    option1.OptionText = model.Option1.Trim('?'); //remove ? from the option if user added it in, we dont need it cuz our view will always automatically generate a '?' at the end
+                    option2.OptionText = model.Option2.Trim('?');
                     _optionRepo.SaveQuestionOption(option1);
                     _optionRepo.SaveQuestionOption(option2);
 
