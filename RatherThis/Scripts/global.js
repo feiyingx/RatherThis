@@ -43,3 +43,7 @@ function activateLogin() {
         $(login).slideDown().effect("highlight", { color: "#ffe400"}, 1000);
     }
 }
+
+function toggleComments(trigger) {
+    $(trigger).siblings(".comment-container").slideToggle();
+}

@@ -591,7 +591,8 @@ p.ask-name span
 {
     display: inline-block;
     padding: 3px 7px 4px 7px;
-    
+    border-radius: 3px;
+    -moz-border-radius: 3px;
     color: White;
     font-weight: bold;
 }
@@ -725,4 +726,85 @@ p.login-action-message a:hover
 div.question-row.not-first
 {
     padding-top: 35px;
+}
+
+/* COMMENTS */
+.comment-container
+{
+    width: 186px;
+    border-bottom: 3px solid #393939;
+}
+
+.comment-box textarea
+{
+    height: 50px;
+    margin-top: 8px;
+}
+
+a.comment-link
+{
+    display: block;
+    width: 186px;
+    height: 20px;
+    color: White;
+    background-color: #393939;
+    text-align: center;
+    line-height: 20px;
+    margin-top: 15px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+a.comment-link:hover
+{
+    background-color:#525252;
+}
+
+a.question-detail-link
+{
+    width: 186px;
+    line-height: 12px;
+    font-size: 10px;
+    text-align: right;
+    display: block;
+    margin-top: 10px;
+    color: #393939;
+    font-weight: bold;
+}
+
+a.question-detail-link:hover
+{
+    color: #ccc;
+}
+
+.comment-list
+{
+    margin-top: 12px;
+}
+
+.comment-box input
+{
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: bold;
+    color: White;
+    background-color: #393939;
+    padding-left: 17px;
+    padding-right: 17px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 2px;
+    
+    border-radius: 3px;
+    -moz-border-radius: 3px;   
+}
+
+.comment-box input:hover
+{
+    background-color: #40950C;
 }

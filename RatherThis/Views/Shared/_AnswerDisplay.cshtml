@@ -63,16 +63,20 @@
         
     </div>
     
-    <p class="ask-name answer">asked by: <span class="@Model.QuestionUserGender">@Model.Name</span></p>
-    
-    <div id="question-@Model.QuestionId-comment">
-        @{ 
-        Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
-        }
-    </div>
+        <p class="ask-name answer">asked by: <span class="@Model.QuestionUserGender">@Model.Name</span></p>
+        <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">COMMENTS</a>
+        <div class="comment-container" style="display:none;">
+            <div id="question-@Model.QuestionId-comment" class="comment-box">
+                @{ 
+                Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
+                }
+            </div>
 
-        <div id="question-@Model.QuestionId-comment-list">
-        @{ Html.RenderAction("CommentList", "Question", new { qid = Model.QuestionId, listSize = 10 }); }
+            <div id="question-@Model.QuestionId-comment-list" class="comment-list">
+            @{ Html.RenderAction("CommentList", "Question", new { qid = Model.QuestionId, listSize = 10 }); }
+            </div>
+
+            <a class="question-detail-link" href="">view more</a>
         </div>
     </div>
 }   
