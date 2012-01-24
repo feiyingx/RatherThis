@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Code\Config.cs" />
     <Compile Include="Code\Constants.cs" />
+    <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\Utility.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -86,6 +87,8 @@
     <Content Include="Global.asax" />
     <Content Include="images\arrow.png" />
     <Content Include="images\check.png" />
+    <Content Include="images\comment-arrow-blue.png" />
+    <Content Include="images\comment-arrow-pink.png" />
     <Content Include="images\logo.png" />
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\global.js" />

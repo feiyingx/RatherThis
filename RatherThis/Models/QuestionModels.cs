@@ -50,6 +50,7 @@ namespace RatherThis.Models
         public int AnsweredOptionId { get; set; }
         public string QuestionUserGender { get; set; }
         public CommentListViewModel CommentModel { get; set; }
+        public int NumComments { get; set; }
     }
 
     public class CommentFormViewModel

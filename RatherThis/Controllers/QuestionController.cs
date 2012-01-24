@@ -196,6 +196,8 @@ namespace RatherThis.Controllers
                         commentModel.Comments = q.Comments.ToList();
                         model.CommentModel = commentModel;
                          * */
+
+                        model.NumComments = q.Comments.Count();
                         resultModel.Add(model, "answer");
                     }
                     else
