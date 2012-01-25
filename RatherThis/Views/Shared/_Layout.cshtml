@@ -40,15 +40,25 @@
             }
             else
             {
-                Html.RenderAction("UserSummary", "Account");
-                <a href="@Url.Action("LogOff","Account")" class="left-nav-link">LOG OUT</a>
+                <a href="javascript:void(0);" onclick="toggleUserInfo()" class="left-nav-link">MY INFO</a>
+                <div id="user-info" class="left-column-form">
+                    @{ Html.RenderAction("UserSummary", "Account"); }
+                </div>
                 <a href="javascript:void(0);" onclick="toggleNewQuestion()" class="left-nav-link">NEW QUESTION</a>
                 <div id="new-question" class="left-column-form">
                     @{ Html.RenderAction("New", "Question"); }
                 </div>
+                <a href="@Url.Action("LogOff", "Account")" class="left-nav-link">LOG OUT</a>
             }
 
+            <ul class="footer-nav">
+                <li><a href="">About</a></li>
+                <li><a href="">Privacy</a></li>
+                <li><a href="">Terms</a></li>
+                <li><a href="">Contact Us</a></li>
+            </ul>
             </div>
+
         </div>
         
         <div class="main-column">
@@ -71,6 +81,9 @@
                         var guysClass = "";
 
                         var currentUrl = Request.Url.PathAndQuery.ToString().ToLower();
+                        var pageQueryIndex = currentUrl.IndexOf("page=");
+                        
+                        currentUrl = pageQueryIndex > 0 ? currentUrl.Substring(0, pageQueryIndex - 1) : currentUrl;
                         if (latestUrl == currentUrl)
                         {
                             latestClass = "current";
@@ -102,7 +115,9 @@
             
         </div>
 
-        <div id="footer"></div>
+        <div id="footer clear">
+            
+        </div>
     </div>
 </body>
 </html>

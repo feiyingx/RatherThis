@@ -7,6 +7,15 @@ using RatherThis.Domain.Entities;
 
 namespace RatherThis.Models
 {
+    public class QuestionIndexViewModel
+    {
+        public Dictionary<object, string> ResultViewModels { get; set; }
+        public int CurrentPage { get; set; }
+        public string Gender { get; set; }
+        public string Sort { get; set; }
+        public int TotalPages { get; set; }
+    }
+
     public class NewQuestionViewModel
     {
         public string Gender { get; set; }

@@ -457,6 +457,12 @@ namespace RatherThis.Tests.Controllers
             {
                 throw new NotImplementedException();
             }
+
+
+            public MembershipCreateStatus UpdateUser(Guid userId, string username, string password, string email)
+            {
+                throw new NotImplementedException();
+            }
         }
 
     }

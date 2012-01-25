@@ -73,7 +73,7 @@ namespace RatherThis.Controllers
             return View("_NewQuestion", model);
         }
 
-        public ActionResult Index(string sort, string gender)
+        public ActionResult Index(string sort, string gender, int page = 1)
         {
             List<Question> results;
 
@@ -104,13 +104,16 @@ namespace RatherThis.Controllers
                 }
             }
 
+            int numResults = 0;
             if (currentSort == Constants.QuestionSort.TOP_VIEWED)
             {
-                results = query.OrderByDescending(q => q.Answers.Count()).ThenByDescending(q => q.DateCreated).Take(_pageSize).ToList();
+                numResults = query.Count();
+                results = query.OrderByDescending(q => q.Answers.Count()).ThenByDescending(q => q.DateCreated).Skip((page-1)*_pageSize).Take(_pageSize).ToList();
             }
             else
             {
-                results = query.OrderByDescending(q => q.DateCreated).Take(_pageSize).ToList();
+                numResults = query.Count();
+                results = query.OrderByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
             }
 
 
@@ -222,8 +225,15 @@ namespace RatherThis.Controllers
                     }
                 }
             }
-            
-            return View(resultModel);
+
+            QuestionIndexViewModel viewModel = new QuestionIndexViewModel();
+            viewModel.ResultViewModels = resultModel;
+            viewModel.CurrentPage = page;
+            viewModel.Gender = gender;
+            viewModel.Sort = sort;
+            viewModel.TotalPages = (int)Math.Ceiling((double)numResults / _pageSize);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -288,6 +298,7 @@ namespace RatherThis.Controllers
                 model.OptionId2 = option2.QuestionOptionID;
 
                 model.QuestionId = q.QuestionID;
+                model.QuestionUserGender = q.User.Gender;
 
                 return PartialView("_QuestionDisplay", model);
             }
@@ -326,6 +337,8 @@ namespace RatherThis.Controllers
 
                     model.OptionId1 = option1.QuestionOptionID;
                     model.OptionId2 = option2.QuestionOptionID;
+
+                    model.QuestionUserGender = q.User.Gender;
                     /*
                     CommentListViewModel commentModel = new CommentListViewModel();
                     commentModel.OptionId1 = option1.QuestionOptionID;
@@ -333,6 +346,7 @@ namespace RatherThis.Controllers
                     commentModel.Comments = q.Comments.ToList();
                     model.CommentModel = commentModel;
                     */
+                    model.NumComments = q.Comments.Count();
                     return PartialView("_AnswerDisplay", model);
                 }
                 else
@@ -351,6 +365,7 @@ namespace RatherThis.Controllers
                     model.OptionId2 = option2.QuestionOptionID;
 
                     model.QuestionId = q.QuestionID;
+                    model.QuestionUserGender = q.User.Gender;
 
                     return PartialView("_QuestionDisplay", model);
                 }

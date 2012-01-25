@@ -1,11 +1,15 @@
-﻿@model Dictionary<object, string>
+﻿@model QuestionIndexViewModel
 @using RatherThis.Models
 @{
     ViewBag.Title = "Latest";
 }
 
-@{ var i = 1; }
-@foreach (var keyValue in Model)
+@if(Model == null || Model.ResultViewModels == null){
+    <p>No questions</p>
+}else{
+
+    var i = 1; 
+foreach (var keyValue in Model.ResultViewModels)
 {
     
         if (i % 3 == 1)
@@ -31,7 +35,7 @@
                 @{Html.RenderPartial("_AnswerDisplay", q);}
             </div>
         }
-        if (i % 3 == 0)
+        if (i % 3 == 0 || i == Model.ResultViewModels.Count())
         {
             @:</div>
         }
@@ -39,3 +43,32 @@
    
 }
 
+
+    if(Model.TotalPages > 1){
+        <div class="paging clear">
+        @if (Model.CurrentPage > 1)
+        {
+            <a class="prev" href="@Url.Action("Index", "Question", new{ sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage - 1 })" >PREV</a>
+        }
+        @for(var j = 1; j <= Model.TotalPages; j++)
+        {
+            if (j != Model.CurrentPage)
+            {
+                <a class="page-link" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = j })">@j</a>   
+            }
+            else
+            {
+                <a class="page-link current">@j</a>   
+            }
+        }
+
+        @if (Model.CurrentPage < Model.TotalPages)
+        {
+            <a class="next" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage + 1 })">NEXT</a>
+        }
+        
+        </div>
+    
+    }
+
+}

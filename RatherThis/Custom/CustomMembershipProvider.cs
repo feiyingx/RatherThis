@@ -68,6 +68,43 @@ namespace RatherThis.Custom
             return newUser.ConvertToMembershipUser();
         }
 
+        public MembershipUser UpdateUser(Guid userId, string username, string password, string email, out MembershipCreateStatus status)
+        {
+            User currentUser = UserRepository.Users.Where(u => u.UserID == userId).FirstOrDefault();
+            //if we are updating username,  make sure username is unique
+            if (username != currentUser.Username)
+            {
+                //check if username exists
+                if (UserRepository.Users.Where(u => u.Username.Equals(username) && u.UserID != userId).Count() > 0)
+                {
+                    status = MembershipCreateStatus.DuplicateUserName;
+                    return null;
+                }
+            }
+
+            if (email != currentUser.Email)
+            {
+                //check if email exists
+                if (UserRepository.Users.Where(u => u.Email.Equals(email) && u.UserID != userId).Count() > 0)
+                {
+                    status = MembershipCreateStatus.DuplicateEmail;
+                    return null;
+                }
+            }
+
+            
+            currentUser.Email = email;
+            if (!string.IsNullOrEmpty(password))
+            {
+                currentUser.Password = BCrypt.Net.BCrypt.HashPassword(password);
+            }
+            currentUser.Username = username;
+            UserRepository.SaveUser(currentUser);
+            status = MembershipCreateStatus.Success;
+
+            return currentUser.ConvertToMembershipUser();
+        }
+
         public override bool DeleteUser(string username, bool deleteAllRelatedData)
         {
             throw new NotImplementedException();

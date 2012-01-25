@@ -219,7 +219,7 @@ p.login-message
     margin-left: 1px;
 }
 
-div.left-column .validation-summary-errors
+.validation-summary-errors
 {
     color: #ff0000;
     background-color: #ff6182;
@@ -231,7 +231,7 @@ div.left-column .validation-summary-errors
     border: 1px dashed #fff;
 }
 
-div.left-column .validation-summary-errors li
+.validation-summary-errors li
 {
     margin: 5px;
     font-size: 11px;
@@ -241,7 +241,7 @@ div.left-column .validation-summary-errors li
 
 #menucontainer
 {
-    margin-left: 80px;
+    margin-left: 45px;
 }
 
 #menucontainer a
@@ -390,6 +390,7 @@ a.left-nav-link:hover
     padding-top: 20px;
     padding-left: 40px;
     min-height: 700px;
+    padding-bottom: 100px;
 }
 
 /* QUESTION */
@@ -639,6 +640,8 @@ div.vote-result-bar-container
 {
     background-color: #eee;
     margin-left: 42px;
+    margin-right: 15px;
+    position: relative;
 }
 
 div.vote-result-bar span
@@ -649,7 +652,7 @@ div.vote-result-bar span
 
 .answer-option
 {
-    width: 185px;
+    width: 200px;
     position: relative;
 }
 
@@ -706,17 +709,18 @@ p.vote-result-percent-indicator.first
     font-size: 9px;
     position: absolute;
     display: inline-block;
-    left: 194px;
+    left: 154px;
+    width: 50px;
 }
 
 .vote-count.first
 {
-    top: 104px;
+    top: 5px;
 }
 
 .vote-count.second
 {
-    top: 130px;
+    top: 5px;
 }
 
 p.ask-name.answer
@@ -745,7 +749,7 @@ p.login-action-message a
 
 p.login-action-message a:hover
 {
-    color: #40950C;
+    color: #ddd;
 }
 
 div.question-row.not-first
@@ -770,11 +774,11 @@ a.comment-link
 {
     display: block;
     width: 186px;
-    height: 20px;
+    height: 16px;
     color: White;
     background-color: #393939;
     text-align: center;
-    line-height: 20px;
+    line-height: 16px;
     margin-top: 15px;
     font-size: 10px;
     font-weight: bold;
@@ -876,7 +880,7 @@ p.comment-M .name
 {
     font-family: Arial, Tahoma, Serif;
     font-size: 9px;
-    color: #bbb;
+    color: #aaa;
     padding-top: 2px;
     padding-left: 5px;
     padding-right: 5px;
@@ -894,7 +898,7 @@ div.comment-M
 
 .comment-item-body
 {
-    width: 130px;
+    width: 145px;
     position: relative;
     padding: 5px 10px;
     margin-top: 5px;
@@ -908,7 +912,7 @@ div.comment-M
 div.comment-M p.comment-item-body
 {
     background-color: #00A8FF;
-    margin-left: 36px;
+    margin-left: 21px;
 }
 
 div.comment-F p.comment-item-body
@@ -919,4 +923,222 @@ div.comment-F p.comment-item-body
 div.comment-item
 {
     margin-bottom: 10px;
+}
+
+/* USER SUMMARY */
+#user-info h2
+{
+    font-size: 13px;
+    margin-bottom: 7px;
+    margin-left: 2px;
+}
+
+#user-info h2 span
+{
+    font-weight: bold;
+}
+
+#user-info p
+{
+    
+}
+
+#user-info p.stats
+{
+    font-size: 11px;
+    padding-bottom: 3px;
+    background-color: gray;
+    padding: 5px 12px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+#user-info p.stats span
+{
+    font-weight: bold;
+}
+
+a.info-button
+{
+    background-color: #393939;
+    display: block;
+    width: 80px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 7px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    float: left;
+}
+
+a.info-button.first
+{
+    margin-right: 10px;
+}
+
+a.info-button:hover
+{
+    color: #393939;
+    background-color: White;
+}
+
+/* PAGING */
+div.paging
+{
+    padding-top: 50px;
+    margin-left: 15px;
+}
+
+div.paging a
+{
+    padding: 5px 8px;
+    color: White;
+    background-color: #393939;
+    font-size: 11px;
+    border: 2px solid #393939;
+    font-weight: bold;
+}
+
+div.paging a:hover, div.paging a.current
+{
+    background-color: white;
+    color: #393939;
+    border: 2px solid #393939;
+}
+
+/* FOOTER */
+ul.footer-nav
+{
+    margin-top: 65px;
+    font-size: 10px;
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+ul.footer-nav li
+{
+    display: block;
+    float: left;
+    padding: 5px 4px 5px 0;
+    margin-right: 6px;
+}
+
+ul.footer-nav li a
+{
+    color: White;
+}
+
+ul.footer-nav li a:hover
+{
+    color: gray;
+}
+
+/* MISC PAGES */
+
+div.misc
+{
+    margin-left: 10px;
+    margin-top: 12px;   
+    margin-right: 10px;
+    width: 850px;
+}
+
+div.misc h2
+{
+    font-size: 28px;
+    margin-bottom: 28px;
+}
+
+div.misc .editor-field
+{
+    margin-bottom: 20px;
+}
+
+div.misc input
+{
+    border: 1px solid #ccc;
+    width: 560px;
+    height: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+div.misc label
+{
+    display: inline-block;
+    width: 250px;
+}
+
+div.misc label span
+{
+    font-size: 10px;
+    color: #bbb;
+    line-height: 12px;
+    padding-left: 5px;
+}
+
+div.misc input[type=submit]
+{
+    margin-left: 250px;
+    cursor: pointer;
+    width: 597px;
+    color: White;
+    font-weight: bold;
+    background-color: #393939;
+    font-size: 10px;
+    line-height: 40px;
+    display: block;
+    height: 40px;
+    padding-bottom: 40px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+div.misc input[type=submit]:hover
+{
+    background-color:#40950C;
+}
+
+div.misc .validation-summary-errors
+{
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+}
+
+div.misc p.message
+{
+    margin: 15px 0px;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+div.misc p.message span
+{
+    font-weight: bold;
+}
+
+div.flash
+{
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background: #23c45f url('/images/check.png') no-repeat 15px center;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 55px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    color: White;
+}
+
+div.flash a
+{
+    color: White;
+    font-weight: bold;
+}
+
+div.flash a:hover
+{
+    color: green;
 }

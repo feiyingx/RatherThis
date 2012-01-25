@@ -45,9 +45,10 @@
             
             <div class="vote-result-bar fill" style="width: @optionPercent1.ToString("0.0%");"></div>
         }
+        <span class="vote-count first">@Model.OptionVotes1 @voteText1</span>
         </div>
+        
     </div>
-    <span class="vote-count first">@Model.OptionVotes1 @voteText1</span>
 
     <div class="answer-option">
         <p class="vote-result-percent-indicator">@optionPercent2.ToString("0.0%")</p>
@@ -63,11 +64,12 @@
         {
             <div class="vote-result-bar fill" style="width: @optionPercent2.ToString("0.0%");"></div>
         }
+        <span class="vote-count second">@Model.OptionVotes2 @voteText2</span>
         </div>
+        
         <p>@Model.OptionText2?</p>
         
     </div>
-    <span class="vote-count second">@Model.OptionVotes2 @voteText2</span>
     
         <p class="ask-name answer">asked by: <span class="@Model.QuestionUserGender">@Model.Name</span></p>
         <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">SEE COMMENTS (@Model.NumComments)</a>

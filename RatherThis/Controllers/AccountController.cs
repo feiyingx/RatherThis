@@ -174,6 +174,48 @@ namespace RatherThis.Controllers
             return View("_UserSummary");
         }
 
+        [Authorize]
+        public ActionResult EditProfile()
+        {
+            Guid currentUserId = _membershipService.GetCurrentUserId();
+            User currentUser = _userRepo.Users.Where(u => u.UserID == currentUserId).FirstOrDefault();
+
+            EditProfileModel model = new EditProfileModel();
+            model.UserName = currentUser.Username;
+            model.Email = currentUser.Email;
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditProfile(EditProfileModel model)
+        {
+            Guid currentUserId = _membershipService.GetCurrentUserId();
+
+            if (string.IsNullOrEmpty(model.Password) || (model.Password.Length >= _membershipService.MinPasswordLength))
+            {
+                // Attempt to update the user
+                MembershipCreateStatus updateStatus = MembershipService.UpdateUser(currentUserId, model.UserName.Trim(), model.Password, model.Email.Trim());
+
+                if (updateStatus == MembershipCreateStatus.Success)
+                {
+                    ViewBag.Flash = model.UserName;
+                    return View("EditProfile", model);
+                }
+                else
+                {
+                    ModelState.AddModelError("", AccountValidation.ErrorCodeToString(updateStatus));
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", string.Format("Password must be at least {0} characters.", _membershipService.MinPasswordLength));
+            }
+            
+            return View(model);
+        }
+
         public ActionResult ForgotPassword()
         {
             return View();

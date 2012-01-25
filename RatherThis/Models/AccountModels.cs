@@ -76,6 +76,27 @@ namespace RatherThis.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class EditProfileModel
+    {
+        [Required(ErrorMessage = "Please pick a username.")]
+        [Display(Name = "Username")]
+        [StringLength(100, ErrorMessage = "Username must be less than 100 characters.")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Please enter email.")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "Invalid email address.")]
+        [StringLength(200, ErrorMessage = "Email must be less than 200 characters.")]
+        public string Email { get; set; }
+
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
     public class UserSummaryViewModel
     {
         public string Name { get; set; }
@@ -121,6 +142,7 @@ namespace RatherThis.Models
 
         bool ValidateUser(string email, string password);
         MembershipCreateStatus CreateUser(string userName, string password, string email, string gender);
+        MembershipCreateStatus UpdateUser(Guid userId, string username, string password, string email);
         bool ChangePassword(string userName, string oldPassword, string newPassword);
         Guid GetCurrentUserId();
         bool IsAuthenticated();
@@ -216,6 +238,17 @@ namespace RatherThis.Models
                 return Guid.Empty;
             }
         }
+
+
+        public MembershipCreateStatus UpdateUser(Guid userId, string username, string password, string email)
+        {
+            if (String.IsNullOrEmpty(username)) throw new ArgumentException("Value cannot be null or empty.", "userName");
+            if (String.IsNullOrEmpty(email)) throw new ArgumentException("Value cannot be null or empty.", "email");
+
+            MembershipCreateStatus status;
+            _provider.UpdateUser(userId, username, password, email, out status);
+            return status;
+        }
     }
 
     public interface IFormsAuthenticationService
@@ -296,7 +329,7 @@ namespace RatherThis.Models
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class ValidatePasswordLengthAttribute : ValidationAttribute, IClientValidatable
     {
-        private const string _defaultErrorMessage = "'{0}' must be at least {1} characters long.";
+        private const string _defaultErrorMessage = "'{0}' must be at least {1} characters.";
         private readonly int _minCharacters = Membership.Provider.MinRequiredPasswordLength;
 
         public ValidatePasswordLengthAttribute()

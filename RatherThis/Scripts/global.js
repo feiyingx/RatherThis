@@ -47,3 +47,10 @@ function activateLogin() {
 function toggleComments(trigger) {
     $(trigger).siblings(".comment-container").slideToggle();
 }
+
+function toggleUserInfo() {
+    var userInfo = $("#user-info");
+    if (userInfo) {
+        $(userInfo).slideToggle();
+    }
+}

@@ -1,0 +1,45 @@
+﻿@model RatherThis.Models.EditProfileModel
+@{
+    ViewBag.Title = "EditProfile";
+}
+
+<div class="misc">    
+    <h2>EDIT PROFILE</h2>
+    @if (!string.IsNullOrEmpty(ViewBag.Flash))
+    {
+        <div class="flash">Thanks <span>@ViewBag.Flash</span>, your updates have been saved!</div>
+    }
+    @using (Html.BeginForm("EditProfile", "Account")) 
+    {
+    @Html.ValidationSummary()
+    <div>
+        <fieldset>
+
+            <div class="editor-field">
+                <label for="profile-username" >Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { id="profile-username" })
+            </div>
+
+            <div class="editor-field">
+                <label for="profile-email" >Email</label>
+                @Html.TextBoxFor(m => m.Email, new { id = "profile-email" })
+            </div>
+
+            <div class="editor-field">
+                <label for="profile-pw" >Password <span>( leave blank if no changes )</span></label>
+                @Html.PasswordFor(m => m.Password, new { id="profile-pw" })
+            </div>
+
+            <div class="editor-field">
+                <label for="profile-pw-confirm" >Confirm Password</label>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { id="profile-pw-confirm" })
+            </div>
+
+            <p>
+                <input type="submit" value="SAVE UPDATES" />
+            </p>
+        </fieldset>
+    </div>
+}
+</div>
+
