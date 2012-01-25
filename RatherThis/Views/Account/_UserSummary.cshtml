@@ -13,6 +13,6 @@
 </p>
     
 <a class="info-button first" href="@Url.Action("EditProfile","Account")">Edit My Profile</a>
-<a class="info-button" href="@Url.Action("EditProfile", "Account")">View Summary</a>
+<a class="info-button" href="@Url.Action("UserDetail", "Account", new { username = Model.Username })">View Summary</a>
     <div class="clear"></div>
 }

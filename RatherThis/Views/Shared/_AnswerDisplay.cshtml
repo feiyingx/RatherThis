@@ -71,7 +71,7 @@
         
     </div>
     
-        <p class="ask-name answer">asked by: <span class="@Model.QuestionUserGender">@Model.Name</span></p>
+        <p class="ask-name answer">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
         <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">SEE COMMENTS (@Model.NumComments)</a>
         <div class="comment-container" style="display:none;">
             <div id="question-@Model.QuestionId-comment" class="comment-box">

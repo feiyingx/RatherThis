@@ -156,6 +156,7 @@ namespace RatherThis.Controllers
 
                     model.QuestionId = q.QuestionID;
                     model.QuestionUserGender = q.User.Gender;
+                    model.QuestionUsername = q.User.Username;
 
                     resultModel.Add(model, "question");
                 }
@@ -192,6 +193,7 @@ namespace RatherThis.Controllers
                         model.OptionId1 = option1.QuestionOptionID;
                         model.OptionId2 = option2.QuestionOptionID;
                         model.QuestionUserGender = q.User.Gender;
+                        model.QuestionUsername = q.User.Username;
                         /*
                         CommentListViewModel commentModel = new CommentListViewModel();
                         commentModel.OptionId1 = option1.QuestionOptionID;
@@ -220,6 +222,7 @@ namespace RatherThis.Controllers
 
                         model.QuestionId = q.QuestionID;
                         model.QuestionUserGender = q.User.Gender;
+                        model.QuestionUsername = q.User.Username;
 
                         resultModel.Add(model, "question");
                     }
@@ -299,6 +302,7 @@ namespace RatherThis.Controllers
 
                 model.QuestionId = q.QuestionID;
                 model.QuestionUserGender = q.User.Gender;
+                model.QuestionUsername = q.User.Username;
 
                 return PartialView("_QuestionDisplay", model);
             }
@@ -339,6 +343,7 @@ namespace RatherThis.Controllers
                     model.OptionId2 = option2.QuestionOptionID;
 
                     model.QuestionUserGender = q.User.Gender;
+                    model.QuestionUsername = q.User.Username;
                     /*
                     CommentListViewModel commentModel = new CommentListViewModel();
                     commentModel.OptionId1 = option1.QuestionOptionID;
@@ -366,6 +371,7 @@ namespace RatherThis.Controllers
 
                     model.QuestionId = q.QuestionID;
                     model.QuestionUserGender = q.User.Gender;
+                    model.QuestionUsername = q.User.Username;
 
                     return PartialView("_QuestionDisplay", model);
                 }

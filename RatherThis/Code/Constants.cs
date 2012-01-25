@@ -19,6 +19,12 @@ namespace RatherThis.Code
             TOP_VIEWED
         }
 
+        public enum Filter
+        {
+            QUESTION,
+            ANSWER
+        }
+
         public static string BaseUrl
         {
             get

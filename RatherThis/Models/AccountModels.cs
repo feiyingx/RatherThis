@@ -102,6 +102,7 @@ namespace RatherThis.Models
         public string Name { get; set; }
         public int NumQuestions { get; set; }
         public int NumAnswers { get; set; }
+        public string Username { get; set; }
     }
 
     public class ForgotPasswordViewModel
@@ -127,6 +128,18 @@ namespace RatherThis.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class UserDetailViewModel
+    {
+        public Dictionary<object, string> ResultViewModels { get; set; }
+        public int CurrentPage { get; set; }
+        public string Filter { get; set; }
+        public int TotalPages { get; set; }
+        public string Username { get; set; }
+        public int NumAsked { get; set; }
+        public int NumAnswered { get; set; }
+        public string UserGender { get; set; }
     }
     #endregion
 

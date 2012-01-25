@@ -12,7 +12,7 @@
     {
         var commentClass = string.Format("comment-{0}", comment.User.Gender);
         <div class="comment-item @commentClass">
-            <p class="comment-item-header @commentClass"><a class="name">@comment.User.Username</a></p>
+            <p class="comment-item-header @commentClass"><a class="name" href="@Url.Action("UserDetail", "Account", new { username=comment.User.Username })">@comment.User.Username</a></p>
             <p class="comment-item-body">@comment.CommentText</p>
             <span class="date">@comment.DateCreated.TimeAgo()</span>
         </div>

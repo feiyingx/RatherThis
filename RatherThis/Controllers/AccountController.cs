@@ -13,12 +13,13 @@ using domain = RatherThis.Domain.Entities;
 using RatherThis.Domain.Entities;
 using Ninject;
 using RatherThis.Service.Interface;
+using RatherThis.Code;
 
 namespace RatherThis.Controllers
 {
     public class AccountController : Controller
     {
-
+        private int _pageSize = 9;
         public IFormsAuthenticationService FormsService { get; set; }
         public IMembershipService MembershipService { get; set; }
 
@@ -167,6 +168,7 @@ namespace RatherThis.Controllers
                     model.Name = currentUser.Username;
                     model.NumAnswers = currentUser.Answers.Count();
                     model.NumQuestions = currentUser.Questions.Count();
+                    model.Username = currentUser.Username;
 
                     return View("_UserSummary", model);
                 }
@@ -363,6 +365,157 @@ namespace RatherThis.Controllers
         public ActionResult ResetPasswordThankYou()
         {
             return View();
+        }
+
+        public ActionResult UserDetail(string username, string filter = "", int page = 1)
+        {
+            UserDetailViewModel userDetailViewModel = new UserDetailViewModel();
+
+            User user = _userRepo.GetUserWithQuestionsAnswersByUsername(username);
+            if (user != null)
+            {
+                int numResults;
+                IEnumerable<Question> questionResults;
+                List<Question> results;
+
+                Constants.Filter currentFilter = Constants.Filter.QUESTION;
+                if (filter.ToLower() == Constants.Filter.ANSWER.ToString().ToLower())
+                {
+                    currentFilter = Constants.Filter.ANSWER;
+                }
+
+                if (currentFilter == Constants.Filter.ANSWER)
+                {
+                    questionResults = user.Answers.Select(a => a.Question);                    
+                }
+                else
+                {
+                    questionResults = user.Questions;
+                }
+                //count total number of results
+                numResults = questionResults.Count();
+                //get the actual list of results, accounting for page number and page size
+                results = questionResults.OrderByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
+
+
+                Dictionary<object, string> resultModel = new Dictionary<object, string>();
+                //by 'CURRENT USER', i mean the user that is viewing this page (which could be different from the 'user' whose page is being displayed. e.g. im viewing a friend's user detail page)
+                bool isLoggedIn = _membershipService.IsAuthenticated(); //check to see whether the current user viewing this page is authenticated
+                Guid currentUserId = _membershipService.GetCurrentUserId(); //get current user's user id
+                User currentUser = _userRepo.Users.Where(u => u.UserID == currentUserId).FirstOrDefault();
+                foreach (var q in results)
+                {
+                    //get the question options
+                    QuestionOption option1 = q.QuestionOptions.ElementAt(0);
+                    QuestionOption option2 = q.QuestionOptions.ElementAt(1);
+
+                    DateTime date = q.DateCreated;
+                    String questionGender = q.Gender;
+                    String name = q.User.Username;
+                    String optionText1 = option1.OptionText;
+                    String optionText2 = option2.OptionText;
+
+                    //if user is not logged in, then display the question view since we don't know whether user has answered or not
+                    if (!isLoggedIn)
+                    {
+                        QuestionDisplayViewModel model = new QuestionDisplayViewModel();
+                        model.IsLoggedIn = false;
+                        model.Date = date;
+                        model.Gender = questionGender;
+                        model.Name = name;
+                        model.UserId = Guid.Empty;
+
+                        model.OptionText1 = optionText1;
+                        model.OptionText2 = optionText2;
+
+                        model.OptionId1 = option1.QuestionOptionID;
+                        model.OptionId2 = option2.QuestionOptionID;
+
+                        model.QuestionId = q.QuestionID;
+                        model.QuestionUserGender = q.User.Gender;
+                        model.QuestionUsername = q.User.Username;
+
+                        resultModel.Add(model, "question");
+                    }
+                    else
+                    {
+                        //if user is logged in, then check whether user has already answered the question. if so then render answer view, otherwise render the question view                
+                        //or if the user doesn't match the gender restriction, then just display the answer format 
+                        //(e.g. if current user is male, and this is a 'for ladies' question, since user can't answer it anyways, then just display the answer view
+
+                        //check whether user has already answered this question
+                        Answer userAnswer = q.Answers.Where(a => a.UserID == currentUserId).FirstOrDefault();
+                        Guid questionUserId = q.UserID;
+
+                        bool isAnswered = (userAnswer == null) ? false : true;
+                        bool isGenderMismatch = (!string.IsNullOrEmpty(q.Gender) && q.Gender.ToLower() != currentUser.Gender.ToLower()) ? true : false;
+                        if (isAnswered || (!isAnswered && isGenderMismatch))
+                        {
+                            AnswerDisplayViewModel model = new AnswerDisplayViewModel();
+                            model.QuestionId = q.QuestionID;
+                            model.Date = date;
+                            model.Gender = questionGender;
+                            model.Name = name;
+                            model.UserId = questionUserId;
+                            if (isAnswered)
+                                model.AnsweredOptionId = userAnswer.QuestionOptionID;
+
+                            model.OptionText1 = optionText1;
+                            model.OptionText2 = optionText2;
+
+                            model.OptionVotes1 = q.Answers.Where(a => a.QuestionOptionID == option1.QuestionOptionID).Count();
+                            model.OptionVotes2 = q.Answers.Where(a => a.QuestionOptionID == option2.QuestionOptionID).Count();
+                            model.TotalVotes = (model.OptionVotes1 + model.OptionVotes2);
+
+                            model.OptionId1 = option1.QuestionOptionID;
+                            model.OptionId2 = option2.QuestionOptionID;
+                            model.QuestionUserGender = q.User.Gender;
+                            model.QuestionUsername = q.User.Username;
+                            /*
+                            CommentListViewModel commentModel = new CommentListViewModel();
+                            commentModel.OptionId1 = option1.QuestionOptionID;
+                            commentModel.OptionId2 = option2.QuestionOptionID;
+                            commentModel.Comments = q.Comments.ToList();
+                            model.CommentModel = commentModel;
+                             * */
+
+                            model.NumComments = q.Comments.Count();
+                            resultModel.Add(model, "answer");
+                        }
+                        else
+                        {
+                            QuestionDisplayViewModel model = new QuestionDisplayViewModel();
+                            model.IsLoggedIn = true;
+                            model.Date = date;
+                            model.Gender = questionGender;
+                            model.Name = name;
+                            model.UserId = questionUserId;
+
+                            model.OptionText1 = optionText1;
+                            model.OptionText2 = optionText2;
+
+                            model.OptionId1 = option1.QuestionOptionID;
+                            model.OptionId2 = option2.QuestionOptionID;
+
+                            model.QuestionId = q.QuestionID;
+                            model.QuestionUserGender = q.User.Gender;
+                            model.QuestionUsername = q.User.Username;
+
+                            resultModel.Add(model, "question");
+                        }
+                    }
+                }
+
+                userDetailViewModel.CurrentPage = page;
+                userDetailViewModel.Filter = currentFilter.ToString();
+                userDetailViewModel.TotalPages = (int)Math.Ceiling((double)numResults / _pageSize);
+                userDetailViewModel.ResultViewModels = resultModel;
+                userDetailViewModel.Username = user.Username;
+                userDetailViewModel.NumAsked = user.Questions.Count();
+                userDetailViewModel.NumAnswered = user.Answers.Count();
+                userDetailViewModel.UserGender = user.Gender;
+            }
+            return View(userDetailViewModel);
         }
 
         // **************************************

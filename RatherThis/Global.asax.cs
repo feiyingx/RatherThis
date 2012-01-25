@@ -23,6 +23,12 @@ namespace RatherThis
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "UserDetail",
+                "User/{username}",
+                new { controller = "Account", action="UserDetail" }
+            );
+
+            routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Question", action = "Index", id = UrlParameter.Optional } // Parameter defaults

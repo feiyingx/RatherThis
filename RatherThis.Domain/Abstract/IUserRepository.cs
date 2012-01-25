@@ -11,5 +11,6 @@ namespace RatherThis.Domain.Abstract
         IQueryable<User> Users { get; }
         void SaveUser(User user);
         User GetUserWithQuestionsAnswers(Guid userId);
+        User GetUserWithQuestionsAnswersByUsername(string username);
     }
 }

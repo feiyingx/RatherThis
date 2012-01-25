@@ -40,6 +40,7 @@ namespace RatherThis.Models
         public int QuestionId { get; set; }
         public bool IsLoggedIn { get; set; }
         public string QuestionUserGender { get; set; }
+        public string QuestionUsername { get; set; }
     }
 
     public class AnswerDisplayViewModel
@@ -58,6 +59,7 @@ namespace RatherThis.Models
         public int QuestionId { get; set; }
         public int AnsweredOptionId { get; set; }
         public string QuestionUserGender { get; set; }
+        public string QuestionUsername { get; set; }
         public CommentListViewModel CommentModel { get; set; }
         public int NumComments { get; set; }
     }

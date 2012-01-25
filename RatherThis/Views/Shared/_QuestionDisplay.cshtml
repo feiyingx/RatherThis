@@ -64,7 +64,7 @@
             <input class="btn-question-action skip" type="submit" value="SKIP" />
         }
     }
-    <p class="ask-name">asked by: <span class="@Model.QuestionUserGender">@Model.Name</span></p>
+    <p class="ask-name">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
 
     @if (!Model.IsLoggedIn)
     {
