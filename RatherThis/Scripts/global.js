@@ -1,6 +1,10 @@
 ﻿$(function () {
-    initInField();
+    
 });
+
+(function ($) {
+    $.validator.unobtrusive.adapters.addBool("mandatory", "required");
+} (jQuery));
 
 function initInField() {
     $("label.infield").inFieldLabels();

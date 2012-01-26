@@ -74,6 +74,9 @@ namespace RatherThis.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Please agree with our Terms and Privacy Policy.")]
+        public bool IsAgreeToTerms { get; set; }
     }
 
     public class EditProfileModel

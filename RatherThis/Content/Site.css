@@ -390,6 +390,38 @@ a.left-nav-link:hover
     background-color:#00a8ff;
 }
 
+#agree-to-terms
+{
+    padding: 0;
+    margin: 0;
+}
+
+.agree-to-terms label
+{
+    display: inline-block;
+    position: relative;
+    left: 20px;
+    top: -15px;
+    padding-right: 15px;
+    line-height: 12px;
+}
+
+.agree-to-terms label a
+{
+    font-weight: bold;
+}
+
+.agree-to-terms label a:hover
+{
+    color: Gray;
+}
+
+.agree-to-terms
+{
+    position: relative;
+    margin-top: 10px;
+}
+
 #main
 {
     padding-top: 20px;
@@ -1258,4 +1290,32 @@ p.share-copy
     margin-top: 30px;    
     font-size: 11px;
     padding-left: 5px;
+}
+
+/* TERMS AND PRIVACY */
+div.terms div
+{
+    margin-bottom: 15px;
+}
+
+div.terms h3
+{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+div.terms ul
+{
+    list-style: circle;
+    margin-left: 15px;
+}
+
+div.terms ul li span
+{
+    font-weight: bold;
+}
+
+div.terms p span
+{
+    font-weight: bold;
 }
