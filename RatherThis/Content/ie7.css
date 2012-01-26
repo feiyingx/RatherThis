@@ -1,0 +1,24 @@
+﻿body {
+}
+
+p.vote-result-percent-indicator.first
+{
+    bottom: 6px;
+}
+
+p.vote-result-percent-indicator.second
+{
+    top: 6px;
+    left: 0px;
+}
+
+form.skip-form
+{
+    left: 96px;
+    top: -36px;
+}
+
+#main
+{
+    margin-top: 10px;
+}

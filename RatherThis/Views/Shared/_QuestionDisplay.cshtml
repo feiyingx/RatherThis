@@ -23,12 +23,18 @@
             {
                 UpdateTargetId = questionContainerId,
                 InsertionMode = InsertionMode.Replace,
-                LoadingElementId = ajaxLoaderId
+                LoadingElementId = ajaxLoaderId,
+                OnSuccess = "reinitAddThis()"
             }))
     {
-        
+           
         <p class="question-date">@Model.Date.ToString("MMM dd yyyy").ToUpper()</p>
         <p class="gender-tag @Model.Gender">@genderTag</p>
+        <div class="validation-summary-errors"  style="display:none;">
+            <ul>
+                <li>You must select an answer in order to vote.</li>
+            </ul>
+        </div>
         <h1 class="question">would you rather...</h1>
     
         <div class="option-container">
@@ -40,14 +46,15 @@
             <input type="radio" name="oid" value="@Model.OptionId2" id="@optionInputId2" />
             <label class="option-text" for="@optionInputId2">@Model.OptionText2?</label>
         </div>
-        <div class="clear"></div>
         
         
+        <div class="clear">
         @* display the vote button if user is logged in, otherwise show a call to action link to register or login *@
-        if (Model.IsLoggedIn)
+        @if (Model.IsLoggedIn)
         {
-        <input class="btn-question-action vote" type="submit" value="VOTE" />
+        <input class="btn-question-action vote" onclick="validateAnswer('@questionContainerId')" type="submit" value="VOTE" />
         }
+        </div>
     }
     @* only display the skip button if user is logged in *@
     @if (Model.IsLoggedIn)
@@ -56,7 +63,8 @@
         {
             UpdateTargetId = questionContainerId,
             InsertionMode = InsertionMode.Replace,
-            LoadingElementId = ajaxLoaderId
+            LoadingElementId = ajaxLoaderId,
+            OnSuccess = "reinitAddThis()"
         }, new { @class = "skip-form" }))
         {
             @* 0 is the value for any questions answered by skipping *@

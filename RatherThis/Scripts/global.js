@@ -1,5 +1,5 @@
 ﻿$(function () {
-    
+    initOptionValidation()
 });
 
 (function ($) {
@@ -57,4 +57,44 @@ function toggleUserInfo() {
     if (userInfo) {
         $(userInfo).slideToggle();
     }
+}
+
+function reinitAddThis() {
+    if (window.addthis) {
+
+        window.addthis.ost = 0;
+        window.addthis.ready();
+    }
+}
+
+var testtest;
+function validateAnswer(questionContainerId) {
+    var container = $("#" + questionContainerId);
+    if (container){
+        if ($("input[type='radio']:checked", container).length == 1) {
+            return true;
+        } else {
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+            $(".validation-summary-errors", container).show();
+            return false;
+        }
+    }
+
+    if (event.preventDefault) {
+        event.preventDefault();
+    } else {
+        event.returnValue = false;
+    }
+    return false;
+}
+
+//this function makes sure when the user selects an answer, then we hide the validation summary for the question
+function initOptionValidation() {
+    $(".option-container input[type='radio']").bind('click', function (e) {
+        $(this).parent().siblings(".validation-summary-errors").hide();
+    });
 }

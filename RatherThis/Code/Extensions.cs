@@ -34,5 +34,15 @@ namespace RatherThis.Code
 
             return string.Format("{0}...", str.Substring(0, limit));
         }
+
+        public static string UppercaseFirst(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return str;
+
+            char[] letters = str.ToCharArray();
+            letters[0] = char.ToUpper(letters[0]);
+            return new string(letters);
+        }
     }
 }

@@ -79,6 +79,7 @@ namespace RatherThis.Controllers
 
             //default the sort to latest
             Constants.QuestionSort currentSort = Constants.QuestionSort.LATEST;
+            string pageTitle = "";
 
             if (!string.IsNullOrEmpty(sort))
             {
@@ -97,10 +98,12 @@ namespace RatherThis.Controllers
                 if (gender == femaleGender)
                 {
                     query = query.Where(q => q.Gender.Equals(femaleGender, StringComparison.CurrentCultureIgnoreCase));
+                    pageTitle = "Ladies Only Questions | RatherThis";
                 }
                 else if (gender == maleGender)
                 {
                     query = query.Where(q => q.Gender.Equals(maleGender, StringComparison.CurrentCultureIgnoreCase));
+                    pageTitle = "Guys Only Questions | RatherThis";
                 }
             }
 
@@ -109,12 +112,24 @@ namespace RatherThis.Controllers
             {
                 numResults = query.Count();
                 results = query.OrderByDescending(q => q.Answers.Count()).ThenByDescending(q => q.DateCreated).Skip((page-1)*_pageSize).Take(_pageSize).ToList();
+
+                //if we havent set a page title yet, that means it's not a gender page
+                if (string.IsNullOrEmpty(pageTitle))
+                {
+                    pageTitle = "Top Viewed Questions | RatherThis";
+                }
             }
             else
             {
                 numResults = query.Count();
                 results = query.OrderByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
+                //if we havent set a page title yet, that means it's not a gender page
+                if (string.IsNullOrEmpty(pageTitle))
+                {
+                    pageTitle = "Latest Questions | RatherThis";
+                }
             }
+            ViewBag.Title = pageTitle;
 
 
             Guid currentUserId = Guid.Empty; 

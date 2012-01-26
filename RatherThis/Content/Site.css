@@ -610,11 +610,17 @@ input.btn-question-action
     background-color: #d20522;
 }
 
+div.question-display form
+{
+    position: relative;
+}
+
 form.skip-form
 {   
     position: relative;
     top: -34px;
     left: 69px;
+    width: 70px;
 }
 
 p.ask-name
@@ -711,6 +717,11 @@ div.vote-result-bar span
     line-height: 13px;
 }
 
+.question-display .validation-summary-errors
+{
+    width: 180px;
+}
+
 p.vote-result-percent-indicator
 {
     position: absolute;
@@ -728,6 +739,7 @@ p.vote-result-percent-indicator
 p.vote-result-percent-indicator.first
 {
     bottom: 0px;
+    left: 0px;
 }
 /*
 .vote-count
