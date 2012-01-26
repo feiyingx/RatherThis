@@ -258,18 +258,17 @@ namespace RatherThis.Controllers
                     }
 
                 }
-                return RedirectToAction("RenderQuestion", currentQuestion);
+                return RedirectToAction("RenderQuestion", new { qid = currentQuestion.QuestionID });
             }
             return RedirectToAction("RenderQuestion", new { });
         }
 
-        public PartialViewResult RenderQuestion(Question q)
+        public PartialViewResult RenderQuestion(int qid, int commentListSize = 9, bool showAllComments = false)
         {
-            if (q == null)
-                throw new NullReferenceException("Trying to RenderQuestion with a null question");
+            Question q;
 
             //need to re-retrieve the question from db in order to get eager loading for its relationships, otherwise the question passed in to our action only  has the question's base properties
-            q = _questionRepo.Questions.Where(qe => qe.QuestionID == q.QuestionID).FirstOrDefault();
+            q = _questionRepo.Questions.Where(qe => qe.QuestionID == qid).FirstOrDefault();
             //TODO: what happens if this is null (e.g. bad data)
 
             //get the question options
@@ -352,6 +351,9 @@ namespace RatherThis.Controllers
                     model.CommentModel = commentModel;
                     */
                     model.NumComments = q.Comments.Count();
+                    model.CommentListSize = commentListSize;
+                    model.IsShowAllComment = showAllComments;
+
                     return PartialView("_AnswerDisplay", model);
                 }
                 else
@@ -426,6 +428,16 @@ namespace RatherThis.Controllers
             model.OptionId2 = q.QuestionOptions.ElementAt(1).QuestionOptionID;
 
             return View("_CommentList",model);
+        }
+
+        public ActionResult Detail(int qid)
+        {
+            Question q = _questionRepo.Questions.Where(qe => qe.QuestionID == qid).FirstOrDefault();
+            QuestionDetailViewModel model = new QuestionDetailViewModel();
+            model.Question = q;
+            model.OptionText1 = q.QuestionOptions.ElementAt(0).OptionText;
+            model.OptionText2 = q.QuestionOptions.ElementAt(1).OptionText;
+            return View(model);
         }
     }
 }

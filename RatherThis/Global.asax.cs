@@ -29,6 +29,12 @@ namespace RatherThis
             );
 
             routes.MapRoute(
+                "QuestionDetail",
+                "Questions/{qid}",
+                new { controller = "Question", action="Detail" }
+            );
+
+            routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Question", action = "Index", id = UrlParameter.Optional } // Parameter defaults

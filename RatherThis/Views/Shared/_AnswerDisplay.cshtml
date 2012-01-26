@@ -72,19 +72,29 @@
     </div>
     
         <p class="ask-name answer">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
-        <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">SEE COMMENTS (@Model.NumComments)</a>
-        <div class="comment-container" style="display:none;">
+        @{ var displayCommentContainerStyle = ""; }
+        @if (!Model.IsShowAllComment)
+        {
+            <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">SEE COMMENTS (@Model.NumComments)</a>
+            displayCommentContainerStyle = "display:none;";
+        }
+        
+        <div class="comment-container" style="@displayCommentContainerStyle">
             <div id="question-@Model.QuestionId-comment" class="comment-box">
                 @{ 
-                Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
+        Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
                 }
             </div>
 
             <div id="question-@Model.QuestionId-comment-list" class="comment-list">
-            @{ Html.RenderAction("CommentList", "Question", new { qid = Model.QuestionId, listSize = 10 }); }
+            @{ Html.RenderAction("CommentList", "Question", new { qid = Model.QuestionId, listSize = Model.CommentListSize }); }
             </div>
-
-            <a class="question-detail-link" href="">view more</a>
+            
+            @*don't need to display the question detail link if we're showing all the comments alerady*@
+            @if (!Model.IsShowAllComment)
+            {
+            <a class="question-detail-link" href="@Url.Action("Detail", "Question", new { qid = Model.QuestionId })">view more</a>
+            }
         </div>
     </div>
 }   

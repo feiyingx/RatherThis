@@ -204,6 +204,7 @@
     <None Include="Content\fonts\RAYSHAND-REGULAR.TTF" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Account\UserDetail.cshtml" />
+    <Content Include="Views\Question\Detail.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -222,7 +223,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>45192</DevelopmentServerPort>
+          <DevelopmentServerPort>26034</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

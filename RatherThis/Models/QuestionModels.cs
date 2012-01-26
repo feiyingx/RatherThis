@@ -62,6 +62,27 @@ namespace RatherThis.Models
         public string QuestionUsername { get; set; }
         public CommentListViewModel CommentModel { get; set; }
         public int NumComments { get; set; }
+
+        private int _commentListSize = 9; //default size
+        public int CommentListSize
+        {
+            get { return _commentListSize; }
+            set { _commentListSize = value; }
+        }
+
+        private bool _showAllComment = false;
+        public bool IsShowAllComment
+        {
+            get { return _showAllComment; }
+            set { _showAllComment = value; }
+        }
+    }
+
+    public class QuestionDetailViewModel
+    {
+        public Question Question { get; set; }
+        public String OptionText1 { get; set; }
+        public String OptionText2 { get; set; }
     }
 
     public class CommentFormViewModel

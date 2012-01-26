@@ -1181,6 +1181,18 @@ div.misc p.message span
     font-weight: bold;
 }
 
+
+/* QUESTION DETAIL */
+h2.question-header span
+{
+    font-weight: bold;
+}
+
+h2.question-header
+{
+   
+}
+
 div.flash
 {
     margin-top: 10px;
