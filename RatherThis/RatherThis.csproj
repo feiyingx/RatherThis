@@ -205,6 +205,9 @@
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Account\UserDetail.cshtml" />
     <Content Include="Views\Question\Detail.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -65,6 +65,11 @@ body
     padding: 0;
 }
 
+textarea
+{
+    font-family: Tahoma, Verdana, arial;
+}
+
 .page
 {
     width: 1200px;
@@ -1143,9 +1148,9 @@ div.misc label span
 
 div.misc input[type=submit]
 {
-    margin-left: 250px;
+    margin-left: 253px;
     cursor: pointer;
-    width: 597px;
+    width: 594px;
     color: White;
     font-weight: bold;
     background-color: #393939;
@@ -1179,6 +1184,27 @@ div.misc p.message
 div.misc p.message span
 {
     font-weight: bold;
+}
+
+div.misc textarea
+{
+    width: 560px;
+    height: 200px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #ccc;
+}
+
+div.misc select
+{
+    width: 592px;
+    border: 1px solid #ccc;
+}
+
+label.contact-desc
+{
+    position: relative;
+    top: -192px;
 }
 
 
@@ -1215,4 +1241,21 @@ div.flash a
 div.flash a:hover
 {
     color: green;
+}
+
+.addthis_toolbox
+{
+    margin-top: 15px;
+}
+
+.addthis-left-nav
+{
+    margin-left: 5px;
+}
+
+p.share-copy
+{
+    margin-top: 30px;    
+    font-size: 11px;
+    padding-left: 5px;
 }

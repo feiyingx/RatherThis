@@ -6,30 +6,50 @@ using System.Web.Mvc;
 using RatherThis.Domain.Abstract;
 using RatherThis.Domain.Entities;
 using RatherThis.Models;
+using RatherThis.Service.Interface;
+using Ninject;
 
 namespace RatherThis.Controllers
 {
     public class HomeController : Controller
     {
-        private IQuestionRepository _questionRepo;
-        private int _pageSize = 10;
-
-        public HomeController(IQuestionRepository questionRepo)
-        {
-            _questionRepo = questionRepo;
-        }
-
-        public ActionResult Index(int page = 1)
-        {
-            List<Question> questions = _questionRepo.Questions.OrderByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
-            HomeIndexViewModel model = new HomeIndexViewModel();
-            model.Questions = questions;
-            return View(model);
-        }
+        [Inject]
+        public IEmailService EmailService { get; set; }
 
         public ActionResult About()
         {
             return View();
+        }
+
+        public ActionResult Terms()
+        {
+            return View();
+        }
+
+        public ActionResult Privacy()
+        {
+            return View();
+        }
+
+        public ActionResult Contact(string msg = "")
+        {
+
+            if (!string.IsNullOrEmpty(msg))
+            {
+                ViewBag.Flash = msg; 
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(ContactViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                EmailService.SendContactUsEmail(model.Email, model.Type, model.Description);
+                return RedirectToAction("Contact", new { msg = model.Email });
+            }
+            return View(model);
         }
     }
 }
