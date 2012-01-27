@@ -18,7 +18,7 @@ form.skip-form
     top: -36px;
 }
 
-#main
+#menu
 {
-    margin-top: 10px;
+    overflow:hidden;
 }
