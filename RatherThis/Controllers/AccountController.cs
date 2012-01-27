@@ -71,7 +71,7 @@ namespace RatherThis.Controllers
                 {
                     if (MembershipService.ValidateUser(model.Email, model.Password))
                     {
-                        FormsService.SignIn(model.Email, model.RememberMe);
+                        FormsService.SignIn(model.Email, true);
                         if (Url.IsLocalUrl(returnUrl))
                         {
                             return JavaScript("window.location = \"" + returnUrl + "\";");

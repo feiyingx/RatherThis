@@ -1,0 +1,174 @@
+﻿@using RatherThis.Code
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description" />
+    <meta property="og:image" content="@Constants.BaseUrl/images/share.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RatherThis" />
+
+
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcValidation.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.infieldlabel.min.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/global.js")" type="text/javascript"></script>
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" type="text/css" href="/Content/ie8.css" />
+    <![endif]-->
+    <!--[if IE 7]>
+        <link rel="stylesheet" type="text/css" href="/Content/ie7.css">
+    <![endif]-->
+    <style type="text/css">
+        @@-moz-document url-prefix() {
+            form.skip-form{
+                left: 77px;
+                top: -37px;
+            }
+        }
+    </style>
+
+    <!-- AddThis Button BEGIN -->
+    <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f20a4f962517250"></script>
+    <!-- AddThis Button END -->
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-28638518-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</head>
+
+<body>
+    <div class="page">
+        <div class="left-column">
+            <div id="title">
+                <a href="/"><img src="/images/logo.png" alt="RatherThis - Would you rather questions" /></a>
+            </div>
+
+            <div>
+            @if (!Utility.IsAuthenticated())
+            {
+                <a href="javascript:void(0);" onclick="toggleRegistration()" class="left-nav-link">REGISTER</a>
+                <div id="registration" class="left-column-form" style="display:none;">
+                    @{ Html.RenderAction("Register", "Account"); }
+                </div>
+                
+                <a href="javascript:void(0);" onclick="toggleLogin()" class="left-nav-link">LOGIN</a>
+                <div id="login" class="left-column-form">
+                    @{ Html.RenderAction("LogOn", "Account"); }
+                </div>
+            }
+            else
+            {
+                <a href="javascript:void(0);" onclick="toggleUserInfo()" class="left-nav-link">MY INFO</a>
+                <div id="user-info" class="left-column-form">
+                    @{ Html.RenderAction("UserSummary", "Account"); }
+                </div>
+                <a href="javascript:void(0);" onclick="toggleNewQuestion()" class="left-nav-link">NEW QUESTION</a>
+                <div id="new-question" class="left-column-form">
+                    @{ Html.RenderAction("New", "Question"); }
+                </div>
+                <a href="@Url.Action("LogOff", "Account")" class="left-nav-link">LOG OUT</a>
+            }
+            
+            <!-- AddThis Button BEGIN -->
+            <p class="share-copy">Share RATHERTHIS with your friends!</p>
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style addthis-left-nav" addthis:url="@RatherThis.Code.Constants.BaseUrl@Url.Action("Index","Question")">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_digg"></a>
+                <a class="addthis_button_reddit"></a>
+                <a class="addthis_button_compact"></a>
+            </div>
+    <!-- AddThis Button END -->
+
+            <ul class="footer-nav">
+                <li><a href="@Url.Action("About","Home")">About</a></li>
+                <li><a href="@Url.Action("Privacy","Home")">Privacy</a></li>
+                <li><a href="@Url.Action("Terms","Home")">Terms</a></li>
+                <li><a href="@Url.Action("Contact","Home")">Contact Us</a></li>
+            </ul>
+            </div>
+
+        </div>
+        
+        <div class="main-column">
+            <div id="menucontainer">
+                @{ 
+                    var topViewedSort = RatherThis.Code.Constants.QuestionSort.TOP_VIEWED.ToString().ToLower();
+                    var genderFemale = RatherThis.Code.Constants.Gender.F.ToString().ToLower();
+                    var genderMale = RatherThis.Code.Constants.Gender.M.ToString().ToLower();
+                }
+                <ul id="menu">
+                    @{
+                        var latestUrl = Url.Action("Index", "Question").ToLower();
+                        var topViewedUrl = Url.Action("Index", "Question", new { sort = topViewedSort }, null).ToLower();
+                        var ladiesUrl = Url.Action("Index", "Question", new { gender = genderFemale }, null).ToLower();
+                        var guysUrl = Url.Action("Index", "Question", new { gender = genderMale }, null).ToLower();
+
+                        var latestClass = "";
+                        var topViewedClass = "";
+                        var ladiesClass = "";
+                        var guysClass = "";
+
+                        var currentUrl = Request.Url.PathAndQuery.ToString().ToLower();
+                        var pageQueryIndex = currentUrl.IndexOf("page=");
+                        
+                        currentUrl = pageQueryIndex > 0 ? currentUrl.Substring(0, pageQueryIndex - 1) : currentUrl;
+                        if (latestUrl == currentUrl)
+                        {
+                            latestClass = "current";
+                        }
+                        if (topViewedUrl == currentUrl)
+                        {
+                            topViewedClass = "current";
+                        }
+                        if (ladiesUrl == currentUrl)
+                        {
+                            ladiesClass = "current";
+                        }
+                        if (guysUrl == currentUrl)
+                        {
+                            guysClass = "current";
+                        }
+                    }
+                    <li><a href="@latestUrl" class="@latestClass">LATEST</a></li>
+                    <li><a href="@topViewedUrl" class="@topViewedClass">TOP VIEWED</a></li>
+                    <li><a href="@ladiesUrl" class="@ladiesClass">FOR THE LADIES</a></li>
+                    <li><a href="@guysUrl" class="@guysClass">FOR THE GUYS</a></li>
+                </ul>
+            </div>
+            <div id="main" class="clear">
+                @RenderBody()
+
+                <div class="clear"></div>
+            </div>
+            
+        </div>
+
+        <div id="footer clear">
+            
+        </div>
+    </div>
+</body>
+</html>

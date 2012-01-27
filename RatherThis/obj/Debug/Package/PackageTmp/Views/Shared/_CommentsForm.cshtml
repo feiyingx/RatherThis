@@ -1,0 +1,19 @@
+﻿@model RatherThis.Models.CommentFormViewModel
+@{
+    Layout = null;
+    var containerId = string.Format("question-{0}-comment", Model.QuestionId);
+    var reloadComments = string.Format("loadComments('{0}','{1}', {2}, 10);", containerId + "-list", "", Model.QuestionId);
+}
+
+@using (Ajax.BeginForm("NewComment", "Question",new { qid = Model.QuestionId, oid = Model.AnsweredOptionId }, new AjaxOptions
+        {
+            UpdateTargetId= containerId,
+            InsertionMode = InsertionMode.Replace,
+            LoadingElementId = containerId + "ajax-loading",
+            OnSuccess = reloadComments
+        }))
+{
+    @Html.TextAreaFor(m => m.Comment)
+
+    <input type="submit" value="Post Comment" />
+}

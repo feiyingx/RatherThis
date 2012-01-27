@@ -1,0 +1,21 @@
+﻿@model RatherThis.Models.CommentListViewModel
+@using RatherThis.Code
+@{
+    Layout = null;
+}
+
+
+@if (Model != null && Model.Comments != null && Model.Comments.Count() > 0)
+{
+    
+    foreach (var comment in Model.Comments)
+    {
+        var commentClass = string.Format("comment-{0}", comment.User.Gender);
+        <div class="comment-item @commentClass">
+            <p class="comment-item-header @commentClass"><a class="name" href="@Url.Action("UserDetail", "Account", new { username=comment.User.Username })">@comment.User.Username</a></p>
+            <p class="comment-item-body">@comment.CommentText</p>
+            <span class="date">@comment.DateCreated.TimeAgo()</span>
+        </div>
+    }
+    
+}

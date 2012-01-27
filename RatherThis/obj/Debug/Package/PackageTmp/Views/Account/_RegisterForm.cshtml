@@ -1,0 +1,53 @@
+﻿@model RatherThis.Models.RegisterModel
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("Register", "Account", new AjaxOptions{
+            UpdateTargetId = "registration",
+            InsertionMode = InsertionMode.Replace,
+            LoadingElementId = "registration-ajax-loading"
+        })) 
+    {
+    @Html.ValidationSummary()
+    <div>
+        <fieldset>
+            <div class="editor-field gender-field">
+                <span class="female">@Html.RadioButtonFor(m => m.Gender, "F", new{id="gender-female"})<label for="gender-female" >Female</label></span>
+                <span class="male">@Html.RadioButtonFor(m => m.Gender, "M", new{id="gender-male"})<label for="gender-male" >Male</label></span>
+                
+            </div>
+
+            <div class="editor-field">
+                <label for="register-username" >Enter Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { id="register-username" })
+            </div>
+
+            <div class="editor-field">
+                <label for="register-email" >Enter Email</label>
+                @Html.TextBoxFor(m => m.Email, new { id = "register-email" })
+            </div>
+
+            <div class="editor-field">
+                <label for="register-pw" >Enter Password</label>
+                @Html.PasswordFor(m => m.Password, new { id="register-pw" })
+            </div>
+
+            <div class="editor-field">
+                <label for="register-pw-confirm" >Confirm Password</label>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { id="register-pw-confirm" })
+            </div>
+
+            <div class="editor-field agree-to-terms">
+                <input type="checkbox" id="agree-to-terms" name="IsAgreeToTerms" data-val="true" data-val-mandatory="Please agree with our Terms and Privacy Policy." value="true" />
+                
+                <label for="agree-to-terms">I understand and agree with the RatherThis <a href="@Url.Action("Terms","Home")" target="_blank">TERMS</a> and <a href="@Url.Action("Privacy","Home")" target="_blank">PRIVACY POLICY</a>.</label>
+            </div>
+
+            <p>
+                <input type="submit" value="SIGN UP" />
+            </p>
+        </fieldset>
+    </div>
+}
+

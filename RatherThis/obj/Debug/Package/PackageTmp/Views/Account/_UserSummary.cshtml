@@ -1,0 +1,18 @@
+﻿@model RatherThis.Models.UserSummaryViewModel
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+<h2><span>@Model.Name</span> is in the house!</h2>
+<p class="stats">
+    I've <span>asked @Model.NumQuestions</span> questions.
+    <br />
+    I've <span>answered @Model.NumAnswers</span> questions.
+</p>
+    
+<a class="info-button first" href="@Url.Action("EditProfile","Account")">Edit My Profile</a>
+<a class="info-button" href="@Url.Action("UserDetail", "Account", new { username = Model.Username })">View Summary</a>
+    <div class="clear"></div>
+}

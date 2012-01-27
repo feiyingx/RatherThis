@@ -16,11 +16,13 @@ namespace RatherThis.Service
         {
             StringBuilder body = new StringBuilder();
             body.AppendLine("Thank you for signing up with RatherThis.com!");
+            body.AppendLine("Come out here, have some fun and start asking some questions!");
+            body.AppendLine("http://www.ratherthis.com");
             body.AppendLine("");
             body.AppendLine("Thank you again!");
             body.AppendLine("From RatherThis");
 
-            SendEmail("welcome@RatherThis.com", email, "Welcome to RatherThis!", body.ToString());
+            SendEmail(email, "Welcome to RatherThis!", body.ToString());
         }
 
         public void SendResetPasswordEmail(string email, string resetToken)
@@ -32,58 +34,60 @@ namespace RatherThis.Service
             body.AppendLine("");
             body.AppendLine("From RatherThis");
 
-            SendEmail("noreply@RatherThis.com", email, "Password Reset | RatherThis", body.ToString());
+            SendEmail(email, "Password Reset | RatherThis", body.ToString());
         }
 
         public void SendContactUsEmail(string senderEmail, string contactType, string comment)
         {
             StringBuilder emailToSender = new StringBuilder();
-            emailToSender.AppendLine("Thank you for taking the time to reach out to us! We will get back to you as soon as possible.");
+            emailToSender.AppendLine("Thank you for taking the time to reach out to us!");
+            emailToSender.Append("We will get back to you as soon as possible.");
             emailToSender.AppendLine("Please feel free to reach out to us any time!");
+            emailToSender.Append("");
             emailToSender.AppendLine("Thank you!");
             emailToSender.AppendLine("From RatherThis");
 
-            SendEmail("noreply@RatherThis.com", senderEmail, "Contact Us | RatherThis", emailToSender.ToString());
+            SendEmail(senderEmail, "Contact Us | RatherThis", emailToSender.ToString());
 
             StringBuilder emailToUs = new StringBuilder();
             emailToUs.AppendLine("Contact email: " + senderEmail);
             emailToUs.AppendLine("Contact type: " + contactType);
             emailToUs.AppendLine("Comment: " + comment);
 
-            SendEmail("contact-us@RatherThis.com", "contact-us@RatherThis.com", "Contact Us Email", emailToUs.ToString());
+            SendEmail("ratherthis@gmail.com", "Contact Us Email", emailToUs.ToString());
         }
 
         public void SendErrorEmail(string stackTrace)
         {
-            SendEmail("error@RatherThis.com", "ratherthis@gmail.com", "Error Email", stackTrace);
+            SendEmail("ratherthis@gmail.com", "Error Email", stackTrace);
         }
 
-        private void SendEmail(string fromAddress, string toAddress, string subject, string body)
+        private void SendEmail(string toAddress, string subject, string body)
         {
-            using (var smtpClient = new SmtpClient())
-            {
-                smtpClient.EnableSsl = Config.EmailSettings.UseSsl();
-                smtpClient.Host = Config.EmailSettings.ServerName();
-                smtpClient.Port = Config.EmailSettings.ServerPort();
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(Config.EmailSettings.Username(), Config.EmailSettings.Password());
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("no-reply@ratherthis.com");
+                mail.To.Add(toAddress);
+                mail.Subject = subject;
+                mail.Body = body;
+
+                SmtpClient smtp = new SmtpClient(Config.EmailSettings.ServerName());
+                NetworkCredential credentials = new NetworkCredential(Config.EmailSettings.Username(), Config.EmailSettings.Password());
+                smtp.Credentials = credentials;
 
                 if (Config.EmailSettings.WriteAsFile())
                 {
-                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                    smtpClient.PickupDirectoryLocation = Config.EmailSettings.FileLocation();
-                    smtpClient.EnableSsl = false;
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+                    smtp.PickupDirectoryLocation = Config.EmailSettings.FileLocation();
+                    smtp.EnableSsl = false;
                 }
-
-                MailMessage mail = new MailMessage(fromAddress, toAddress, subject, body);
 
                 if (Config.EmailSettings.WriteAsFile())
                 {
                     mail.BodyEncoding = Encoding.ASCII;
                 }
-
-                smtpClient.Send(mail);
-            }
+            
+                smtp.Send(mail);
+            
         }
     }
 }

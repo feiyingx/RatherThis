@@ -1,0 +1,17 @@
+﻿@model QuestionDetailViewModel
+@using RatherThis.Models
+@{
+    ViewBag.Title = "Would you rather @Model.OptionText1 or @Model.OptionText2? | RatherThis";
+}
+
+<div class="user-detail">
+<h2 class="question-header">Would you rather <span>@Model.OptionText1</span> or <span>@Model.OptionText2</span>?</h2>
+@{ var questionContainerId = string.Format("question-container-{0}", Model.Question.QuestionID); }
+            
+<div id="@questionContainerId" class="question-container">
+    @* listSize = 0 will tell the comment list control to generate all comments *@
+@{ Html.RenderAction("RenderQuestion", "Question", new { qid = Model.Question.QuestionID, commentListSize = 0, showAllComments = true }); }
+</div>
+
+</div>
+

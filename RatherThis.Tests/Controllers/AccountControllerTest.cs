@@ -149,7 +149,7 @@ namespace RatherThis.Tests.Controllers
             {
                 //UserName = "someUser",
                 Password = "goodPassword",
-                RememberMe = false
+                //RememberMe = false
             };
 
             // Act
@@ -172,7 +172,7 @@ namespace RatherThis.Tests.Controllers
             {
                 //UserName = "someUser",
                 Password = "goodPassword",
-                RememberMe = false
+                //RememberMe = false
             };
 
             // Act
@@ -194,7 +194,7 @@ namespace RatherThis.Tests.Controllers
             {
                 //UserName = "someUser",
                 Password = "goodPassword",
-                RememberMe = false
+                //RememberMe = false
             };
 
             // Act
@@ -217,7 +217,7 @@ namespace RatherThis.Tests.Controllers
             {
                 //UserName = "someUser",
                 Password = "goodPassword",
-                RememberMe = false
+                //RememberMe = false
             };
             controller.ModelState.AddModelError("", "Dummy error message.");
 
@@ -239,7 +239,7 @@ namespace RatherThis.Tests.Controllers
             {
                 //UserName = "someUser",
                 Password = "badPassword",
-                RememberMe = false
+                //RememberMe = false
             };
 
             // Act
