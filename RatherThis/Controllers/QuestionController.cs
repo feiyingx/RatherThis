@@ -58,7 +58,7 @@ namespace RatherThis.Controllers
                     _optionRepo.SaveQuestionOption(option1);
                     _optionRepo.SaveQuestionOption(option2);
 
-                    return JavaScript("window.location.reload();");
+                    return JavaScript("window.location.href = 'http://" + Request.Url.Authority + "';");
                 }
             }
             else
