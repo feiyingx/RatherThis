@@ -86,6 +86,7 @@
   <ItemGroup>
     <Content Include="Content\ie7.css" />
     <Content Include="Content\ie8.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="images\arrow.png" />
     <Content Include="images\check.png" />
