@@ -24,7 +24,9 @@
                 UpdateTargetId = questionContainerId,
                 InsertionMode = InsertionMode.Replace,
                 LoadingElementId = ajaxLoaderId,
-                OnSuccess = "reinitAddThis()"
+                OnSuccess = "reinitAddThis()",
+                OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-vote-loading", ajaxLoaderId + "-vote", ajaxLoaderId + "-skip-disable", ajaxLoaderId + "-skip"),
+                LoadingElementDuration = 2000
             }))
     {
            
@@ -52,7 +54,9 @@
         @* display the vote button if user is logged in, otherwise show a call to action link to register or login *@
         @if (Model.IsLoggedIn)
         {
-        <input class="btn-question-action vote" onclick="validateAnswer('@questionContainerId')" type="submit" value="VOTE" />
+            <input id="@ajaxLoaderId-vote" class="btn-question-action vote" onclick="validateAnswer('@questionContainerId')" type="submit" value="VOTE" />
+            <input id="@ajaxLoaderId-vote-loading" class="btn-question-action vote loading" type="button" value="" disabled style="display:none;" />
+            <input id="@ajaxLoaderId-vote-disable" class="btn-question-action vote" type="button" value="VOTE" disabled style="display:none;"/>
         }
         </div>
     }
@@ -64,14 +68,20 @@
             UpdateTargetId = questionContainerId,
             InsertionMode = InsertionMode.Replace,
             LoadingElementId = ajaxLoaderId,
-            OnSuccess = "reinitAddThis()"
+            OnSuccess = "reinitAddThis()",
+            OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-skip-loading", ajaxLoaderId + "-skip", ajaxLoaderId+"-vote-disable", ajaxLoaderId+"-vote"),
+            LoadingElementDuration = 2000
         }, new { @class = "skip-form" }))
         {
             @* 0 is the value for any questions answered by skipping *@
             <input type="hidden" name="oid" value="0" />
-            <input class="btn-question-action skip" type="submit" value="SKIP" />
+            <input id="@ajaxLoaderId-skip" class="btn-question-action skip" type="submit" value="SKIP" />
+            <input id="@ajaxLoaderId-skip-loading" class="btn-question-action skip loading" type="button" value="" disabled style="display:none;"/>
+            <input id="@ajaxLoaderId-skip-disable" class="btn-question-action skip" type="button" value="SKIP" disabled style="display:none;"/>
+            
         }
     }
+
     <p class="ask-name">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
 
     @if (!Model.IsLoggedIn)

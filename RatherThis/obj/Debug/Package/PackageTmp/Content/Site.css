@@ -496,6 +496,12 @@ h1.question
     width: 170px;
 }
 
+#new-question input[type="submit"][disabled]
+{
+    background: white url('/images/ajax-loader-white.gif') no-repeat center center;
+    cursor: default;
+}
+
 .question-container
 {
     width: 270px;
@@ -608,6 +614,24 @@ input.btn-question-action
 .btn-question-action.skip:hover
 {
     background-color: #d20522;
+}
+
+input.btn-question-action[disabled]
+{
+    cursor: default;
+    color: #595959;
+}
+
+input.btn-question-action[disabled]:hover
+{
+    background-color:#393939;
+}
+
+input.btn-question-action.loading[disabled]
+{
+    background: #393939 url('/images/ajax-loader-gray.gif') no-repeat center center;
+    padding-left: 30px;
+    padding-right: 30px;    
 }
 
 div.question-display form

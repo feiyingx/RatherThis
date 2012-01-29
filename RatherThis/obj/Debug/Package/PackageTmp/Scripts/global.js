@@ -92,6 +92,18 @@ function validateAnswer(questionContainerId) {
     return false;
 }
 
+function loadWhileAnswer(actionButtonToLoad, actionButtonToHide, inactiveButtonToDisable, inactiveButtonToHide) {
+    $("#" + actionButtonToHide).hide();
+    $("#" + inactiveButtonToHide).hide();
+
+    $("#" + actionButtonToLoad).show();
+    $("#" + inactiveButtonToDisable).show();
+}
+
+function loadWhileNewQuestion() {
+    $("#new-question-submit").hide();
+    $("#new-question-submit-loading").show();
+}
 //this function makes sure when the user selects an answer, then we hide the validation summary for the question
 function initOptionValidation() {
     $(".option-container input[type='radio']").bind('click', function (e) {

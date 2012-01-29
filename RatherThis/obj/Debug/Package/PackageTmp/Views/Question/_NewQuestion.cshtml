@@ -8,7 +8,8 @@
         {
             UpdateTargetId = "new-question",
             InsertionMode = InsertionMode.Replace,
-            LoadingElementId = "new-question-ajax-loading"
+            LoadingElementId = "new-question-ajax-loading",
+            OnBegin = "loadWhileNewQuestion()"
         }))
 {
     <div class="editor-field gender-field">
@@ -29,6 +30,7 @@
     @Html.TextAreaFor(m => m.Option2)
     </div>
 
-    <input type="submit" value="ASK QUESTION" />
+    <input type="submit" value="ASK QUESTION" id="new-question-submit" />
+    <input type="submit" value="" id="new-question-submit-loading" disabled style="display:none;" />
 }
 
