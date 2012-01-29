@@ -265,11 +265,17 @@ namespace RatherThis.Controllers
                 {
                     if (currentQuestion != null)
                     {
-                        Answer newAnswer = new Answer();
-                        newAnswer.QuestionID = qid;
-                        newAnswer.QuestionOptionID = oid;
-                        newAnswer.UserID = _membershipService.GetCurrentUserId();
-                        _answerRepo.SaveAnswer(newAnswer);
+                        Guid currentUserId = _membershipService.GetCurrentUserId();
+                        //check if user has already answered, COURTESY OF JERM
+                        Answer existingAnswer = _answerRepo.Answers.Where(a => a.QuestionID == qid && a.UserID == currentUserId).FirstOrDefault();
+                        if (existingAnswer == null)
+                        {
+                            Answer newAnswer = new Answer();
+                            newAnswer.QuestionID = qid;
+                            newAnswer.QuestionOptionID = oid;
+                            newAnswer.UserID = currentUserId;
+                            _answerRepo.SaveAnswer(newAnswer);
+                        }
                     }
 
                 }
