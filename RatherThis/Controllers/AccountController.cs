@@ -169,6 +169,14 @@ namespace RatherThis.Controllers
                     model.NumAnswers = currentUser.Answers.Count();
                     model.NumQuestions = currentUser.Questions.Count();
                     model.Username = currentUser.Username;
+                    //use the same random greeting message within the same session
+                    string greetingMessage = (string)Session["greeting-msg"];
+                    if (string.IsNullOrEmpty(greetingMessage))
+                    {
+                        greetingMessage = Utility.GetGreetingMessage(currentUser.Username);
+                        Session["greeting-msg"] = greetingMessage;
+                    }
+                    model.GreetingMessage = greetingMessage;
 
                     return View("_UserSummary", model);
                 }

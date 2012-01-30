@@ -103,6 +103,7 @@ namespace RatherThis.Models
         public int NumQuestions { get; set; }
         public int NumAnswers { get; set; }
         public string Username { get; set; }
+        public string GreetingMessage { get; set; }
     }
 
     public class ForgotPasswordViewModel

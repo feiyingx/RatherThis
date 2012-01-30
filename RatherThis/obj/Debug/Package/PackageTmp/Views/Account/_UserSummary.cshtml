@@ -5,7 +5,7 @@
 
 @if (Model != null)
 {
-<h2><span>@Model.Name</span> is in the house!</h2>
+<h2>@Html.Raw(Model.GreetingMessage)</h2>
 <p class="stats">
     I've <span>asked @Model.NumQuestions</span> questions.
     <br />
