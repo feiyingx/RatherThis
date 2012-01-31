@@ -19,3 +19,4 @@ C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis.Tests\bin\Debug\
 C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis.Tests\bin\Debug\Ninject.xml
 C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis.Tests\bin\Debug\BCrypt.Net.pdb
 C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis.Tests\bin\Debug\BCrypt.Net.xml
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis.Tests\bin\Debug\Newtonsoft.Json.dll

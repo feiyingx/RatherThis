@@ -5,6 +5,11 @@
 }
 
 <p class="login-message">Login to ASK and ANSWER questions</p>
+
+                
+<fb:login-button scope="email,user_checkins" onlogin="afterFacebookConnect();"></fb:login-button>
+<div id="fb-root" style="margin-bottom: 10px;"></div>
+
 @using (Ajax.BeginForm("LogOn", "Account", new AjaxOptions
         {
             UpdateTargetId = "login",
@@ -33,4 +38,30 @@
     </div>
 }
 
+<script src="//connect.facebook.net/en_US/all.js"></script>
+ <script>
+     FB.init({
+         appId: '@RatherThis.Code.Config.FacebookAppId',
+         status: true, // check login status
+         cookie: true, // enable cookies to allow server to access session,
+         xfbml: true, // enable XFBML and social plugins
+         oauth: true, // enable OAuth 2.0
+         channelUrl: '@RatherThis.Code.Config.ChannelUrl' //custom channel
+     });
 
+     function afterFacebookConnect() {
+         FB.getLoginStatus(function (response) {
+             if ((response.status) && (response.status == 'connected')) {
+                 window.location = "/Account/FacebookLogin?token=" +
+                        response.authResponse.accessToken;
+             } else {
+                 // user clicked Cancel
+             }
+         });
+     }
+
+//     FB.Event.subscribe('auth.login', function (response) {
+//         // do something with response
+//         alert('in');
+//     });
+ </script>

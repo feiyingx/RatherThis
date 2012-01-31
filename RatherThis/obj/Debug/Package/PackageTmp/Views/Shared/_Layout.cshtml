@@ -1,16 +1,17 @@
 ﻿@using RatherThis.Code
 
 <!DOCTYPE html>
-<html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>@ViewBag.Title</title>
     <meta name="description" content="'Would you rather..' questions that make you smile, think, and laugh." />
-    <meta name="keywords" content="would you rather, would you rather questions, rather this, ratherthis.com, i would rather, i rather, fun questions, funny questions, interesting questions" />
+    <meta name="keywords" content="would you rather, would you rather questions, rather this, ratherthis.com, i would rather, i rather, fun questions, funny questions, interesting questions, hypothetical questions" />
 
     <meta property="og:image" content="@Constants.BaseUrl/images/share.png" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="RatherThis" />
+    <meta property="fb:app_id" content="342260072473856" />
 
 
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
@@ -43,6 +44,11 @@
 
     <!-- AddThis Button BEGIN -->
     <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f20a4f962517250"></script>
+    <script type="text/javascript">
+        var addthis_config = {
+            data_track_clickback: false
+        }
+    </script>
     <!-- AddThis Button END -->
 
     <!-- Google Analytics -->
@@ -71,15 +77,17 @@
             <div>
             @if (!Utility.IsAuthenticated())
             {
-                <a href="javascript:void(0);" onclick="toggleRegistration()" class="left-nav-link">REGISTER</a>
-                <div id="registration" class="left-column-form" style="display:none;">
-                    @{ Html.RenderAction("Register", "Account"); }
-                </div>
-                
                 <a href="javascript:void(0);" onclick="toggleLogin()" class="left-nav-link">LOGIN</a>
                 <div id="login" class="left-column-form">
                     @{ Html.RenderAction("LogOn", "Account"); }
                 </div>
+                
+                <a href="javascript:void(0);" onclick="toggleRegistration()" class="left-nav-link">REGISTER</a>
+                <div id="registration" class="left-column-form">
+                    @{ Html.RenderAction("Register", "Account"); }
+                </div>
+                
+                
             }
             else
             {
@@ -93,23 +101,27 @@
                 </div>
                 <a href="@Url.Action("LogOff", "Account")" class="left-nav-link">LOG OUT</a>
             }
-            
+           
+                        
             <!-- AddThis Button BEGIN -->
-            <p class="share-copy">Share RATHERTHIS with your friends!</p>
-            <div class="addthis_toolbox addthis_default_style addthis_32x32_style addthis-left-nav" addthis:url="@RatherThis.Code.Constants.BaseUrl@Url.Action("Index","Question")">
+            <p class="share-copy">Share RATHERTHIS</p>
+            <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.ratherthis.com&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font&amp;height=21&amp;appId=342260072473856" scrolling="no" frameborder="0" 
+            style="border:none; overflow:hidden; width:200px; height:21px; position:relative; top: -15px; left: 110px;" allowTransparency="true"></iframe>
+@*            <div class="addthis_toolbox addthis_default_style addthis_32x32_style addthis-left-nav" addthis:url="@RatherThis.Code.Constants.BaseUrl@Url.Action("Index", "Question")">
                 <a class="addthis_button_preferred_1"></a>
                 <a class="addthis_button_preferred_2"></a>
                 <a class="addthis_button_digg"></a>
                 <a class="addthis_button_reddit"></a>
                 <a class="addthis_button_compact"></a>
-            </div>
-    <!-- AddThis Button END -->
+            </div>*@
+
+            <!-- AddThis Button END -->
 
             <ul class="footer-nav">
-                <li><a href="@Url.Action("About","Home")">About</a></li>
-                <li><a href="@Url.Action("Privacy","Home")">Privacy</a></li>
-                <li><a href="@Url.Action("Terms","Home")">Terms</a></li>
-                <li><a href="@Url.Action("Contact","Home")">Contact Us</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+                <li><a href="@Url.Action("Terms", "Home")">Terms</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact Us</a></li>
             </ul>
             </div>
 
@@ -136,7 +148,7 @@
 
                         var currentUrl = Request.Url.PathAndQuery.ToString().ToLower();
                         var pageQueryIndex = currentUrl.IndexOf("page=");
-                        
+
                         currentUrl = pageQueryIndex > 0 ? currentUrl.Substring(0, pageQueryIndex - 1) : currentUrl;
                         if (latestUrl == currentUrl)
                         {
@@ -173,5 +185,7 @@
             
         </div>
     </div>
+
+    
 </body>
 </html>

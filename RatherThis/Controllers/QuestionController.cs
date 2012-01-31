@@ -126,7 +126,7 @@ namespace RatherThis.Controllers
                 //if we havent set a page title yet, that means it's not a gender page
                 if (string.IsNullOrEmpty(pageTitle))
                 {
-                    pageTitle = "Latest Questions | RatherThis";
+                    pageTitle = "Would You Rather Questions... | RatherThis";
                 }
             }
             ViewBag.Title = pageTitle;

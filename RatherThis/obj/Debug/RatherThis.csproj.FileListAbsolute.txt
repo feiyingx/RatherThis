@@ -13,3 +13,4 @@ C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\BCrypt.Net.x
 C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\Ninject.pdb
 C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\Ninject.xml
 C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\EntityFramework.xml
+C:\Users\Sexy\Desktop\Projects\RatherThis\RatherThis\RatherThis\bin\Newtonsoft.Json.dll

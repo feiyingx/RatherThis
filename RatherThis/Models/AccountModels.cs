@@ -156,6 +156,7 @@ namespace RatherThis.Models
 
         bool ValidateUser(string email, string password);
         MembershipCreateStatus CreateUser(string userName, string password, string email, string gender);
+        MembershipCreateStatus CreateUser(string userName, string password, string email, string gender, string accountType, string externalID);
         MembershipCreateStatus UpdateUser(Guid userId, string username, string password, string email);
         bool ChangePassword(string userName, string oldPassword, string newPassword);
         Guid GetCurrentUserId();
@@ -225,6 +226,20 @@ namespace RatherThis.Models
 
             MembershipCreateStatus status;
             _provider.CreateUser(userName, password, email, gender, out status);
+            return status;
+        }
+
+        public MembershipCreateStatus CreateUser(string userName, string password, string email, string gender, string accountType, string externalID)
+        {
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
+            if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
+            if (String.IsNullOrEmpty(email)) throw new ArgumentException("Value cannot be null or empty.", "email");
+            if (String.IsNullOrEmpty(accountType)) throw new ArgumentException("Value cannot be null or empty.", "accountType");
+            if (String.IsNullOrEmpty(externalID)) throw new ArgumentException("Value cannot be null or empty.", "externalID");
+            if (gender == null) throw new ArgumentException("Value cannot be null or empty.", "gender");
+
+            MembershipCreateStatus status;
+            _provider.CreateUser(userName, password, email, gender, accountType, externalID, out status);
             return status;
         }
 

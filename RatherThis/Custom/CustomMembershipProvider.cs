@@ -68,6 +68,34 @@ namespace RatherThis.Custom
             return newUser.ConvertToMembershipUser();
         }
 
+        public MembershipUser CreateUser(string username, string password, string email, string gender, string accountType, string externalID, out MembershipCreateStatus status)
+        {
+            //check if username exists
+            if (UserRepository.Users.Where(u => u.Username.Equals(username)).Count() > 0)
+            {
+                status = MembershipCreateStatus.DuplicateUserName;
+                return null;
+            }
+            //check if email exists
+            if (UserRepository.Users.Where(u => u.Email.Equals(email)).Count() > 0)
+            {
+                status = MembershipCreateStatus.DuplicateEmail;
+                return null;
+            }
+
+            User newUser = new User();
+            newUser.Email = email;
+            newUser.Password = BCrypt.Net.BCrypt.HashPassword(password);
+            newUser.Username = username;
+            newUser.Gender = gender;
+            newUser.AccountType = accountType;
+            newUser.ExternalUserID = externalID;
+            UserRepository.SaveUser(newUser);
+            status = MembershipCreateStatus.Success;
+
+            return newUser.ConvertToMembershipUser();
+        }
+
         public MembershipUser UpdateUser(Guid userId, string username, string password, string email, out MembershipCreateStatus status)
         {
             User currentUser = UserRepository.Users.Where(u => u.UserID == userId).FirstOrDefault();

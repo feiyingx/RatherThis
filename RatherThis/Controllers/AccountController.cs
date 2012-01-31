@@ -14,6 +14,8 @@ using RatherThis.Domain.Entities;
 using Ninject;
 using RatherThis.Service.Interface;
 using RatherThis.Code;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace RatherThis.Controllers
 {
@@ -133,7 +135,7 @@ namespace RatherThis.Controllers
 
                     if (createStatus == MembershipCreateStatus.Success)
                     {
-                        FormsService.SignIn(model.Email, false /* createPersistentCookie */);
+                        FormsService.SignIn(model.Email, true /* createPersistentCookie */);
                         return JavaScript("window.location.reload();");
                     }
                     else
@@ -525,6 +527,58 @@ namespace RatherThis.Controllers
             }
             return View(userDetailViewModel);
         }
+
+        [HttpGet]
+        public ActionResult FacebookLogin(string token)
+        {
+            WebClient client = new WebClient();
+            string jsonResult = client.DownloadString(string.Concat(
+                "https://graph.facebook.com/me?access_token=", token));
+
+            JObject jsonUserInfo = JObject.Parse(jsonResult);
+
+            string username = jsonUserInfo.Value<string>("username");
+            string firstName = jsonUserInfo.Value<string>("first_name");
+            string lastName = jsonUserInfo.Value<string>("last_name");
+            if (string.IsNullOrEmpty(username))
+            {
+                string usernamePart2 = (lastName.Length > 1) ? lastName.Substring(0, 2) : lastName;
+                //generate a username using first name and last 2 letters of last name
+                username = string.Format("{0}{1}", firstName, usernamePart2);
+            }
+            string email = jsonUserInfo.Value<string>("email");
+            Int64 facebook_userID = jsonUserInfo.Value<Int64>("id");
+            string gender = jsonUserInfo.Value<string>("gender");
+
+            //see if user already exists, if so, authenticate the user, otherwise create an account for the user using their fbID and authenticate them
+            if (!string.IsNullOrEmpty(email))
+            {
+                User siteUser = _userRepo.Users.Where(u => u.Email.Equals(email)).FirstOrDefault();
+                if (siteUser != null)
+                {
+                    FormsService.SignIn(email, true);
+                }
+                else
+                {
+                    string genderChar = "";
+                    if(gender == "male"){
+                        genderChar = "M";
+                    }else if(gender == "female"){
+                        genderChar = "F";
+                    }
+                    //use the overrided CreateUser method 
+                    MembershipCreateStatus createStatus = MembershipService.CreateUser(username, DateTime.Now.ToString("ddMMMyyyyhhmmss") ,email, genderChar, "facebook", facebook_userID.ToString());
+
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+                        FormsService.SignIn(email, true/* createPersistentCookie */);
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", "Question");
+        }
+
 
         // **************************************
         // URL: /Account/ChangePassword

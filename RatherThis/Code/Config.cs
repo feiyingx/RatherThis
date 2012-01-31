@@ -8,6 +8,37 @@ namespace RatherThis.Code
 {
     public class Config
     {
+        public static string FacebookAppId
+        {
+            get
+            {
+                if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
+                {
+                    //return localhost app id
+                    return "170210959753986";
+                }
+                else
+                {
+                    return "342260072473856";
+                }
+            }
+        }
+
+        public static string ChannelUrl
+        {
+            get
+            {
+                if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
+                {
+                    return "localhost:26034/channel.html";
+                }
+                else
+                {
+                    return "http://www.ratherthis.com/channel.html";
+                }
+            }
+        }
+
         public static class EmailSettings
         {
             private static string _usernameKey = "SmtpUsername";

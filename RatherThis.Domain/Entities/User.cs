@@ -13,6 +13,8 @@ namespace RatherThis.Domain.Entities
         public string Password { get; set; }
         public string Username { get; set; }
         public string Gender { get; set; }
+        public string AccountType { get; set; }
+        public string ExternalUserID { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
 

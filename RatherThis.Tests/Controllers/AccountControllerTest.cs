@@ -463,6 +463,12 @@ namespace RatherThis.Tests.Controllers
             {
                 throw new NotImplementedException();
             }
+
+
+            public MembershipCreateStatus CreateUser(string userName, string password, string email, string gender, string accountType, string externalID)
+            {
+                throw new NotImplementedException();
+            }
         }
 
     }
