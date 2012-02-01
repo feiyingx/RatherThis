@@ -109,6 +109,7 @@ namespace RatherThis.Controllers
 
         public ActionResult LogOff()
         {
+            Session["greeting-msg"] = ""; //reset the greeting msg when you log out
             FormsService.SignOut();
 
             return RedirectToAction("Index", "Question");
