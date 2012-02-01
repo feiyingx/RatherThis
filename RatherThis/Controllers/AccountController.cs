@@ -16,6 +16,7 @@ using RatherThis.Service.Interface;
 using RatherThis.Code;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using RatherThis.Code;
 
 namespace RatherThis.Controllers
 {
@@ -542,9 +543,9 @@ namespace RatherThis.Controllers
             string lastName = jsonUserInfo.Value<string>("last_name");
             if (string.IsNullOrEmpty(username))
             {
-                string usernamePart2 = (lastName.Length > 1) ? lastName.Substring(0, 2) : lastName;
-                //generate a username using first name and last 2 letters of last name
-                username = string.Format("{0}{1}", firstName, usernamePart2);
+                //generate a username using first name and last name reversed
+                lastName = lastName.ReverseString();
+                username = string.Format("{0}-{1}", firstName, lastName);
             }
             string email = jsonUserInfo.Value<string>("email");
             Int64 facebook_userID = jsonUserInfo.Value<Int64>("id");

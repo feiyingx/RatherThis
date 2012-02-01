@@ -44,5 +44,12 @@ namespace RatherThis.Code
             letters[0] = char.ToUpper(letters[0]);
             return new string(letters);
         }
+
+        public static string ReverseString(this string s)
+        {
+            char[] arr = s.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
+        }
     }
 }

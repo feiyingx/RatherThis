@@ -71,11 +71,12 @@ namespace RatherThis.Custom
         public MembershipUser CreateUser(string username, string password, string email, string gender, string accountType, string externalID, out MembershipCreateStatus status)
         {
             //check if username exists
+            /* don't do this check if we're using this create user method, because we're auto generating the username
             if (UserRepository.Users.Where(u => u.Username.Equals(username)).Count() > 0)
             {
                 status = MembershipCreateStatus.DuplicateUserName;
                 return null;
-            }
+            }*/
             //check if email exists
             if (UserRepository.Users.Where(u => u.Email.Equals(email)).Count() > 0)
             {
