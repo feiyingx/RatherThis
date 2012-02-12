@@ -72,6 +72,12 @@
     </div>
     
         <p class="ask-name answer">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
+
+        @if (!string.IsNullOrEmpty(Model.QuestionCategory))
+        {
+            <p class="question-category">category: <a href="@Url.Action("Index", "Question", new { qcat = Model.QuestionCategoryId })" class="q-cat">@Model.QuestionCategory</a></p>
+        }
+
         @{ var displayCommentContainerStyle = ""; }
         @if (!Model.IsShowAllComment)
         {

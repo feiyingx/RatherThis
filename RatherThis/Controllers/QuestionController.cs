@@ -47,6 +47,7 @@ namespace RatherThis.Controllers
                     Question newQuestion = new Question();
                     newQuestion.Gender = model.Gender;
                     newQuestion.UserID = _membershipService.GetCurrentUserId();
+                    newQuestion.Category = model.Category;
                     _questionRepo.SaveQuestion(newQuestion);
 
                     QuestionOption option1 = new QuestionOption();
@@ -73,7 +74,7 @@ namespace RatherThis.Controllers
             return View("_NewQuestion", model);
         }
 
-        public ActionResult Index(string sort, string gender, int page = 1)
+        public ActionResult Index(string sort, string gender, int page = 1, int qcat = -1, bool onlyUnanswered = false)
         {
             List<Question> results;
 
@@ -98,14 +99,41 @@ namespace RatherThis.Controllers
                 if (gender == femaleGender)
                 {
                     query = query.Where(q => q.Gender.Equals(femaleGender, StringComparison.CurrentCultureIgnoreCase));
-                    pageTitle = "Ladies Only Questions | RatherThis";
                 }
                 else if (gender == maleGender)
                 {
                     query = query.Where(q => q.Gender.Equals(maleGender, StringComparison.CurrentCultureIgnoreCase));
-                    pageTitle = "Guys Only Questions | RatherThis";
                 }
             }
+
+            //check if there is a category
+            if (qcat >= 0)
+            {
+                //if category is the default 'unknown' category, then also check for questions that has 'null' as the category
+                if (qcat == 0)
+                    query = query.Where(q => q.Category == qcat || q.Category == null);
+                else
+                    query = query.Where(q => q.Category == qcat);
+            }
+
+            Guid currentUserId = Guid.Empty;
+            User currentUser = null;
+            List<int> answeredQuestionIds = new List<int>();
+            bool isLoggedIn = _membershipService.IsAuthenticated();
+            if (isLoggedIn)
+            {
+                currentUserId = _membershipService.GetCurrentUserId();
+                currentUser = _userRepo.Users.Where(u => u.UserID == currentUserId).First();
+                answeredQuestionIds = currentUser.Answers.Select(ans => ans.QuestionID).ToList();
+
+                //check to see if we dont want to include answered questions, which means we should exclude questions 
+                if (onlyUnanswered)
+                {
+                    query = query.Where(q => !answeredQuestionIds.Contains(q.QuestionID)).Where(q => string.IsNullOrEmpty(q.Gender) || q.Gender == currentUser.Gender);
+                }
+            }
+
+            
 
             int numResults = 0;
             if (currentSort == Constants.QuestionSort.TOP_VIEWED)
@@ -113,32 +141,26 @@ namespace RatherThis.Controllers
                 numResults = query.Count();
                 results = query.OrderByDescending(q => q.Answers.Count()).ThenByDescending(q => q.DateCreated).Skip((page-1)*_pageSize).Take(_pageSize).ToList();
 
-                //if we havent set a page title yet, that means it's not a gender page
-                if (string.IsNullOrEmpty(pageTitle))
-                {
-                    pageTitle = "Top Viewed Questions | RatherThis";
-                }
             }
             else
             {
                 numResults = query.Count();
                 results = query.OrderByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
-                //if we havent set a page title yet, that means it's not a gender page
-                if (string.IsNullOrEmpty(pageTitle))
-                {
-                    pageTitle = "Would You Rather Questions... | RatherThis";
-                }
             }
+
+            //set pagetitle based on the question category
+            //if qcat is -1, then it means we're on the view all page
+            if (qcat == -1)
+            {
+                pageTitle = "'Would You Rather' Questions For Everyone - RatherThis.com";
+            }
+            else
+            {
+                CategoryItem currentCat = Constants.QuestionCategories.Where(c => c.CategoryID == qcat).First();
+                pageTitle = "Fun And Interesting Questions About " + currentCat.Name + " - RatherThis.com";
+            }
+
             ViewBag.Title = pageTitle;
-
-
-            Guid currentUserId = Guid.Empty; 
-            User currentUser = null;
-            bool isLoggedIn = _membershipService.IsAuthenticated();
-            if(isLoggedIn){
-                currentUserId = _membershipService.GetCurrentUserId();
-                currentUser = _userRepo.Users.Where(u => u.UserID == currentUserId).First();
-            }
              
             Dictionary<object, string> resultModel = new Dictionary<object, string>();
             foreach (var q in results)
@@ -152,6 +174,9 @@ namespace RatherThis.Controllers
                 String name = q.User.Username;
                 String optionText1 = option1.OptionText;
                 String optionText2 = option2.OptionText;
+
+                //if category is null, then default to the 'unknown' category
+                CategoryItem questionCat = q.Category ==  null ? Constants.QuestionCategories.Where(cat => cat.CategoryID == 0).First() : Constants.QuestionCategories.Where(cat => cat.CategoryID == q.Category).First();  //default to 'unknown'
 
                 //if user is not logged in, then display the question view since we don't know whether user has answered or not
                 if (!isLoggedIn)
@@ -172,6 +197,8 @@ namespace RatherThis.Controllers
                     model.QuestionId = q.QuestionID;
                     model.QuestionUserGender = q.User.Gender;
                     model.QuestionUsername = q.User.Username;
+                    model.QuestionCategory = questionCat.Name;
+                    model.QuestionCategoryId = questionCat.CategoryID;
 
                     resultModel.Add(model, "question");
                 }
@@ -209,6 +236,9 @@ namespace RatherThis.Controllers
                         model.OptionId2 = option2.QuestionOptionID;
                         model.QuestionUserGender = q.User.Gender;
                         model.QuestionUsername = q.User.Username;
+
+                        model.QuestionCategory = questionCat.Name;
+                        model.QuestionCategoryId = questionCat.CategoryID;
                         /*
                         CommentListViewModel commentModel = new CommentListViewModel();
                         commentModel.OptionId1 = option1.QuestionOptionID;
@@ -238,6 +268,8 @@ namespace RatherThis.Controllers
                         model.QuestionId = q.QuestionID;
                         model.QuestionUserGender = q.User.Gender;
                         model.QuestionUsername = q.User.Username;
+                        model.QuestionCategory = questionCat.Name;
+                        model.QuestionCategoryId = questionCat.CategoryID;
 
                         resultModel.Add(model, "question");
                     }
@@ -250,6 +282,8 @@ namespace RatherThis.Controllers
             viewModel.Gender = gender;
             viewModel.Sort = sort;
             viewModel.TotalPages = (int)Math.Ceiling((double)numResults / _pageSize);
+            viewModel.CurrentCategoryId = qcat;
+            viewModel.IsOnlyUnanswered = onlyUnanswered;
 
             return View(viewModel);
         }

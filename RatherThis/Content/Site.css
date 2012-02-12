@@ -72,7 +72,7 @@ textarea
 
 .page
 {
-    width: 1200px;
+    width: 1340px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -169,7 +169,7 @@ div.left-column
 
 div.main-column
 {
-    width:950px;
+    width:1040px;
     padding-right: 20px;
     background-color: #393939;
     padding-top: 10px;
@@ -252,14 +252,16 @@ p.login-message
 #menucontainer a
 {
     color: White;    
-    font-size: 10px;
+    font-size: 11px;
     display: block;
-    width: 100px;
+    width: 115px;
     height: 24px;
     text-align: center;
     line-height: 24px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
+    background-color: #494949;
+    font-family: 'RaysHand', 'Times New Roman';
 }
 
 #menucontainer a:hover, #menucontainer a.current
@@ -502,11 +504,19 @@ h1.question
     cursor: default;
 }
 
+#new-question select
+{
+    border: 0px solid white;
+    padding: 0;
+    margin: 0;
+    width: 172px;
+}
+
 .question-container
 {
     width: 270px;
     float: left;
-    margin: 15px;
+    margin: 15px 25px;
 }
 
 p.question-date
@@ -843,6 +853,30 @@ div.question-row.not-first
     padding-top: 35px;
 }
 
+div.answer-display p.question-category
+{
+    margin-top: 20px;
+}
+
+p.question-category
+{
+    
+}
+
+p.question-category a
+{
+    font-size: 11px;
+    color: black;
+    font-weight: bold;
+    padding-bottom: 1px;
+    border-bottom: 1px dotted #ccc;
+}
+
+p.question-category a:hover
+{
+    color: #aaa;
+}
+
 /* COMMENTS */
 .comment-container
 {
@@ -1133,7 +1167,7 @@ div.user-detail
     margin-left: 10px;
     margin-top: 12px;   
     margin-right: 10px;
-    width: 900px;
+    width: 1000px;
 }
 
 div.user-detail h2
@@ -1170,6 +1204,77 @@ a.sub-nav-link:hover, a.sub-nav-link.current
     background-color: #393939;
 }
 
+div.question-display-options
+{
+    margin-left: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+div.question-display-options div.gender-links a
+{
+    padding: 5px 10px;
+    color: White;
+    background-color: #393939;
+    font-size: 10px;
+    font-weight: bold;
+    border: 2px solid #393939;
+}
+
+div.question-display-options div.gender-links a:hover, div.question-display-options div.gender-links a.current
+{
+    background-color: White;
+    color: #393939;
+}
+
+div.answered-filter
+{
+    margin-top: 10px;
+    padding-top: 8px;
+}
+
+div.answered-filter input
+{
+    padding: 0;
+    margin: 0;
+    margin-left: 1px;
+}
+
+div.answered-filter label
+{
+    font-size: 11px;
+    padding-left: 5px;
+    position: relative;
+    top: -2px;
+}
+
+div.no-results p
+{
+    margin-left: 10px;
+    margin-right: 45px;
+    background-color: #c93434;
+    color: White;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    padding: 15px 30px;    
+}
+
+div.no-results .action
+{
+    background-color: #23C45F;
+}
+
+/*
+div.question-display-options div.gender-links .F
+{
+    background-color: #FD005F;
+}
+
+div.question-display-options div.gender-links .M
+{
+    background-color: #00A8FF;
+}
+*/
 
 /* MISC PAGES */
 

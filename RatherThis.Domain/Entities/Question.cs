@@ -11,6 +11,7 @@ namespace RatherThis.Domain.Entities
         public Guid UserID { get; set; }
         public DateTime DateCreated { get; set; }
         public string Gender { get; set; }
+        public int? Category { get; set; }
 
         public virtual User User { get; set; }
         public virtual ICollection<QuestionOption> QuestionOptions { get; private set; }

@@ -1,4 +1,5 @@
 ﻿@model RatherThis.Models.NewQuestionViewModel
+@using RatherThis.Custom
            
 @{
     Layout = null;
@@ -30,6 +31,10 @@
     @Html.TextAreaFor(m => m.Option2)
     </div>
 
+    <div class="editor-field gender-field">
+        <p>CATEGORY</p>
+        @Html.QuestionCategoryDropDownListFor(m => m.Category)
+    </div>
     <input type="submit" value="ASK QUESTION" id="new-question-submit" />
     <input type="submit" value="" id="new-question-submit-loading" disabled style="display:none;" />
 }

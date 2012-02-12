@@ -1,0 +1,46 @@
+﻿@model RatherThis.Models.EditQuestionViewModel
+@using RatherThis.Custom
+@{
+    ViewBag.Title = "Edit";
+}
+
+<style>
+    input
+    {
+        border: 1px solid #ccc;
+    }
+</style>
+
+<a href="@Url.Action("ToDoQuestions", "Wkys")">To Do Questions</a>
+
+<h2>Edit Question</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+
+    <div class="editor-field">
+        <label>Category</label>
+        @Html.QuestionCategoryDropDownListFor(m => m.Category)
+    </div>
+    
+    <div class="editor-field">
+        <label>Gender (if 'All', then leave blank. 'F' for female. 'M' for male)</label>
+        @Html.EditorFor(m => m.Gender) 
+    </div>
+    <div class="editor-field">
+        <label>Option 1</label>
+        @Html.EditorFor(m => m.Option1)
+    </div>
+
+    <div class="editor-field">
+        <label>Option 2</label>
+        @Html.EditorFor(m => m.Option2)
+    </div>
+    
+    <div class="editor-field">
+        @Html.HiddenFor(m => m.QuestionID)
+    </div>
+
+    <input type="submit" value="Save" />
+}

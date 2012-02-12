@@ -102,6 +102,19 @@ function loadWhileNewQuestion() {
     $("#new-question-submit").hide();
     $("#new-question-submit-loading").show();
 }
+
+
+function toggleUnansweredQuestions(sectionUrl, checkbox) {
+    //if its true, then it means user wants to see only unanswered questions
+    //else it means user wants to see all questions
+    if ($(checkbox).is(':checked')) {
+        window.location = sectionUrl + "&onlyunanswered=true";
+    } else {
+        window.location = sectionUrl + "&onlyunanswered=false";
+    }
+}
+
+
 //this function makes sure when the user selects an answer, then we hide the validation summary for the question
 function initOptionValidation() {
     $(".option-container input[type='radio']").bind('click', function (e) {

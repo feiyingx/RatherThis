@@ -76,6 +76,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\WkysController.cs" />
     <Compile Include="Custom\CustomMembershipProvider.cs" />
     <Compile Include="Custom\HtmlHelpers.cs" />
     <Compile Include="Global.asax.cs">
@@ -158,6 +159,8 @@
     <Content Include="Views\Error\404.cshtml" />
     <Content Include="Views\Error\500.cshtml" />
     <Content Include="channel.html" />
+    <Content Include="Views\Wkys\ToDoQuestions.cshtml" />
+    <Content Include="Views\Wkys\Edit.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />

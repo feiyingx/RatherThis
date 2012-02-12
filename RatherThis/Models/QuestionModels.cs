@@ -14,6 +14,8 @@ namespace RatherThis.Models
         public string Gender { get; set; }
         public string Sort { get; set; }
         public int TotalPages { get; set; }
+        public int CurrentCategoryId { get; set; }
+        public bool IsOnlyUnanswered { get; set; }
     }
 
     public class NewQuestionViewModel
@@ -25,6 +27,24 @@ namespace RatherThis.Models
         [Required(ErrorMessage = "Please enter the second answer option.")]
         [StringLength(140, ErrorMessage = "Second answer option exceeds 140 characters.")]
         public string Option2 { get; set; }
+        [Required(ErrorMessage = "Please select a category.")]
+        public int Category { get; set; }
+    }
+
+    public class EditQuestionViewModel
+    {
+        public string Gender { get; set; }
+        [Required(ErrorMessage = "Please enter the first answer option.")]
+        [StringLength(140, ErrorMessage = "First answer option exceeds 140 characters.")]
+        public string Option1 { get; set; }
+        [Required(ErrorMessage = "Please enter the second answer option.")]
+        [StringLength(140, ErrorMessage = "Second answer option exceeds 140 characters.")]
+        public string Option2 { get; set; }
+        [Required(ErrorMessage = "Please select a category.")]
+        public int Category { get; set; }
+
+        [Required(ErrorMessage = "Please enter a question id.")]
+        public int QuestionID { get; set; }
     }
 
     public class QuestionDisplayViewModel
@@ -41,6 +61,8 @@ namespace RatherThis.Models
         public bool IsLoggedIn { get; set; }
         public string QuestionUserGender { get; set; }
         public string QuestionUsername { get; set; }
+        public string QuestionCategory { get; set; }
+        public int QuestionCategoryId { get; set; }
     }
 
     public class AnswerDisplayViewModel
@@ -60,6 +82,8 @@ namespace RatherThis.Models
         public int AnsweredOptionId { get; set; }
         public string QuestionUserGender { get; set; }
         public string QuestionUsername { get; set; }
+        public string QuestionCategory { get; set; }
+        public int QuestionCategoryId { get; set; }
         public CommentListViewModel CommentModel { get; set; }
         public int NumComments { get; set; }
 

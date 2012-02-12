@@ -136,41 +136,27 @@
                 }
                 <ul id="menu">
                     @{
-                        var latestUrl = Url.Action("Index", "Question").ToLower();
-                        var topViewedUrl = Url.Action("Index", "Question", new { sort = topViewedSort }, null).ToLower();
-                        var ladiesUrl = Url.Action("Index", "Question", new { gender = genderFemale }, null).ToLower();
-                        var guysUrl = Url.Action("Index", "Question", new { gender = genderMale }, null).ToLower();
+                        var allQuestionsUrl = Url.Action("Index", "Question", new{ qcat = -1 }).ToLower();
+                        var allQuestionsClass = "";
 
-                        var latestClass = "";
-                        var topViewedClass = "";
-                        var ladiesClass = "";
-                        var guysClass = "";
+                        var currentUrl = Request.Url.AbsolutePath.ToLower();
 
-                        var currentUrl = Request.Url.PathAndQuery.ToString().ToLower();
-                        var pageQueryIndex = currentUrl.IndexOf("page=");
-
-                        currentUrl = pageQueryIndex > 0 ? currentUrl.Substring(0, pageQueryIndex - 1) : currentUrl;
-                        if (latestUrl == currentUrl)
+                        if (allQuestionsUrl == currentUrl)
                         {
-                            latestClass = "current";
-                        }
-                        if (topViewedUrl == currentUrl)
-                        {
-                            topViewedClass = "current";
-                        }
-                        if (ladiesUrl == currentUrl)
-                        {
-                            ladiesClass = "current";
-                        }
-                        if (guysUrl == currentUrl)
-                        {
-                            guysClass = "current";
+                            allQuestionsClass = "current";
                         }
                     }
-                    <li><a href="@latestUrl" class="@latestClass">LATEST</a></li>
-                    <li><a href="@topViewedUrl" class="@topViewedClass">TOP VIEWED</a></li>
-                    <li><a href="@ladiesUrl" class="@ladiesClass">FOR THE LADIES</a></li>
-                    <li><a href="@guysUrl" class="@guysClass">FOR THE GUYS</a></li>
+                    <li><a href="@allQuestionsUrl" class="@allQuestionsClass">All</a></li>
+
+                    @* Category Nav *@
+                    @{ 
+                        var categories = Constants.QuestionCategories; 
+                        foreach(var catItem in categories){
+                            var catUrl = @Url.Action("Index", "Question", new { qcat = catItem.CategoryID }).ToLower();
+                            var currentClass = currentUrl.ToLower().Contains(catUrl) ? "current" : "";
+                            <li><a href="@catUrl" class="@currentClass">@catItem.Name</a></li>   
+                        }
+                    }
                 </ul>
             </div>
             <div id="main" class="clear">
