@@ -51,5 +51,10 @@ namespace RatherThis.Controllers
             }
             return View(model);
         }
+
+        public ActionResult SiteMap()
+        {
+            return View();
+        }
     }
 }

@@ -12,9 +12,9 @@
     <div class="question-display-options">
         @*TODO: ADD SORT - date and rating (once we have bump up/bump down)*@
         <div class="gender-links">
-        <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, page = Model.CurrentPage, qcat = Model.CurrentCategoryId })" class="@GetCurrentGenderClass("")">All Genders</a>
-        <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = "F", page = Model.CurrentPage, qcat = Model.CurrentCategoryId })" class="F @GetCurrentGenderClass("F")">Ladies Only Questions</a>
-        <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = "M", page = Model.CurrentPage, qcat = Model.CurrentCategoryId })" class="M @GetCurrentGenderClass("M")">Guys Only Questions</a>
+        <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, page = Model.CurrentPage, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" class="@GetCurrentGenderClass("")">All Genders</a>
+        <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = "F", page = Model.CurrentPage, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" class="F @GetCurrentGenderClass("F")">Ladies Only Questions</a>
+        <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = "M", page = Model.CurrentPage, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" class="M @GetCurrentGenderClass("M")">Guys Only Questions</a>
         </div>
 
         <div class="answered-filter">

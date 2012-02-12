@@ -39,7 +39,7 @@ namespace RatherThis.Code
                     _catItems.Add(new CategoryItem(2, "Sports"));
                     _catItems.Add(new CategoryItem(3, "Tech & Games"));
                     _catItems.Add(new CategoryItem(4, "News & Politics"));
-                    _catItems.Add(new CategoryItem(5, "Social & Celebrity"));
+                    _catItems.Add(new CategoryItem(5, "People & Life"));
                     _catItems.Add(new CategoryItem(6, "School & Work"));
                     _catItems.Add(new CategoryItem(0, "Random"));
                 }

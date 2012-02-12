@@ -53,33 +53,33 @@ namespace RatherThis
                 );
 
             routes.MapRoute(
-                "celebrity",
-                "celebrity",
+                "people life",
+                "people-life",
                 new { controller = "question", action = "index", qcat = 5 }
                 );
 
             routes.MapRoute(
                 "life",
                 "life",
+                new { controller = "question", action = "index", qcat = 5 }
+                );
+
+            routes.MapRoute(
+                "school-work",
+                "school-work",
                 new { controller = "question", action = "index", qcat = 6 }
                 );
 
             routes.MapRoute(
-                "school-work",
-                "school-work",
-                new { controller = "question", action = "index", qcat = 7 }
-                );
-
-            routes.MapRoute(
                 "school",
                 "school",
-                new { controller = "question", action = "index", qcat = 7 }
+                new { controller = "question", action = "index", qcat = 6 }
                 );
 
             routes.MapRoute(
                 "work",
                 "work",
-                new { controller = "question", action = "index", qcat = 7 }
+                new { controller = "question", action = "index", qcat = 6 }
                 );
 
             routes.MapRoute(

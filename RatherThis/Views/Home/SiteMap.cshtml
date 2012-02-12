@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "SiteMap";
+}
+
+<div class="misc">
+    <h2>SITEMAP</h2>
+    <ul>
+        <li><a href="@Url.Action("About","Home")">About RatherThis.com</a></li>
+        <li><a href="@Url.Action("Index", "Question", new { qid = -1 })">All Questions</a></li>
+        @{ 
+            var categories = RatherThis.Code.Constants.QuestionCategories; 
+            foreach(var catItem in categories){
+                var catUrl = @Url.Action("Index", "Question", new { qcat = catItem.CategoryID }).ToLower();
+                <li><a href="@catUrl">@catItem.Name Questions</a></li>   
+            }
+        }
+    </ul>
+</div>
+

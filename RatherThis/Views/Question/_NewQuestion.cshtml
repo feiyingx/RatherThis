@@ -21,6 +21,10 @@
     </div>
     
     @Html.ValidationSummary()
+
+    <div class="editor-field gender-field">
+        @Html.QuestionCategoryDropDownListFor(m => m.Category)
+    </div>
     
     <div class="editor-field">
     <p class="ask-question">Would you rather...</p>    
@@ -31,10 +35,6 @@
     @Html.TextAreaFor(m => m.Option2)
     </div>
 
-    <div class="editor-field gender-field">
-        <p>CATEGORY</p>
-        @Html.QuestionCategoryDropDownListFor(m => m.Category)
-    </div>
     <input type="submit" value="ASK QUESTION" id="new-question-submit" />
     <input type="submit" value="" id="new-question-submit-loading" disabled style="display:none;" />
 }
