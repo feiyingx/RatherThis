@@ -103,7 +103,6 @@ function loadWhileNewQuestion() {
     $("#new-question-submit-loading").show();
 }
 
-
 function toggleUnansweredQuestions(sectionUrl, checkbox) {
     //if its true, then it means user wants to see only unanswered questions
     //else it means user wants to see all questions
@@ -112,6 +111,110 @@ function toggleUnansweredQuestions(sectionUrl, checkbox) {
     } else {
         window.location = sectionUrl + "&onlyunanswered=false";
     }
+}
+
+function bumpUp(qid, triggerElt) {
+    var isDumped = false;
+    
+    var netBumpSpan = $(triggerElt).siblings("span");
+    var netBump = parseInt($(netBumpSpan).html());
+
+    //check to see whether it's been bumped up already, if so, then clicking again will 'unbump' it
+    //otherwise, mark it as 'on'
+    if ($(triggerElt).hasClass("on")) {
+        $(triggerElt).removeClass("on");
+        netBump -= 1;
+        $(netBumpSpan).html(netBump);
+
+        $.get('/question/bump?qid=' + qid + '&direction=reset', function (data) {
+
+        });
+    } else {
+        isDumped = $(triggerElt).siblings(".on").length > 0;
+        $(triggerElt).siblings(".on").removeClass("on");
+        $(triggerElt).addClass("on");
+
+        //this means it has been dumped before, so need to increment the total count by 2
+        if (isDumped) {
+            netBump += 2;
+            $(netBumpSpan).html(netBump);
+        } else {
+            netBump += 1;
+            $(netBumpSpan).html(netBump);
+        }
+
+        $.get('/question/bump?qid=' + qid + '&direction=up', function (data) {
+
+        });
+    }
+
+    
+    
+
+//    $.get('/question/bump?qid=' + qid + '&direction=up', function (data) {
+//        //this means it has been dumped before, so need to increment the total count by 2
+//        var netBumpSpan = $(triggerElt).siblings("span");
+//        if (isDumped) {            
+//            var netBump = $(netBumpSpan).html();
+//            netBump += 2;
+//            $(netBumpSpan).html(netBump);
+//        } else {
+//            var netBump = $(netBumpSpan).html();
+//            netBump += 1;
+//            $(netBumpSpan).html(netBump);
+//        }
+//    });
+}
+
+function bumpDown(qid, triggerElt) {
+    var isBumped = false;
+    var netBumpSpan = $(triggerElt).siblings("span");
+    var netBump = parseInt($(netBumpSpan).html());
+
+    //check to see whether it's been bumped down already, if so, then clicking again will 'undump' it
+    //otherwise, mark it as 'on'
+    if ($(triggerElt).hasClass("on")) {
+        $(triggerElt).removeClass("on");
+        netBump += 1;
+        $(netBumpSpan).html(netBump);
+
+        $.get('/question/bump?qid=' + qid + '&direction=reset', function (data) {
+
+        });
+    } else {
+        isBumped = $(triggerElt).siblings(".on").length > 0;
+        $(triggerElt).siblings(".on").removeClass("on");
+        $(triggerElt).addClass("on");
+
+        //this means it has been dumped before, so need to increment the total count by 2
+        if (isBumped) {
+            netBump -= 2;
+            $(netBumpSpan).html(netBump);
+        } else {
+            netBump -= 1;
+            $(netBumpSpan).html(netBump);
+        }
+
+        $.get('/question/bump?qid=' + qid + '&direction=down', function (data) {
+
+        });
+    }
+
+    
+
+//    $.get('/question/bump?qid=' + qid + '&direction=up', function (data) {
+//        //this means it has been dumped before, so need to increment the total count by 2
+//        var netBumpSpan = $(triggerElt).siblings("span");
+//        if (isBumped) {
+//            var netBump = $(netBumpSpan).html();
+//            netBump -= 2;
+//            $(netBumpSpan).html(netBump);
+//        } else {
+//            var netBump = $(netBumpSpan).html();
+//            netBump -= 1;
+//            $(netBumpSpan).html(netBump);
+//        }
+//    });
 }
 
 

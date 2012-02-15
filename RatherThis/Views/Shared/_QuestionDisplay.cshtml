@@ -17,17 +17,19 @@
     var questionContainerId = string.Format("question-container-{0}", Model.QuestionId);
     var ajaxLoaderId = "question-ajax-loading-" + Model.QuestionId;
     var notLoggedInClass = Model.IsLoggedIn ? "" : "not-logged-in";
+
+    Html.RenderAction("BumpControl", "Question", new { qid = Model.QuestionId });
     
     <div class="question-display @notLoggedInClass">
     @using (Ajax.BeginForm("Answer", "Question", new { qid = Model.QuestionId }, new AjaxOptions
-            {
-                UpdateTargetId = questionContainerId,
-                InsertionMode = InsertionMode.Replace,
-                LoadingElementId = ajaxLoaderId,
-                OnSuccess = "reinitAddThis()",
-                OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-vote-loading", ajaxLoaderId + "-vote", ajaxLoaderId + "-skip-disable", ajaxLoaderId + "-skip"),
-                LoadingElementDuration = 2000
-            }))
+    {
+        UpdateTargetId = questionContainerId,
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = ajaxLoaderId,
+        OnSuccess = "reinitAddThis()",
+        OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-vote-loading", ajaxLoaderId + "-vote", ajaxLoaderId + "-skip-disable", ajaxLoaderId + "-skip"),
+        LoadingElementDuration = 2000
+    }))
     {
            
         <p class="question-date">@Model.Date.ToString("MMM dd yyyy").ToUpper()</p>
@@ -69,7 +71,7 @@
             InsertionMode = InsertionMode.Replace,
             LoadingElementId = ajaxLoaderId,
             OnSuccess = "reinitAddThis()",
-            OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-skip-loading", ajaxLoaderId + "-skip", ajaxLoaderId+"-vote-disable", ajaxLoaderId+"-vote"),
+            OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-skip-loading", ajaxLoaderId + "-skip", ajaxLoaderId + "-vote-disable", ajaxLoaderId + "-vote"),
             LoadingElementDuration = 2000
         }, new { @class = "skip-form" }))
         {

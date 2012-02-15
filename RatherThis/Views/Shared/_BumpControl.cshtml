@@ -1,0 +1,14 @@
+﻿@model RatherThis.Models.BumpControlViewModel
+@{
+    Layout = null;
+
+    var bumpClass = Model.IsBumped ? "on" : "";
+    var dumpClass = Model.IsDumped ? "on" : "";
+}
+
+ <div class="bump-container">
+    <a href="javascript:void(0);" class="@bumpClass" onclick="bumpUp(@Model.QuestionID, this);"">Bump</a>
+    <span class="bump-count">@Model.NetBumps</span>
+    <a href="javascript:void(0);" class="@dumpClass" onclick="bumpDown(@Model.QuestionID, this);">Dump</a>
+</div>
+

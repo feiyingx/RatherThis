@@ -249,18 +249,23 @@ namespace RatherThis.Models
             return System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
         }
 
-
+        private Guid _currentUserId = Guid.Empty;
         public Guid GetCurrentUserId()
         {
             if (IsAuthenticated())
             {
-                FormsIdentity identity = HttpContext.Current.User.Identity as FormsIdentity;
-                //currently storing the userid in the forms authentication ticket's userdata property
-                string userData = identity.Ticket.UserData;
-                Guid userId = Guid.Empty;
-                if (!Guid.TryParse(userData, out userId))
-                    throw new FormatException("Could not parse the user data to get the current user's id");
-                return userId;
+                if (_currentUserId == Guid.Empty)
+                {
+                    FormsIdentity identity = HttpContext.Current.User.Identity as FormsIdentity;
+                    //currently storing the userid in the forms authentication ticket's userdata property
+                    string userData = identity.Ticket.UserData;
+                    Guid userId = Guid.Empty;
+                    if (!Guid.TryParse(userData, out userId))
+                        throw new FormatException("Could not parse the user data to get the current user's id");
+
+                    _currentUserId = userId;
+                }
+                return _currentUserId;
             }
             else
             {

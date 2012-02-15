@@ -124,4 +124,13 @@ namespace RatherThis.Models
         public int OptionId1 { get; set; }
         public int OptionId2 { get; set; }
     }
+
+    public class BumpControlViewModel
+    {
+        public int QuestionID { get; set; }
+        public bool IsBumped { get; set; }
+        public bool IsDumped { get; set; }
+        public int NetBumps { get; set; }
+        public bool IsLoggedIn { get; set; }
+    }
 }

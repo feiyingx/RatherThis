@@ -15,5 +15,6 @@ namespace RatherThis.Domain.Concrete
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
+        public DbSet<Bump> Bumps { get; set; }
     }
 }

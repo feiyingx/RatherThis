@@ -18,10 +18,11 @@ namespace RatherThis.Controllers
         private IAnswerRepository _answerRepo;
         private IUserRepository _userRepo;
         private ICommentRepository _commentRepo;
+        private IBumpRepository _bumpRepo;
 
         private int _pageSize = 9;
 
-        public QuestionController(IMembershipService membershipService, IQuestionRepository questionRepo, IQuestionOptionRepository optionRepo, IAnswerRepository answerRepo, IUserRepository userRepo, ICommentRepository commentRepo)
+        public QuestionController(IMembershipService membershipService, IQuestionRepository questionRepo, IQuestionOptionRepository optionRepo, IAnswerRepository answerRepo, IUserRepository userRepo, ICommentRepository commentRepo, IBumpRepository bumpRepo)
         {
             _membershipService = membershipService;
             _questionRepo = questionRepo;
@@ -29,6 +30,7 @@ namespace RatherThis.Controllers
             _answerRepo = answerRepo;
             _userRepo = userRepo;
             _commentRepo = commentRepo;
+            _bumpRepo = bumpRepo;
         }
 
         public ActionResult New()
@@ -493,6 +495,150 @@ namespace RatherThis.Controllers
             model.OptionText1 = q.QuestionOptions.ElementAt(0).OptionText;
             model.OptionText2 = q.QuestionOptions.ElementAt(1).OptionText;
             return View(model);
+        }
+
+        public ActionResult Bump(int qid, string direction)
+        {
+            //make sure 'direction'is valid
+            if (direction == "up" || direction == "down" || direction == "reset")
+            {
+
+                Guid currentUserId = _membershipService.GetCurrentUserId();
+
+                //check whether question exists
+                Question question = _questionRepo.Questions.Where(q => q.QuestionID == qid).FirstOrDefault();
+                if (question != null)
+                {
+
+                    //check whether the user has already bumped this question
+                    Bump alreadyBumped = _bumpRepo.Bumps.Where(b => b.QuestionID == qid && b.UserID == currentUserId).FirstOrDefault();
+                    if (alreadyBumped == null && direction != "reset")
+                    {
+                        if (question != null)
+                        {
+                            //hasnt been bumped, so record the bump
+                            Bump newBump = new Bump();
+                            newBump.QuestionID = qid;
+                            newBump.UserID = currentUserId;
+
+                            if (direction == "up")
+                            {
+                                newBump.BumpUpValue = 1;
+                                //update question value as well
+                                question.BumpUpValue += 1;
+                            }
+                            else
+                            {
+                                newBump.BumpDownValue = 1;
+                                //update question value as well
+                                question.BumpDownValue += 1;
+                            }
+
+                            _bumpRepo.SaveBump(newBump);
+                            _questionRepo.SaveQuestion(question);
+                            
+                        }
+                    }
+                    else
+                    {
+                        //check what the previous bump value was, if user already bumped up, then do nothing since already been bumped up
+                        //if user has bumped it down before, then update the bump to a bump up
+                        if (direction == "up")
+                        {
+                            if (alreadyBumped.BumpDownValue > 0)
+                            {
+                                alreadyBumped.BumpDownValue = 0;
+                                alreadyBumped.BumpUpValue = 1;
+                                _bumpRepo.SaveBump(alreadyBumped);
+
+                                question.BumpDownValue -= 1; //remove 1 bump down since user changed their bump to a bump up
+                                question.BumpUpValue += 1;
+                            }
+                            else if (alreadyBumped.BumpUpValue == 0)
+                            {
+                                //this case checks whether the user may have 'reset'their bump so now it's back to zero
+                                alreadyBumped.BumpDownValue = 0;
+                                alreadyBumped.BumpUpValue = 1;
+                                _bumpRepo.SaveBump(alreadyBumped);
+
+                                question.BumpUpValue += 1;
+                            }
+                        }
+                        else if (direction == "down")
+                        {
+                            //check whether user had previously bumped it up, if so, we'll need to subtract 1 from the dump value
+                            if (alreadyBumped.BumpUpValue > 0)
+                            {
+                                alreadyBumped.BumpUpValue = 0;
+                                alreadyBumped.BumpDownValue = 1;
+                                _bumpRepo.SaveBump(alreadyBumped);
+
+                                question.BumpUpValue -= 1;
+                                question.BumpDownValue += 1;
+                            }
+                            else if (alreadyBumped.BumpDownValue == 0)
+                            {
+                                //this case checks whether the user may have 'reset'their dump so now it's back to zero
+                                alreadyBumped.BumpUpValue = 0;
+                                alreadyBumped.BumpDownValue = 1;
+                                _bumpRepo.SaveBump(alreadyBumped);
+
+                                question.BumpDownValue += 1;
+                            }
+                        }
+                        else
+                        {
+                            if (alreadyBumped.BumpUpValue > 0)
+                            {
+                                question.BumpUpValue -= 1;
+                            }
+                            else if(alreadyBumped.BumpDownValue > 0)
+                            {
+                                question.BumpDownValue -= 1;
+                            }
+
+                            alreadyBumped.BumpUpValue = alreadyBumped.BumpDownValue = 0;
+                            _bumpRepo.SaveBump(alreadyBumped);
+                        }
+                        _questionRepo.SaveQuestion(question);
+                    }
+
+                    return Json("success", JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json("failed", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult BumpControl(int qid)
+        {
+            BumpControlViewModel model = new BumpControlViewModel();
+            model.QuestionID = qid;
+
+            if (_membershipService.IsAuthenticated())
+            {
+                Guid userId = _membershipService.GetCurrentUserId();
+                Bump userBump = _bumpRepo.Bumps.Where(b => b.UserID == userId && b.QuestionID == qid).FirstOrDefault();
+                if (userBump == null)
+                {
+                    model.IsBumped = model.IsDumped = false;
+                    model.NetBumps = 0;
+                }
+                else
+                {
+                    model.IsBumped = userBump.BumpUpValue > 0;
+                    model.IsDumped = userBump.BumpDownValue > 0;
+                    model.NetBumps = userBump.BumpUpValue - userBump.BumpDownValue;
+                }
+
+                model.IsLoggedIn = true;
+            }
+            else
+            {
+                model.IsLoggedIn = false;
+            }
+
+            return View("_BumpControl", model);
         }
     }
 }

@@ -39,6 +39,7 @@ namespace RatherThis.Infrastructure
             ninjectKernel.Bind<IResetPasswordTokenRepository>().To<EFResetPasswordTokenRepository>();
             ninjectKernel.Bind<IEmailService>().To<EmailService>();
             ninjectKernel.Bind<IMembershipService>().To<AccountMembershipService>();
+            ninjectKernel.Bind<IBumpRepository>().To<EFBumpRepository>();
 
             //inject membership
             ninjectKernel.Inject(Membership.Provider);

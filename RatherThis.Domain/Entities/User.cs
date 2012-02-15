@@ -21,6 +21,7 @@ namespace RatherThis.Domain.Entities
         public virtual ICollection<Question> Questions { get; private set; }
         public virtual ICollection<Answer> Answers { get; private set; }
         public virtual ICollection<Comment> Comments { get; private set; }
+        public virtual ICollection<Bump> Bumps { get; private set; }
 
         public MembershipUser ConvertToMembershipUser()
         {
