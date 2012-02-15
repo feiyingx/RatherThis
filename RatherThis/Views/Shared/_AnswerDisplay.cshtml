@@ -23,6 +23,8 @@
     {
         optionPercent1 = optionPercent2 = 0;
     }
+
+    Html.RenderAction("BumpControl", "Question", new { qid = Model.QuestionId });
     
     <div class="answer-display">
     <p class="question-date">@Model.Date.ToString("MMM dd yyyy").ToUpper()</p>

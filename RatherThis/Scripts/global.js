@@ -115,8 +115,8 @@ function toggleUnansweredQuestions(sectionUrl, checkbox) {
 
 function bumpUp(qid, triggerElt) {
     var isDumped = false;
-    
-    var netBumpSpan = $(triggerElt).siblings("span");
+
+    var netBumpSpan = $(triggerElt).siblings(".bump-count");
     var netBump = parseInt($(netBumpSpan).html());
 
     //check to see whether it's been bumped up already, if so, then clicking again will 'unbump' it
@@ -168,7 +168,7 @@ function bumpUp(qid, triggerElt) {
 
 function bumpDown(qid, triggerElt) {
     var isBumped = false;
-    var netBumpSpan = $(triggerElt).siblings("span");
+    var netBumpSpan = $(triggerElt).siblings(".bump-count");
     var netBump = parseInt($(netBumpSpan).html());
 
     //check to see whether it's been bumped down already, if so, then clicking again will 'undump' it

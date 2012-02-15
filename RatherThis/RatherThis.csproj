@@ -98,6 +98,10 @@
     <Content Include="images\ajax-loader-gray.gif" />
     <Content Include="images\ajax-loader-white.gif" />
     <Content Include="images\arrow.png" />
+    <Content Include="images\bump-down-on.png" />
+    <Content Include="images\bump-down.png" />
+    <Content Include="images\bump-up-on.png" />
+    <Content Include="images\bump-up.png" />
     <Content Include="images\check.png" />
     <Content Include="images\comment-arrow-blue.png" />
     <Content Include="images\comment-arrow-pink.png" />

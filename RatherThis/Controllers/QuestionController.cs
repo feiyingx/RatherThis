@@ -635,6 +635,11 @@ namespace RatherThis.Controllers
             }
             else
             {
+                Question question = _questionRepo.Questions.Where(q => q.QuestionID == qid).FirstOrDefault();
+                if (question != null)
+                {
+                    model.NetBumps = (question.BumpUpValue - question.BumpDownValue);
+                }
                 model.IsLoggedIn = false;
             }
 

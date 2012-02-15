@@ -514,10 +514,71 @@ h1.question
 
 .question-container
 {
-    width: 270px;
+    width: 260px;
     float: left;
-    margin: 15px 25px;
+    margin: 15px 25px 15px 0px;
+    padding-left: 45px;
+    position: relative;
 }
+
+.bump-container
+{
+    position: absolute;
+    width: 35px;
+    left: -5px;
+    top: 5px;
+}
+
+.bump-container span.label
+{
+    font-size: 9px;
+    font-family: Arial;
+    color: #ccc;
+    display: block;
+    text-align: center;
+}
+
+.bump-container .bump-count
+{
+    font-family: Arial;
+    font-weight: bold;
+    color: #b9b9b9;
+    font-size: 24px;
+    text-align: center;
+    display: block;
+    width: 35px;
+    margin-top: -3px;
+}
+
+.bump-container .bump, .bump-container .dump
+{
+    height: 30px;
+    width: 35px;
+    display: block;
+    text-align: center;
+}
+
+.bump-container .bump
+{
+    background: white url('/images/bump-up.png') no-repeat center center;   
+}
+
+.bump-container .dump
+{
+    background: white url('/images/bump-down.png') no-repeat center center;
+}
+
+.bump-container a.bump:hover, .bump-container .bump.on
+{
+    background: white url('/images/bump-up-on.png') no-repeat center center;   
+}
+
+.bump-container a.dump:hover, .bump-container .dump.on
+{
+    background: white url('/images/bump-down-on.png') no-repeat center center;   
+}
+
+
 
 p.question-date
 {
