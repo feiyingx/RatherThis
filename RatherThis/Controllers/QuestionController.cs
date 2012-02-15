@@ -614,6 +614,12 @@ namespace RatherThis.Controllers
         {
             BumpControlViewModel model = new BumpControlViewModel();
             model.QuestionID = qid;
+            Question question = _questionRepo.Questions.Where(q => q.QuestionID == qid).FirstOrDefault();
+
+            if (question != null)
+            {
+                model.NetBumps = (question.BumpUpValue - question.BumpDownValue);
+            }
 
             if (_membershipService.IsAuthenticated())
             {
@@ -622,24 +628,17 @@ namespace RatherThis.Controllers
                 if (userBump == null)
                 {
                     model.IsBumped = model.IsDumped = false;
-                    model.NetBumps = 0;
                 }
                 else
                 {
                     model.IsBumped = userBump.BumpUpValue > 0;
                     model.IsDumped = userBump.BumpDownValue > 0;
-                    model.NetBumps = userBump.BumpUpValue - userBump.BumpDownValue;
                 }
 
                 model.IsLoggedIn = true;
             }
             else
             {
-                Question question = _questionRepo.Questions.Where(q => q.QuestionID == qid).FirstOrDefault();
-                if (question != null)
-                {
-                    model.NetBumps = (question.BumpUpValue - question.BumpDownValue);
-                }
                 model.IsLoggedIn = false;
             }
 

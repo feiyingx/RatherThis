@@ -1,0 +1,106 @@
+﻿@model RatherThis.Models.QuestionDisplayViewModel
+
+@if (Model != null)
+{
+    var genderTag = "FOR ALL";
+
+    if (Model.Gender == "F")
+    {
+        genderTag = "FOR THE LADIES";
+    }
+    else if (Model.Gender == "M")
+    {
+        genderTag = "FOR THE GUYS";
+    }
+    var optionInputId1 = string.Format("question-{0}-option-{1}", Model.QuestionId, @Model.OptionId1);
+    var optionInputId2 = string.Format("question-{0}-option-{1}", Model.QuestionId, @Model.OptionId2);
+    var questionContainerId = string.Format("question-container-{0}", Model.QuestionId);
+    var ajaxLoaderId = "question-ajax-loading-" + Model.QuestionId;
+    var notLoggedInClass = Model.IsLoggedIn ? "" : "not-logged-in";
+
+    Html.RenderAction("BumpControl", "Question", new { qid = Model.QuestionId });
+    
+    <div class="question-display @notLoggedInClass">
+    @using (Ajax.BeginForm("Answer", "Question", new { qid = Model.QuestionId }, new AjaxOptions
+    {
+        UpdateTargetId = questionContainerId,
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = ajaxLoaderId,
+        OnSuccess = "reinitAddThis()",
+        OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-vote-loading", ajaxLoaderId + "-vote", ajaxLoaderId + "-skip-disable", ajaxLoaderId + "-skip"),
+        LoadingElementDuration = 2000
+    }))
+    {
+           
+        <p class="question-date">@Model.Date.ToString("MMM dd yyyy").ToUpper()</p>
+        <p class="gender-tag @Model.Gender">@genderTag</p>
+        <div class="validation-summary-errors"  style="display:none;">
+            <ul>
+                <li>You must select an answer in order to vote.</li>
+            </ul>
+        </div>
+        <h1 class="question">would you rather...</h1>
+    
+        <div class="option-container">
+            
+            <input type="radio" name="oid" value="@Model.OptionId1" id="@optionInputId1" />
+            <label class="option-text" for="@optionInputId1" >@Model.OptionText1?</label>
+        </div>
+        <div class="option-container">
+            <input type="radio" name="oid" value="@Model.OptionId2" id="@optionInputId2" />
+            <label class="option-text" for="@optionInputId2">@Model.OptionText2?</label>
+        </div>
+        
+        
+        <div class="clear">
+        @* display the vote button if user is logged in, otherwise show a call to action link to register or login *@
+        @if (Model.IsLoggedIn)
+        {
+            <input id="@ajaxLoaderId-vote" class="btn-question-action vote" onclick="validateAnswer('@questionContainerId')" type="submit" value="VOTE" />
+            <input id="@ajaxLoaderId-vote-loading" class="btn-question-action vote loading" type="button" value="" disabled style="display:none;" />
+            <input id="@ajaxLoaderId-vote-disable" class="btn-question-action vote" type="button" value="VOTE" disabled style="display:none;"/>
+        }
+        </div>
+    }
+    @* only display the skip button if user is logged in *@
+    @if (Model.IsLoggedIn)
+    {
+        using (Ajax.BeginForm("Answer", "Question", new { qid = Model.QuestionId }, new AjaxOptions
+        {
+            UpdateTargetId = questionContainerId,
+            InsertionMode = InsertionMode.Replace,
+            LoadingElementId = ajaxLoaderId,
+            OnSuccess = "reinitAddThis()",
+            OnBegin = string.Format("loadWhileAnswer('{0}','{1}','{2}','{3}');", ajaxLoaderId + "-skip-loading", ajaxLoaderId + "-skip", ajaxLoaderId + "-vote-disable", ajaxLoaderId + "-vote"),
+            LoadingElementDuration = 2000
+        }, new { @class = "skip-form" }))
+        {
+            @* 0 is the value for any questions answered by skipping *@
+            <input type="hidden" name="oid" value="0" />
+            <input id="@ajaxLoaderId-skip" class="btn-question-action skip" type="submit" value="SKIP" />
+            <input id="@ajaxLoaderId-skip-loading" class="btn-question-action skip loading" type="button" value="" disabled style="display:none;"/>
+            <input id="@ajaxLoaderId-skip-disable" class="btn-question-action skip" type="button" value="SKIP" disabled style="display:none;"/>
+            
+        }
+    }
+
+    <p class="ask-name">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
+
+    @if (!Model.IsLoggedIn)
+    {
+        <text><p class="login-action-message">Please <a href="#login" onclick="activateLogin()">LOGIN</a> or <a href="#registration" onclick="activateRegistration()">REGISTER</a> to Answer</p></text>   
+    }
+    
+    @if (!string.IsNullOrEmpty(Model.QuestionCategory))
+    {
+        <p class="question-category">category: <a href="@Url.Action("Index", "Question", new { qcat = Model.QuestionCategoryId })" class="q-cat">@Model.QuestionCategory</a></p>
+    }
+    </div>
+    
+    <div class="addthis_toolbox addthis_default_style" addthis:url="@RatherThis.Code.Constants.BaseUrl@Url.Action("Detail", "Question", new { qid = Model.QuestionId })">
+        <a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a>
+        <a class="addthis_button_digg"></a>
+        <a class="addthis_button_reddit"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+}

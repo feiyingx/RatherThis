@@ -1,0 +1,115 @@
+﻿@model RatherThis.Models.AnswerDisplayViewModel
+
+@if (Model != null)
+{
+    var genderTag = "FOR ALL";
+    if (Model.Gender == "F")
+    {
+        genderTag = "FOR THE LADIES";
+    }
+    else if (Model.Gender == "M")
+    {
+        genderTag = "FOR THE GUYS";
+    }
+    double optionPercent1;
+    double optionPercent2;
+    //check for total votes before doing any % calculations, if its 0, then both should be 0%*@
+    if (Model.TotalVotes > 0)
+    {
+        optionPercent1 = (double)Model.OptionVotes1 / Model.TotalVotes;
+        optionPercent2 = 1 - optionPercent1;
+    }
+    else
+    {
+        optionPercent1 = optionPercent2 = 0;
+    }
+
+    Html.RenderAction("BumpControl", "Question", new { qid = Model.QuestionId });
+    
+    <div class="answer-display">
+    <p class="question-date">@Model.Date.ToString("MMM dd yyyy").ToUpper()</p>
+    <p class="gender-tag @Model.Gender">@genderTag</p>@*<span class="checked"></span>*@
+    <h1 class="question">would you rather...</h1>
+    
+    <div class="answer-option">
+        <p>@Model.OptionText1?</p>
+        <p class="vote-result-percent-indicator first">@optionPercent1.ToString("0.0%")</p>
+        @*<span class="vote-count">0 votes</span>*@
+        <div class="vote-result-bar-container">
+        @{var voteText1 = Model.OptionVotes1 > 1 ? "votes" : "vote";}
+        @if (optionPercent1 == 0)
+        {
+            voteText1 = "votes";
+            <div class="vote-result-bar none"></div>
+        }
+        else
+        {
+            
+            <div class="vote-result-bar fill" style="width: @optionPercent1.ToString("0.0%");"></div>
+        }
+        <span class="vote-count first">@Model.OptionVotes1 @voteText1</span>
+        </div>
+        
+    </div>
+
+    <div class="answer-option">
+        <p class="vote-result-percent-indicator second">@optionPercent2.ToString("0.0%")</p>
+        @*<span class="vote-count second">20 votes</span>*@
+        <div class="vote-result-bar-container">
+        @{ var voteText2 = Model.OptionVotes2 > 1 ? "votes" : "vote";}
+        @if (optionPercent2 == 0)
+        {
+            voteText2 = "votes";
+            <div class="vote-result-bar none"></div>
+        }
+        else
+        {
+            <div class="vote-result-bar fill" style="width: @optionPercent2.ToString("0.0%");"></div>
+        }
+        <span class="vote-count second">@Model.OptionVotes2 @voteText2</span>
+        </div>
+        
+        <p>@Model.OptionText2?</p>
+        
+    </div>
+    
+        <p class="ask-name answer">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
+
+        @if (!string.IsNullOrEmpty(Model.QuestionCategory))
+        {
+            <p class="question-category">category: <a href="@Url.Action("Index", "Question", new { qcat = Model.QuestionCategoryId })" class="q-cat">@Model.QuestionCategory</a></p>
+        }
+
+        @{ var displayCommentContainerStyle = ""; }
+        @if (!Model.IsShowAllComment)
+        {
+            <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">COMMENTS (@Model.NumComments)</a>
+            displayCommentContainerStyle = "display:none;";
+        }
+        
+        <div class="comment-container" style="@displayCommentContainerStyle">
+            <div id="question-@Model.QuestionId-comment" class="comment-box">
+                @{ 
+        Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
+                }
+            </div>
+
+            <div id="question-@Model.QuestionId-comment-list" class="comment-list">
+            @{ Html.RenderAction("CommentList", "Question", new { qid = Model.QuestionId, listSize = Model.CommentListSize }); }
+            </div>
+            
+            @*don't need to display the question detail link if we're showing all the comments alerady*@
+            @if (!Model.IsShowAllComment)
+            {
+            <a class="question-detail-link" href="@Url.Action("Detail", "Question", new { qid = Model.QuestionId })">view more</a>
+            }
+        </div>
+    </div>
+    
+    <div class="addthis_toolbox addthis_default_style" addthis:url="@RatherThis.Code.Constants.BaseUrl@Url.Action("Detail", "Question", new { qid = Model.QuestionId})">
+        <a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a>
+        <a class="addthis_button_digg"></a>
+        <a class="addthis_button_reddit"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+}   

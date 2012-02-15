@@ -1,0 +1,99 @@
+﻿@model RatherThis.Models.LogOnModel
+           
+@{
+    Layout = null;
+}
+
+<p class="login-message">Login to ASK and ANSWER questions</p>
+
+                
+<fb:login-button scope="email,user_checkins" onlogin="afterFacebookConnect();"></fb:login-button>
+<div id="fb-root" style="margin-bottom: 10px;"></div>
+
+@using (Ajax.BeginForm("LogOn", "Account", new AjaxOptions
+        {
+            UpdateTargetId = "login",
+            InsertionMode = InsertionMode.Replace,
+            LoadingElementId = "login-ajax-loading"
+        }))
+{
+    @Html.ValidationSummary()
+    <div>
+        <fieldset>
+            <div class="editor-field">
+                <label for="login-email" name="Email">Enter Email</label>
+                @Html.TextBoxFor(m => m.Email, new { id = "login-email" })
+            </div>
+
+            <div class="editor-field">
+                <label for="login-pw" name="Password">Enter Password</label>
+                @Html.PasswordFor(m => m.Password, new { id="login-pw" })
+            </div>
+
+            <p>
+                <input type="submit" value="LOGIN" />
+                <a href="@Url.Action("ForgotPassword","Account")" class="forgot-pw">Forgot Password?</a>
+            </p>
+        </fieldset>
+    </div>
+}
+
+<script src="//connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+ <script type="text/javascript">
+     FB.init({
+         appId: '@RatherThis.Code.Config.FacebookAppId',
+         status: true, // check login status
+         cookie: true, // enable cookies to allow server to access session,
+         xfbml: true, // enable XFBML and social plugins
+         oauth: true, // enable OAuth 2.0
+         channelUrl: '@RatherThis.Code.Config.ChannelUrl' //custom channel
+     });
+
+     function afterFacebookConnect() {
+         FB.getLoginStatus(function (response) {
+             if ((response.status) && (response.status == 'connected')) {
+                 window.location = "/Account/FacebookLogin?token=" +
+                        response.authResponse.accessToken;
+             } else {
+                 // user clicked Cancel
+             }
+         });
+     }
+
+//    window.fbAsyncInit = function () {
+//             FB.init({
+//                 appId: '@RatherThis.Code.Config.FacebookAppId',
+//                 status: true, // check login status
+//                 cookie: true, // enable cookies to allow server to access session,
+//                 xfbml: true, // enable XFBML and social plugins
+//                 oauth: true, // enable OAuth 2.0
+//                 channelUrl: '@RatherThis.Code.Config.ChannelUrl' //custom channel
+//             });
+//         };
+
+//    function afterFacebookConnect() {
+//        FB.getLoginStatus(function (response) {
+//            if (response.session) {
+//                window.location = "../Account/FacebookLogin?token=" + 
+//                       response.session.access_token;
+//            } else {
+//                // user clicked Cancel
+//            }
+//        });
+//    };
+
+//    $(document).ready(function () {
+//        if (document.getElementById('fb-root') != undefined) {
+//            var e = document.createElement('script');
+//            e.type = 'text/javascript';
+//            e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+//            e.async = true;
+//            document.getElementById('fb-root').appendChild(e);
+//        }
+//    });
+
+//     FB.Event.subscribe('auth.login', function (response) {
+//         // do something with response
+//         alert('in');
+//     });
+ </script>

@@ -1,0 +1,55 @@
+﻿@model List<RatherThis.Domain.Entities.Question>
+@{
+    ViewBag.Title = "Questions";    
+}
+
+<style>
+    table
+    {
+        border: 1px solid #ccc;
+    }
+    td
+    {
+        width: 150px;
+        border: 1px solid #ccc;
+        padding: 15px;
+    }
+    
+    tr:nth-child(even)
+    {
+        background-color: #ddd;
+    }
+</style>
+
+<h2>Questions</h2>
+@if (Model != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Option1</th>
+                <th>Option2</th>
+                <th>User</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in Model)
+            {
+                <tr>
+                    <td>@question.QuestionID</td>
+                    <td>Would you rather</td>
+                    <td>@question.QuestionOptions.ElementAt(0).OptionText</td>
+                    <td>@question.QuestionOptions.ElementAt(1).OptionText</td>
+                    <td>@question.User.Username</td>
+                    <td><a href="@Url.Action("Edit", "Wkys", new { qid = question.QuestionID })">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}
+
+

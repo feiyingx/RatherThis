@@ -1,0 +1,31 @@
+﻿@model RatherThis.Models.BumpControlViewModel
+@{
+    Layout = null;
+
+    var bumpClass = Model.IsBumped ? "on" : "";
+    var dumpClass = Model.IsDumped ? "on" : "";
+}
+
+@{
+    if (Model.IsLoggedIn)
+    {
+         <div class="bump-container">
+            <span class="label">bump</span>
+            <a href="javascript:void(0);" class="@bumpClass bump" onclick="bumpUp(@Model.QuestionID, this);"></a>            
+            <span class="bump-count">@Model.NetBumps</span>
+            <a href="javascript:void(0);" class="@dumpClass dump" onclick="bumpDown(@Model.QuestionID, this);"></a>
+            <span class="label">dump</span>
+        </div>
+    }
+    else
+    {
+        <div class="bump-container">
+            <span class="label">bump</span>
+            <span class="@bumpClass bump"></span>            
+            <span class="bump-count">@Model.NetBumps</span>
+            <span class="@dumpClass dump"></span>
+            <span class="label">dump</span>
+        </div>
+    }
+}
+

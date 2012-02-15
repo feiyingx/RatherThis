@@ -1,0 +1,45 @@
+﻿@model RatherThis.Models.ContactViewModel
+@{
+    ViewBag.Title = "Hit Us Up With Questions, Suggestions, Jokes, or Epic Stories - RatherThis.com";
+}
+<div class="misc">
+    <h2>CONTACT US</h2>
+    @if (!string.IsNullOrEmpty(ViewBag.Flash))
+    {
+        <div class="flash">Thanks, your request has been sent to your email <span>@ViewBag.Flash</span>! We will try to get back to you as soon as possible!</div>
+    }
+    <p class="message">Feel free to contact us with any questions, give us suggestions and feedback, or say hello to the team!</p>
+    @using (Html.BeginForm("Contact", "Home"))
+    {
+    @Html.ValidationSummary()
+    <div>
+        <fieldset>
+
+            <div class="editor-field">
+                <label for="contact-type" >Topic</label>
+                <select name="Type" id="contact-type">
+                    <option value="General">General</option>
+                    <option value="Suggestion">Suggestion/Feedback</option>
+                    <option value="Say Hi">Say Hi</option>
+                    <option value="Bug">Report Bugs</option>
+                </select>
+            </div>
+
+            <div class="editor-field">
+                <label for="contact-email" >Your Email</label>
+                @Html.TextBoxFor(m => m.Email, new { id = "contact-email" })
+            </div>
+
+            <div class="editor-field">
+                <label for="contact-desc" class="contact-desc" >Description</label>
+                @Html.TextAreaFor(m => m.Description, new { id = "contact-desc" })
+            </div>
+
+            <p>
+                <input type="submit" value="SEND" />
+            </p>
+        </fieldset>
+    </div>
+    }
+</div>
+

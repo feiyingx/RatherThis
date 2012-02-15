@@ -1,0 +1,86 @@
+﻿@model UserDetailViewModel
+@using RatherThis.Models
+@{
+    ViewBag.Title = Model.Username + " Universe Of Cool Questions - RatherThis.com";
+}
+
+<div class="user-detail">
+<h2 class="@Model.UserGender">@Model.Username.ToUpper() UNIVERSE</h2>
+@{
+    var questionSubNavClass = (Model.Filter.ToLower() == "question") ? "current" : "";
+    var answerSubNavClass = (Model.Filter.ToLower() == "answer") ? "current" : "";    
+}
+<a class="sub-nav-link @questionSubNavClass" href="@Url.Action("UserDetail", "Account", new { username= Model.Username, filter = "question" })">QUESTIONS ASKED (@Model.NumAsked)</a>
+<a class="sub-nav-link @answerSubNavClass" href="@Url.Action("UserDetail", "Account", new { username= Model.Username, filter = "answer" })">QUESTIONS ANSWERED (@Model.NumAnswered)</a>
+
+    @if(Model.ResultViewModels == null){
+    <p>No questions</p>
+    }else{
+
+        var i = 1; 
+    foreach (var keyValue in Model.ResultViewModels)
+    {
+    
+            if (i % 3 == 1)
+            {
+                var classNotFirst = i == 1 ? "" : "not-first";
+                <text><div class="question-row clear @classNotFirst"></text>
+            }
+            if (keyValue.Value == "question")
+            {
+                var q = (QuestionDisplayViewModel)keyValue.Key;
+                var questionContainerId = string.Format("question-container-{0}", q.QuestionId);
+            
+                <div id="@questionContainerId" class="question-container">
+                    @{Html.RenderPartial("_QuestionDisplay", q);}
+                </div>
+            }
+            else
+            {
+                var q = (AnswerDisplayViewModel)keyValue.Key;
+                var questionContainerId2 = string.Format("question-container-{0}", q.QuestionId);
+            
+                <div id="@questionContainerId2" class="question-container">
+                    @{Html.RenderPartial("_AnswerDisplay", q);}
+                </div>
+            }
+            if (i % 3 == 0 || i == Model.ResultViewModels.Count())
+            {
+                @:</div>
+            }
+            i = i + 1;
+   
+    }
+
+
+    if(Model.TotalPages > 1){
+        <div class="paging clear">
+        @if (Model.CurrentPage > 1)
+        {
+            <a class="prev" href="@Url.Action("UserDetail", "Account", new{ username = Model.Username, filter= Model.Filter, page = Model.CurrentPage - 1 })" >PREV</a>
+        }
+        @for (var j = 1; j <= Model.TotalPages; j++)
+        {
+            if (j != Model.CurrentPage)
+            {
+                <a class="page-link" href="@Url.Action("UserDetail", "Account", new { username = Model.Username, filter = Model.Filter, page = j })">@j</a>   
+            }
+            else
+            {
+                <a class="page-link current">@j</a>   
+            }
+        }
+
+        @if (Model.CurrentPage < Model.TotalPages)
+        {
+            <a class="next" href="@Url.Action("UserDetail", "Account", new { username = Model.Username, filter = Model.Filter, page = Model.CurrentPage + 1 })">NEXT</a>
+        }
+        
+        </div>
+    
+    }
+
+}
+
+</div>
+
