@@ -1,5 +1,6 @@
 ﻿$(function () {
-    initOptionValidation()
+    initOptionValidation();
+    initSortLinks();
 });
 
 (function ($) {
@@ -147,23 +148,6 @@ function bumpUp(qid, triggerElt) {
 
         });
     }
-
-    
-    
-
-//    $.get('/question/bump?qid=' + qid + '&direction=up', function (data) {
-//        //this means it has been dumped before, so need to increment the total count by 2
-//        var netBumpSpan = $(triggerElt).siblings("span");
-//        if (isDumped) {            
-//            var netBump = $(netBumpSpan).html();
-//            netBump += 2;
-//            $(netBumpSpan).html(netBump);
-//        } else {
-//            var netBump = $(netBumpSpan).html();
-//            netBump += 1;
-//            $(netBumpSpan).html(netBump);
-//        }
-//    });
 }
 
 function bumpDown(qid, triggerElt) {
@@ -199,24 +183,17 @@ function bumpDown(qid, triggerElt) {
 
         });
     }
-
-    
-
-//    $.get('/question/bump?qid=' + qid + '&direction=up', function (data) {
-//        //this means it has been dumped before, so need to increment the total count by 2
-//        var netBumpSpan = $(triggerElt).siblings("span");
-//        if (isBumped) {
-//            var netBump = $(netBumpSpan).html();
-//            netBump -= 2;
-//            $(netBumpSpan).html(netBump);
-//        } else {
-//            var netBump = $(netBumpSpan).html();
-//            netBump -= 1;
-//            $(netBumpSpan).html(netBump);
-//        }
-//    });
 }
 
+function initSortLinks() {
+    $(".sort-links .current-sort, .sort-links a").bind('mouseover', function (e) {
+        $(".sort-links a").show();
+    });
+
+    $(" .sort-links .current-sort, .sort-links a").bind('mouseout', function (e) {
+        $(".sort-links a").hide();
+    });
+}
 
 //this function makes sure when the user selects an answer, then we hide the validation summary for the question
 function initOptionValidation() {

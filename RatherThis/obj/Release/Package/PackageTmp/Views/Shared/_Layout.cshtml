@@ -71,7 +71,7 @@
     <div class="page">
         <div class="left-column">
             <div id="title">
-                <a href="/"><img src="/images/logo.png" alt="RatherThis - Would you rather questions" /></a>
+                <a href="/" title="Would you rather questions. Find answers to the most unique and creative questions." rel="home"><img src="/images/logo.png" alt="RatherThis - Would you rather questions" /></a>
             </div>
 
             <div>
@@ -83,7 +83,7 @@
                 </div>
                 
                 <a href="javascript:void(0);" onclick="toggleRegistration()" class="left-nav-link">REGISTER</a>
-                <div id="registration" class="left-column-form">
+                <div id="registration" class="left-column-form" style="display:none;">
                     @{ Html.RenderAction("Register", "Account"); }
                 </div>
                 
@@ -129,11 +129,6 @@
         
         <div class="main-column">
             <div id="menucontainer">
-                @{ 
-                    var topViewedSort = RatherThis.Code.Constants.QuestionSort.TOP_VIEWED.ToString().ToLower();
-                    var genderFemale = RatherThis.Code.Constants.Gender.F.ToString().ToLower();
-                    var genderMale = RatherThis.Code.Constants.Gender.M.ToString().ToLower();
-                }
                 <ul id="menu">
                     @{
                         var allQuestionsUrl = Url.Action("Index", "Question", new{ qcat = -1 }).ToLower();
