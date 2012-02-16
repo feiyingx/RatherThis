@@ -107,6 +107,7 @@
     <Content Include="images\comment-arrow-pink.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\share.png" />
+    <Content Include="images\sort-arrow.png" />
     <Content Include="lib\Newtonsoft.Json.dll" />
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\global.js" />

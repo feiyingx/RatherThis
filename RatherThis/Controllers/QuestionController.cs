@@ -80,14 +80,14 @@ namespace RatherThis.Controllers
         {
             List<Question> results;
 
-            //default the sort to latest
-            Constants.QuestionSort currentSort = Constants.QuestionSort.LATEST;
+            //default the sort to highest rated
+            Constants.QuestionSort currentSort = Constants.QuestionSort.Top_Rated;
             string pageTitle = "";
 
             if (!string.IsNullOrEmpty(sort))
             {
-                if (sort.ToLower() == Constants.QuestionSort.TOP_VIEWED.ToString().ToLower())
-                    currentSort = Constants.QuestionSort.TOP_VIEWED;
+                if (sort.ToLower() == Constants.QuestionSort.Latest.ToString().ToLower())
+                    currentSort = Constants.QuestionSort.Latest;
             }
 
             IQueryable<Question> query = _questionRepo.Questions;
@@ -138,16 +138,15 @@ namespace RatherThis.Controllers
             
 
             int numResults = 0;
-            if (currentSort == Constants.QuestionSort.TOP_VIEWED)
+            if (currentSort == Constants.QuestionSort.Latest)
             {
                 numResults = query.Count();
-                results = query.OrderByDescending(q => q.Answers.Count()).ThenByDescending(q => q.DateCreated).Skip((page-1)*_pageSize).Take(_pageSize).ToList();
-
+                results = query.OrderByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
             }
             else
             {
                 numResults = query.Count();
-                results = query.OrderByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
+                results = query.OrderByDescending(q => (q.BumpUpValue - q.BumpDownValue)).ThenByDescending(q => q.DateCreated).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
             }
 
             //set pagetitle based on the question category
@@ -282,7 +281,7 @@ namespace RatherThis.Controllers
             viewModel.ResultViewModels = resultModel;
             viewModel.CurrentPage = page;
             viewModel.Gender = gender;
-            viewModel.Sort = sort;
+            viewModel.Sort = currentSort.ToString();
             viewModel.TotalPages = (int)Math.Ceiling((double)numResults / _pageSize);
             viewModel.CurrentCategoryId = qcat;
             viewModel.IsOnlyUnanswered = onlyUnanswered;

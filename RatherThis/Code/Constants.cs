@@ -16,8 +16,8 @@ namespace RatherThis.Code
 
         public enum QuestionSort
         {
-            LATEST,
-            TOP_VIEWED
+            Latest,
+            Top_Rated
         }
 
         public enum Filter

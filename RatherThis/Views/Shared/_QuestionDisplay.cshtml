@@ -86,15 +86,17 @@
 
     <p class="ask-name">asked by: <a href="@Url.Action("UserDetail", "Account", new { username = Model.QuestionUsername })"><span class="@Model.QuestionUserGender">@Model.Name</span></a></p>
 
+    @if (!string.IsNullOrEmpty(Model.QuestionCategory))
+    {
+        <p class="question-category">category: <a href="@Url.Action("Index", "Question", new { qcat = Model.QuestionCategoryId })" class="q-cat">@Model.QuestionCategory</a></p>
+    }
+
     @if (!Model.IsLoggedIn)
     {
         <text><p class="login-action-message">Please <a href="#login" onclick="activateLogin()">LOGIN</a> or <a href="#registration" onclick="activateRegistration()">REGISTER</a> to Answer</p></text>   
     }
     
-    @if (!string.IsNullOrEmpty(Model.QuestionCategory))
-    {
-        <p class="question-category">category: <a href="@Url.Action("Index", "Question", new { qcat = Model.QuestionCategoryId })" class="q-cat">@Model.QuestionCategory</a></p>
-    }
+    
     </div>
     
     <div class="addthis_toolbox addthis_default_style" addthis:url="@RatherThis.Code.Constants.BaseUrl@Url.Action("Detail", "Question", new { qid = Model.QuestionId })">

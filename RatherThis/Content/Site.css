@@ -893,7 +893,8 @@ p.ask-name.answer
 
 p.login-action-message
 {
-    margin-top: 20px;
+    margin-top: 5px;
+    margin-left: 1px;
     font-size: 11px;
     display: inline-block;
 }
@@ -915,6 +916,11 @@ div.question-row.not-first
 }
 
 div.answer-display p.question-category
+{
+    margin-top: 20px;
+}
+
+.not-logged-in .question-category
 {
     margin-top: 20px;
 }
@@ -1270,6 +1276,63 @@ div.question-display-options
     margin-left: 10px;
     margin-bottom: 20px;
     margin-top: 20px;
+    position: relative;
+}
+
+div.question-display-options div.gender-links
+{
+    left: 126px;
+    position: relative;
+    padding-left: 12px;
+}
+
+div.question-display-options div.sort-links
+{
+    position: absolute;
+    width: 125px;
+    top: -6px;
+    z-index: 1;
+}
+
+div.question-display-options div.sort-links a, div.question-display-options div.sort-links .current-sort
+{
+    display: block;
+    width: 100px;
+    padding-left: 15px;
+    background-color: #393939;
+    height: 26px;
+    line-height: 26px;
+    color: White;
+    font-size: 10px;
+    font-weight: bold;
+    
+}
+
+div.question-display-options div.divider
+{
+    width: 3px;
+    height: 26px;
+    background-color: #393939;
+    position: absolute;
+    left: 125px;
+    top: -6px;
+}
+
+div.question-display-options div.sort-links a:hover
+{
+    background-color: #525252;
+}
+
+div.question-display-options div.sort-links .current-sort
+{
+    background: white url('/images/sort-arrow.png') no-repeat right center;
+    color: #393939;
+    border: 2px solid #393939;
+    width: 96px;
+    height: 22px;
+    line-height: 22px;
+    cursor: pointer;
+    
 }
 
 div.question-display-options div.gender-links a

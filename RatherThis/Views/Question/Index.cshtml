@@ -7,22 +7,40 @@
     var isNoResults = (Model == null || Model.ResultViewModels == null || Model.ResultViewModels.Count() == 0);
 }
 
-@if ((isNoResults && !isNoFilters) || (!isNoResults) )
+@if ((isNoResults && !isNoFilters) || (!isNoResults))
 {
     <div class="question-display-options">
         @*TODO: ADD SORT - date and rating (once we have bump up/bump down)*@
+        <div class="sort-links">
+        @{
+            var sorts = EnumUtil.GetValues<RatherThis.Code.Constants.QuestionSort>();
+            <span class="current-sort">@Model.Sort.Replace("_", " ")</span>
+            foreach (var s in sorts)
+            {
+                <a href="@Url.Action("Index", "Question", new { sort = s.ToString(), page = Model.CurrentPage, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" style="display:none;" >Sort  @s.ToString().Replace("_", " ")</a>
+            }
+        }
+        </div>
+
+        <div class="divider"></div>
+
         <div class="gender-links">
         <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, page = Model.CurrentPage, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" class="@GetCurrentGenderClass("")">All Genders</a>
         <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = "F", page = Model.CurrentPage, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" class="F @GetCurrentGenderClass("F")">Ladies Only Questions</a>
         <a href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = "M", page = Model.CurrentPage, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" class="M @GetCurrentGenderClass("M")">Guys Only Questions</a>
         </div>
 
-        <div class="answered-filter">
+        <div class="answered-filter" class="clear">
         @{ 
-            var sectionUrl =  Constants.BaseUrl + Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage, qcat = Model.CurrentCategoryId });
-            var unansweredChecked = Model.IsOnlyUnanswered ? "checked" : "";
+    var sectionUrl = Constants.BaseUrl + Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage, qcat = Model.CurrentCategoryId });
+    var unansweredChecked = Model.IsOnlyUnanswered ? "checked" : "";
         }
-        <input type="checkbox" id="cb-show-unanswered-only" @unansweredChecked onclick="toggleUnansweredQuestions('@sectionUrl', this)" /><label for="cb-show-unanswered-only">Only show unanswered questions</label>
+        
+        @*only show this if user is logged in*@
+        @if (Utility.IsAuthenticated())
+        {
+            <input type="checkbox" id="cb-show-unanswered-only" @unansweredChecked onclick="toggleUnansweredQuestions('@sectionUrl', this)" /><label for="cb-show-unanswered-only">Only show unanswered questions</label>
+        }
         </div>
     </div>        
 }
@@ -33,7 +51,8 @@
     @if (isNoFilters)
     {
         <p class="action">We don't have any questions for this section yet. Come on down and be the first to ask!   ヽ(ヽ(ﾟヽ(ﾟ∀ヽ(ﾟ∀ﾟヽ(ﾟ∀ﾟ)ﾉﾟ∀ﾟ)ﾉ∀ﾟ)ﾉﾟ)ﾉ)ﾉ</p>
-    }else
+    }
+    else
     {
         <p>We ran out of questions for the selected criterion..   ლ(ಠ益ಠლ)</p>    
     }
@@ -41,11 +60,11 @@
 }
 else
 {
-    
-    var i = 1; 
-foreach (var keyValue in Model.ResultViewModels)
-{
-    
+
+    var i = 1;
+    foreach (var keyValue in Model.ResultViewModels)
+    {
+
         if (i % 3 == 1)
         {
             var classNotFirst = i == 1 ? "" : "not-first";
@@ -74,15 +93,16 @@ foreach (var keyValue in Model.ResultViewModels)
             @:</div>
         }
         i = i + 1;
-   
-}
+
+    }
 
 
-    if(Model.TotalPages > 1){
+    if (Model.TotalPages > 1)
+    {
         <div class="paging clear">
         @if (Model.CurrentPage > 1)
         {
-            <a class="prev" href="@Url.Action("Index", "Question", new{ sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage - 1, qcat = Model.CurrentCategoryId })" >PREV</a>
+            <a class="prev" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage - 1, qcat = Model.CurrentCategoryId })" >PREV</a>
         }
         @for (var j = 1; j <= Model.TotalPages; j++)
         {
@@ -108,12 +128,16 @@ foreach (var keyValue in Model.ResultViewModels)
 }
 
 @functions{
-    public string GetCurrentGenderClass(string linkGender){
+    public string GetCurrentGenderClass(string linkGender)
+    {
         var currentGender = string.IsNullOrEmpty(Model.Gender) ? "" : Model.Gender.ToLower();
-        if (string.IsNullOrEmpty(currentGender) && string.IsNullOrEmpty(linkGender)){
+        if (string.IsNullOrEmpty(currentGender) && string.IsNullOrEmpty(linkGender))
+        {
             return "current";
-        }else if(currentGender == linkGender.ToLower()){
-            return "current";   
+        }
+        else if (currentGender == linkGender.ToLower())
+        {
+            return "current";
         }
 
         return "";

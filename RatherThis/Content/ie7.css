@@ -22,3 +22,18 @@ form.skip-form
 {
     overflow:hidden;
 }
+
+div.question-display-options div.sort-links
+{
+    top: 0px;
+}
+
+div.question-display-options div.sort-links a
+{
+    z-index: 1;
+}
+
+div.question-display-options div.divider
+{
+    top: 0px;
+}

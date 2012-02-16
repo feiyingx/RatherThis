@@ -23,4 +23,12 @@ namespace RatherThis.Code
             return string.Format(greetings.ElementAt(randomIndex), username);
         }
     }
+
+    public static class EnumUtil
+    {
+        public static IEnumerable<T> GetValues<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
+        }
+    }
 }

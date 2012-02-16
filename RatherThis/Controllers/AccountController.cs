@@ -112,7 +112,7 @@ namespace RatherThis.Controllers
             Session["greeting-msg"] = ""; //reset the greeting msg when you log out
             FormsService.SignOut();
 
-            return RedirectToAction("Index", "Question");
+            return RedirectToAction("Index", "Question", new { qcat=-1 }); //qcat -1 makes sure we end up on the all page
         }
 
         // **************************************
