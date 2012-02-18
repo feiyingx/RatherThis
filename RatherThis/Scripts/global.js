@@ -106,6 +106,14 @@ function loadWhileNewQuestion() {
     $("#new-question-submit-loading").show();
 }
 
+function loadWhileComment(commentContainerId) {
+    var container = $("#" + commentContainerId);
+    if (container) {
+        $(".submit-comment", container).not(":disabled").hide();
+        $("input:disabled", container).show();
+    }
+}
+
 function toggleUnansweredQuestions(sectionUrl, checkbox) {
     //if its true, then it means user wants to see only unanswered questions
     //else it means user wants to see all questions
@@ -199,7 +207,11 @@ function initSortLinks() {
 
 function initOptionClick() {
     $(".option-container").bind('click', function (e) {
-        $(this).siblings(".option-reason").slideDown('fast');
+        if ($("body").hasClass("ie7")) {
+            $(this).siblings(".option-reason").show();
+        } else {
+            $(this).siblings(".option-reason").slideDown('fast');
+        }
     });
 }
 

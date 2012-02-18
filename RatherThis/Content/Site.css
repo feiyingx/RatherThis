@@ -1064,6 +1064,18 @@ a.question-detail-link:hover
     background-color: #40950C;
 }
 
+input.submit-comment[disabled]
+{
+    background: #393939 url('/images/ajax-loader-gray.gif') no-repeat center center;
+    width: 65px;
+    color: #595959;
+}
+
+input.submit-comment[disabled]:hover
+{
+    background-color:#393939;
+}
+
 .comment-item-header.comment-F
 {
     text-align: left;
