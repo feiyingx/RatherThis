@@ -290,7 +290,7 @@ namespace RatherThis.Controllers
         }
 
         [HttpPost]
-        public ActionResult Answer(int qid = 0, int oid = -1)
+        public ActionResult Answer(int qid = 0, int oid = -1, string reason = "")
         {
             if (qid > 0 && oid >= 0)
             {
@@ -310,6 +310,17 @@ namespace RatherThis.Controllers
                             newAnswer.QuestionOptionID = oid;
                             newAnswer.UserID = currentUserId;
                             _answerRepo.SaveAnswer(newAnswer);
+                        }
+
+                        //save the reason as a comment if there is one
+                        if (!string.IsNullOrEmpty(reason))
+                        {
+                            Comment newComment = new Comment();
+                            newComment.CommentText = reason;
+                            newComment.QuestionID = currentQuestion.QuestionID;
+                            newComment.UserID = currentUserId;
+                            newComment.QuestionOptionID = oid;
+                            _commentRepo.SaveComment(newComment);
                         }
                     }
 

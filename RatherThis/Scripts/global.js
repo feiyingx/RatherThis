@@ -1,6 +1,8 @@
 ﻿$(function () {
     initOptionValidation();
     initSortLinks();
+    initOptionClick();
+    initReasonTextarea();
 });
 
 (function ($) {
@@ -192,6 +194,44 @@ function initSortLinks() {
 
     $(" .sort-links .current-sort, .sort-links a").bind('mouseout', function (e) {
         $(".sort-links a").hide();
+    });
+}
+
+function initOptionClick() {
+    $(".option-container").bind('click', function (e) {
+        $(this).siblings(".option-reason").slideDown('fast');
+    });
+}
+
+function initReasonTextarea() {
+    //limit char limit to 320
+    $(".option-reason-area").bind('keyup', function (e) {
+        var charCount = $(this).val().length;
+        if (charCount > 320) {
+            $(this).val($(this).val().substring(0, 319));
+        }
+        
+        //update char count
+        var counter = $(this).siblings(".counter");
+        $(".count", counter).html(charCount);
+    }).bind('change', function (e) {
+        var charCount = $(this).val().length;
+        if (charCount > 320) {
+            $(this).val($(this).val().substring(0, 319));
+        }
+
+        //update char count
+        var counter = $(this).siblings(".counter");
+        $(".count", counter).html(charCount);
+    }).bind('keydown', function (e) {
+        var charCount = $(this).val().length;
+        if (charCount > 320) {
+            $(this).val($(this).val().substring(0, 319));
+        }
+
+        //update char count
+        var counter = $(this).siblings(".counter");
+        $(".count", counter).html(charCount);
     });
 }
 
