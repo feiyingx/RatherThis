@@ -51,6 +51,14 @@
             <label class="option-text" for="@optionInputId2">@Model.OptionText2?</label>
         </div>
         
+        <div class="option-reason clear" style="display:none;" >
+            <label>Tell us why <span>(optional: 320 chars max)</span></label>
+            <textarea name="reason" class="option-reason-area" rows="4"></textarea>
+            <div class="counter">
+                <span class="count">0</span> <span>characters</span>
+            </div>
+        </div>
+        
         
         <div class="clear">
         @* display the vote button if user is logged in, otherwise show a call to action link to register or login *@

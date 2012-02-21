@@ -325,7 +325,7 @@ namespace RatherThis.Controllers
                     }
 
                 }
-                return RedirectToAction("RenderQuestion", new { qid = currentQuestion.QuestionID });
+                return RedirectToAction("RenderQuestion", new { qid = currentQuestion.QuestionID, showAllComments = true });
             }
             return RedirectToAction("RenderQuestion", new { });
         }

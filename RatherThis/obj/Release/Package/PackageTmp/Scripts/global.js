@@ -1,6 +1,8 @@
 ﻿$(function () {
     initOptionValidation();
     initSortLinks();
+    initOptionClick();
+    initReasonTextarea();
 });
 
 (function ($) {
@@ -104,6 +106,14 @@ function loadWhileNewQuestion() {
     $("#new-question-submit-loading").show();
 }
 
+function loadWhileComment(commentContainerId) {
+    var container = $("#" + commentContainerId);
+    if (container) {
+        $(".submit-comment", container).not(":disabled").hide();
+        $("input:disabled", container).show();
+    }
+}
+
 function toggleUnansweredQuestions(sectionUrl, checkbox) {
     //if its true, then it means user wants to see only unanswered questions
     //else it means user wants to see all questions
@@ -192,6 +202,48 @@ function initSortLinks() {
 
     $(" .sort-links .current-sort, .sort-links a").bind('mouseout', function (e) {
         $(".sort-links a").hide();
+    });
+}
+
+function initOptionClick() {
+    $(".option-container").bind('click', function (e) {
+        if ($("body").hasClass("ie7")) {
+            $(this).siblings(".option-reason").show();
+        } else {
+            $(this).siblings(".option-reason").slideDown('fast');
+        }
+    });
+}
+
+function initReasonTextarea() {
+    //limit char limit to 320
+    $(".option-reason-area").bind('keyup', function (e) {
+        var charCount = $(this).val().length;
+        if (charCount > 320) {
+            $(this).val($(this).val().substring(0, 319));
+        }
+        
+        //update char count
+        var counter = $(this).siblings(".counter");
+        $(".count", counter).html(charCount);
+    }).bind('change', function (e) {
+        var charCount = $(this).val().length;
+        if (charCount > 320) {
+            $(this).val($(this).val().substring(0, 319));
+        }
+
+        //update char count
+        var counter = $(this).siblings(".counter");
+        $(".count", counter).html(charCount);
+    }).bind('keydown', function (e) {
+        var charCount = $(this).val().length;
+        if (charCount > 320) {
+            $(this).val($(this).val().substring(0, 319));
+        }
+
+        //update char count
+        var counter = $(this).siblings(".counter");
+        $(".count", counter).html(charCount);
     });
 }
 

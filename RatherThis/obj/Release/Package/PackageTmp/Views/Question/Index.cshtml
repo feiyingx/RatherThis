@@ -102,13 +102,13 @@ else
         <div class="paging clear">
         @if (Model.CurrentPage > 1)
         {
-            <a class="prev" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage - 1, qcat = Model.CurrentCategoryId })" >PREV</a>
+            <a class="prev" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage - 1, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })" >PREV</a>
         }
         @for (var j = 1; j <= Model.TotalPages; j++)
         {
             if (j != Model.CurrentPage)
             {
-                <a class="page-link" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = j, qcat = Model.CurrentCategoryId })">@j</a>   
+                <a class="page-link" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = j, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })">@j</a>   
             }
             else
             {
@@ -118,7 +118,7 @@ else
 
         @if (Model.CurrentPage < Model.TotalPages)
         {
-            <a class="next" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage + 1, qcat = Model.CurrentCategoryId })">NEXT</a>
+            <a class="next" href="@Url.Action("Index", "Question", new { sort = Model.Sort, gender = Model.Gender, page = Model.CurrentPage + 1, qcat = Model.CurrentCategoryId, onlyunanswered = Model.IsOnlyUnanswered })">NEXT</a>
         }
         
         </div>

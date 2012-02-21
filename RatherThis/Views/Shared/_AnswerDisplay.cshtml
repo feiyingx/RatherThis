@@ -83,14 +83,14 @@
         @{ var displayCommentContainerStyle = ""; }
         @if (!Model.IsShowAllComment)
         {
-            <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">COMMENTS (@Model.NumComments)</a>
+            <a href="javascript:void(0)" class="comment-link" onclick="toggleComments(this)">WHY's (@Model.NumComments)</a>
             displayCommentContainerStyle = "display:none;";
         }
         
         <div class="comment-container" style="@displayCommentContainerStyle">
             <div id="question-@Model.QuestionId-comment" class="comment-box">
                 @{ 
-        Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
+                    Html.RenderAction("NewComment", "Question", new { qid = Model.QuestionId, oid = Model.AnsweredOptionId });
                 }
             </div>
 

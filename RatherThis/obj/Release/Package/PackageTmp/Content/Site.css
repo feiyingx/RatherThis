@@ -659,6 +659,44 @@ span.checked
     padding-bottom: 10px;
 }
 
+.option-reason
+{
+    margin-top: 30px;
+    
+}
+
+.option-reason label
+{
+    
+    display: block;
+    width: 185px;
+    height: 15px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #393939;
+}
+
+.option-reason label span
+{
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.option-reason .counter
+{
+    font-size: 10px;    
+    color: gray;
+}
+
+.option-reason-area
+{
+    border: 1px solid #ccc;
+    width: 180px;
+    margin-top: 2px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;   
+}
+
 input.btn-question-action
 {
     cursor: pointer;
@@ -1024,6 +1062,18 @@ a.question-detail-link:hover
 .comment-box input:hover
 {
     background-color: #40950C;
+}
+
+input.submit-comment[disabled]
+{
+    background: #393939 url('/images/ajax-loader-gray.gif') no-repeat center center;
+    width: 65px;
+    color: #595959;
+}
+
+input.submit-comment[disabled]:hover
+{
+    background-color:#393939;
 }
 
 .comment-item-header.comment-F

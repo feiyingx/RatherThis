@@ -10,10 +10,12 @@
             UpdateTargetId= containerId,
             InsertionMode = InsertionMode.Replace,
             LoadingElementId = containerId + "ajax-loading",
+            OnBegin = "loadWhileComment('"+ containerId+"')",
             OnSuccess = reloadComments
         }))
 {
     @Html.TextAreaFor(m => m.Comment)
 
-    <input type="submit" value="Post Comment" />
+    <input type="submit" value="Post It" class="submit-comment" />
+    <input type="submit" value="" class="submit-comment" disabled style="display:none;" />
 }
