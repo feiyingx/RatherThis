@@ -80,14 +80,16 @@ namespace RatherThis.Controllers
         {
             List<Question> results;
 
-            //default the sort to highest rated
-            Constants.QuestionSort currentSort = Constants.QuestionSort.Top_Rated;
+            //default the sort to latest
+            Constants.QuestionSort currentSort = Constants.QuestionSort.Latest;
             string pageTitle = "";
 
             if (!string.IsNullOrEmpty(sort))
             {
                 if (sort.ToLower() == Constants.QuestionSort.Latest.ToString().ToLower())
                     currentSort = Constants.QuestionSort.Latest;
+                else if (sort.ToLower() == Constants.QuestionSort.Top_Rated.ToString().ToLower())
+                    currentSort = Constants.QuestionSort.Top_Rated;
             }
 
             IQueryable<Question> query = _questionRepo.Questions;

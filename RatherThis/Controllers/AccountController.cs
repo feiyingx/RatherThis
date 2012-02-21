@@ -578,7 +578,7 @@ namespace RatherThis.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "Question");
+            return RedirectToAction("Index", "Question", new { qcat = -1});
         }
 
 
