@@ -283,6 +283,16 @@ p.login-message
     background: #393939 url('/images/arrow.png') no-repeat right -3px;
     width: 210px;
     margin-bottom: 15px;
+    
+}
+
+#title a
+{
+    text-indent: -9999px;
+    height: 50px;
+    width: 210px;
+    display: block;
+    background: url('/images/logo.png') no-repeat 23px center;
 }
 
 #title img
