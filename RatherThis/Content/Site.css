@@ -739,8 +739,8 @@ input.btn-question-action[disabled]:hover
 input.btn-question-action.loading[disabled]
 {
     background: #393939 url('/images/ajax-loader-gray.gif') no-repeat center center;
-    padding-left: 30px;
-    padding-right: 30px;    
+    padding-left: 52px;
+    padding-right: 52px;    
 }
 
 div.question-display form

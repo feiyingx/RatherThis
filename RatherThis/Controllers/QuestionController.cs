@@ -163,7 +163,10 @@ namespace RatherThis.Controllers
                 pageTitle = "Fun And Interesting Questions About " + currentCat.Name + " - RatherThis.com";
             }
 
+            //set meta info
             ViewBag.Title = pageTitle;
+            ViewBag.Description = Utility.GetMetaDescription(qcat);
+            ViewBag.Keywords = Utility.GetMetaKeywords(qcat);
              
             Dictionary<object, string> resultModel = new Dictionary<object, string>();
             foreach (var q in results)
@@ -506,6 +509,11 @@ namespace RatherThis.Controllers
             model.Question = q;
             model.OptionText1 = q.QuestionOptions.ElementAt(0).OptionText;
             model.OptionText2 = q.QuestionOptions.ElementAt(1).OptionText;
+
+            //set metadata
+            ViewBag.Description = string.Format("Would you rather {0} or {1}? Come and see what people answered!", model.OptionText1, model.OptionText2);
+            ViewBag.Keywords = q.Category.HasValue ? Utility.GetMetaKeywords(q.Category.Value) : "";
+
             return View(model);
         }
 
